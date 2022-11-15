@@ -37,7 +37,8 @@ class model_buttons:  # класс формирования клавиатур
         but1 = types.KeyboardButton(text='Да, хочу!')
         but2 = types.KeyboardButton(text='🔙Вернуться в начало')
         kb4.add(but1, but2)
-        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар?\n'
+        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
+                                                    f'(выбор количества далее) \n'
                                                     f'/help - справка по боту\n', reply_markup=kb4)
 
 

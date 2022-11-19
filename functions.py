@@ -5,17 +5,25 @@ import gspread
 from datetime import *
 # библиотека рандома
 from random import *
+import json
 
 
-def marks_buttons(bot, message):  # функция определяющая клавиатуру с марками авто
-    kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-    but1 = types.KeyboardButton(text='🔘 Клюшки')
-    but2 = types.KeyboardButton(text='🔘 Коньки')
-    but3 = types.KeyboardButton(text='🔘 Защита')
-    but4 = types.KeyboardButton(text='🔘 Вратарям')
-    but5 = types.KeyboardButton(text='🔘 Другое')
-    kb1.add(but1, but2, but3, but4, but5)
-    bot.send_message(message.chat.id, 'Пожалуйста выберите подкатегорию', reply_markup=kb1)
+class buttons:  # класс для создания клавиатур различных категорий товаров
+    def __init__(self, bot, message, key, kategoriya):
+        self.bot = bot
+        self.message = message
+        self.file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
+        self.file = json.load(self.file)  # открытие файла
+        self.file = self.file[key]        # выбор в файле конкретной категории по ключу (возвращает список)
+        self.kategoriya = kategoriya      # уровень меню (категории/подкатегории/товары)
+
+    def marks_buttons(self):  # функция создающая клавиатуру
+        keys = {}
+        kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+        for i in self.file:    #создаем словарь с парами: "but{i}"-ключ, "types.KeyboardButton(text=i)"-значение
+            keys[f'but{self.file.index(i)}'] = types.KeyboardButton(text=i)
+            kb1.add(keys[f'but{self.file.index(i)}'])
+        self.bot.send_message(self.message.chat.id, f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
 
 
 class model_buttons:  # класс формирования клавиатур
@@ -30,7 +38,7 @@ class model_buttons:  # класс формирования клавиатур
         for key, value in self.kwargs.items():
             key = types.KeyboardButton(text=f'{value}')
             kb3.add(key)
-        self.bot.send_message(self.message.chat.id, 'Пожалуйста выберите подкатегорию', reply_markup=kb3)
+        self.bot.send_message(self.message.chat.id, 'Пожалуйста выберите товар', reply_markup=kb3)
 
     def zayavka_buttons(self):
         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -70,6 +78,7 @@ class poisk_tovar_in_base:
         self.cell = self.worksheet.find(self.tovar_name)  # поиск ячейки с данными по ключевому слову
 
     def poisk_ostatok(self):
+        global file_open, opisanie
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:

@@ -50,7 +50,7 @@ class model_buttons:  # класс формирования клавиатур
                                                     f'/help - справка по боту\n', reply_markup=kb4)
 
 
-def zayavka_done(bot, message, tovar_name):
+def zayavka_done(bot, message, tovar_name, quantity):
     kb2 = types.ReplyKeyboardRemove()
     bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
                                       'Спасибо, что выбрали нас.🤝\n'
@@ -60,16 +60,18 @@ def zayavka_done(bot, message, tovar_name):
                                    f'Имя: {message.from_user.first_name}\n'
                                    f'Фамилия: {message.from_user.last_name}\n'
                                    f'Ссылка: @{message.from_user.username}\n'
-                                   f'Товар: {tovar_name}'
+                                   f'Товар: {tovar_name}\n'
+                                   f'Количество {quantity}'
                                    f'\n')
-    poisk_tovar_in_base(bot, message, tovar_name).zayavka_v_baze()
+    poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
 
 
 class poisk_tovar_in_base:
-    def __init__(self, bot, message, tovar_name):
+    def __init__(self, bot, message, tovar_name, quantity=None):
         self.bot = bot
         self.message = message
         self.tovar_name = tovar_name
+        self.quantity = quantity
         gc = gspread.service_account(filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
         sh = gc.open('CCN')
@@ -115,9 +117,9 @@ class poisk_tovar_in_base:
                                    [[self.message.chat.id, self.message.from_user.username,
                                      self.message.from_user.first_name, self.message.from_user.last_name,
                                      self.tovar_name, 'none', str(datetime.now().date())]])
-            update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value) - 1
+            update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value) - int(self.quantity)
             self.worksheet.update(f"E{self.cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
-            update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + 1
+            update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
             self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
             self.bot.send_message('1338281106', 'Заявка внесена в базу ✅\n'
                                                 'смотреть базу: https://docs.google.com/spreadsheets/d/'
@@ -132,3 +134,10 @@ class tovar:  # класс хранения сообщения для рассы
 
     def _get_tovar_(self):
         return self.tovar
+
+class Quantity:  # класс хранения сообщения для рассылки
+    def __init__(self, quantity):
+        self.quantity = quantity
+
+    def get_quantity(self):
+        return self.quantity

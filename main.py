@@ -3,14 +3,16 @@ import telebot
 # с помощью типов можно создавать клавиатуры
 from telebot import types
 # библиотека для выполнения фоновых процессов в определенное время
-from apscheduler.schedulers.background import BackgroundScheduler
+#from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
-from functions import buttons, model_buttons, zayavka_done, poisk_tovar_in_base, tovar
+from functions import buttons, model_buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity
 
-token = '5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY'
+#token = '5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY'
+token = '5108031210:AAFO7ACd3yHNEhYIc7OVl-6G4dviPSZNA_8'
 bot = telebot.TeleBot(token)
 
 tovar_name = None
+quantity = None
 
 
 @bot.message_handler(commands=['start'])    # перехватчик команды /start
@@ -49,6 +51,7 @@ def price(message):
 @bot.message_handler(func=lambda m: m.text)  # перехватчик текстовых сообщений
 def chek_message_category(m):
     global tovar_name
+    global quantity
     if m.text == 'Вернуться в начало':
         buttons(bot, m, key='general_menu', kategoriya='категорию').marks_buttons()
     if m.text == 'Вернуться в категорию "Клюшки"':
@@ -56,7 +59,8 @@ def chek_message_category(m):
     if m.text == 'Другое':
         buttons(bot, m, key='Другое', kategoriya='подкатегорию').marks_buttons()
     if m.text == 'Да, хочу!':
-        zayavka_done(bot=bot, message=m, tovar_name=tovar_name.tovar)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
+        val = bot.send_message(m.chat.id, 'Пожалуйста введите количество желаемого товара с клавиатуры')
+        bot.register_next_step_handler(val, amount) # функция оформления заявки. Отправляет админу специальное сообщение о заявке
     if m.text == 'Kоньки':
         buttons(bot, m, key='Kоньки', kategoriya='подкатегорию').marks_buttons()
     if m.text == 'Kлюшки':
@@ -111,7 +115,13 @@ def chek_message_category(m):
          #                          f'Авто: {tovar_name}\n')
     #clients_base(bot, message, tovar).chec_and_record()  # класс проверки клиента в базе и его запись в базу
                                                               # в случае отсутствия
-
+def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
+    global quantity
+    quantity = Quantity(message.text)
+    zayavka_done(bot=bot,
+                     message=message,
+                     tovar_name=tovar_name.tovar,
+                     quantity = quantity.quantity)  
 
 bot.infinity_polling()
 

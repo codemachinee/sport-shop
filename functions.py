@@ -8,6 +8,9 @@ from random import *
 import json
 
 
+ostatok = None
+
+
 class buttons:  # класс для создания клавиатур различных категорий товаров
     def __init__(self, bot, message, key, kategoriya):
         self.bot = bot
@@ -51,19 +54,26 @@ class model_buttons:  # класс формирования клавиатур
 
 
 def zayavka_done(bot, message, tovar_name, quantity):
+    global ostatok
     kb2 = types.ReplyKeyboardRemove()
-    bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                                      'Спасибо, что выбрали нас.🤝\n'
-                                      f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
-    bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                   f'Поступила ЗАЯВКА от:\n'
-                                   f'Имя: {message.from_user.first_name}\n'
-                                   f'Фамилия: {message.from_user.last_name}\n'
-                                   f'Ссылка: @{message.from_user.username}\n'
-                                   f'Товар: {tovar_name}\n'
-                                   f'Количество {quantity}'
-                                   f'\n')
-    poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
+    if int(quantity) <= int(ostatok):
+        bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+                                          'Спасибо, что выбрали нас.🤝\n'
+                                          f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
+        bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                       f'Поступила ЗАЯВКА от:\n'
+                                       f'Имя: {message.from_user.first_name}\n'
+                                       f'Фамилия: {message.from_user.last_name}\n'
+                                       f'Ссылка: @{message.from_user.username}\n'
+                                       f'Товар: {tovar_name}\n'
+                                       f'Количество: {quantity}'
+                                       f'\n')
+        poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
+    else:
+        bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, уменьшите запрос '
+                                          f'до корректного числа.\n'
+                                          f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
+        model_buttons(bot, message).zayavka_buttons()
 
 
 class poisk_tovar_in_base:
@@ -80,7 +90,7 @@ class poisk_tovar_in_base:
         self.cell = self.worksheet.find(self.tovar_name)  # поиск ячейки с данными по ключевому слову
 
     def poisk_ostatok(self):
-        global file_open, opisanie
+        global file_open, opisanie, ostatok
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:
@@ -106,6 +116,7 @@ class poisk_tovar_in_base:
                                                             f'/help - справка по боту\n', reply_markup=kb4)
             else:
                 model_buttons(self.bot, self.message).zayavka_buttons()
+                ostatok = self.worksheet.cell(self.cell.row, 5).value
         except AttributeError:
             self.bot.send_message(self.message.chat.id, 'Ошибка, товар отсутствует')
 
@@ -116,7 +127,7 @@ class poisk_tovar_in_base:
             self.worksheet2.update(f'A{worksheet_len2}:G{worksheet_len2}',
                                    [[self.message.chat.id, self.message.from_user.username,
                                      self.message.from_user.first_name, self.message.from_user.last_name,
-                                     self.tovar_name, 'none', str(datetime.now().date())]])
+                                     self.tovar_name, self.quantity, str(datetime.now().date())]])
             update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value) - int(self.quantity)
             self.worksheet.update(f"E{self.cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
             update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
@@ -134,6 +145,7 @@ class tovar:  # класс хранения сообщения для рассы
 
     def _get_tovar_(self):
         return self.tovar
+
 
 class Quantity:  # класс хранения сообщения для рассылки
     def __init__(self, quantity):

@@ -118,10 +118,7 @@ def chek_message_category(m):
 def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
     global quantity
     quantity = Quantity(message.text)
-    zayavka_done(bot=bot,
-                     message=message,
-                     tovar_name=tovar_name.tovar,
-                     quantity = quantity.quantity)  
+    zayavka_done(bot=bot, message=message, tovar_name=tovar_name.tovar, quantity=quantity.quantity)
 
 bot.infinity_polling()
 

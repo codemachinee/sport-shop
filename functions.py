@@ -56,24 +56,31 @@ class model_buttons:  # класс формирования клавиатур
 def zayavka_done(bot, message, tovar_name, quantity):
     global ostatok
     kb2 = types.ReplyKeyboardRemove()
-    if int(quantity) <= int(ostatok):
-        bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                                          'Спасибо, что выбрали нас.🤝\n'
-                                          f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
-        bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                       f'Поступила ЗАЯВКА от:\n'
-                                       f'Имя: {message.from_user.first_name}\n'
-                                       f'Фамилия: {message.from_user.last_name}\n'
-                                       f'Ссылка: @{message.from_user.username}\n'
-                                       f'Товар: {tovar_name}\n'
-                                       f'Количество: {quantity}'
-                                       f'\n')
-        poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
-    else:
-        bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, уменьшите запрос '
-                                          f'до корректного числа.\n'
-                                          f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
+    try:
+        int(quantity)
+    
+        if int(quantity) <= int(ostatok):
+            bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+                                               'Спасибо, что выбрали нас.🤝\n'
+                                              f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
+            bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                           f'Поступила ЗАЯВКА от:\n'
+                                           f'Имя: {message.from_user.first_name}\n'
+                                           f'Фамилия: {message.from_user.last_name}\n'
+                                           f'Ссылка: @{message.from_user.username}\n'
+                                           f'Товар: {tovar_name}\n'
+                                           f'Количество: {quantity}'
+                                           f'\n')
+            poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
+        else:
+            bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, уменьшите запрос '
+                                              f'до корректного числа.\n'
+                                              f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
+            model_buttons(bot, message).zayavka_buttons()
+    except ValueError:
+        bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ', reply_markup=kb2)
         model_buttons(bot, message).zayavka_buttons()
+
 
 
 class poisk_tovar_in_base:

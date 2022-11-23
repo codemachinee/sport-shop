@@ -7,7 +7,6 @@ from datetime import *
 from random import *
 import json
 
-
 ostatok = None
 
 
@@ -17,13 +16,13 @@ class buttons:  # класс для создания клавиатур разл
         self.message = message
         self.file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
         self.file = json.load(self.file)  # открытие файла
-        self.file = self.file[key]        # выбор в файле конкретной категории по ключу (возвращает список)
-        self.kategoriya = kategoriya      # уровень меню (категории/подкатегории/товары)
+        self.file = self.file[key]  # выбор в файле конкретной категории по ключу (возвращает список)
+        self.kategoriya = kategoriya  # уровень меню (категории/подкатегории/товары)
 
     def marks_buttons(self):  # функция создающая клавиатуру
         keys = {}
         kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        for i in self.file:    #создаем словарь с парами: "but{i}"-ключ, "types.KeyboardButton(text=i)"-значение
+        for i in self.file:  # создаем словарь с парами: "but{i}"-ключ, "types.KeyboardButton(text=i)"-значение
             keys[f'but{self.file.index(i)}'] = types.KeyboardButton(text=i)
             kb1.add(keys[f'but{self.file.index(i)}'])
         self.bot.send_message(self.message.chat.id, f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
@@ -56,32 +55,14 @@ class model_buttons:  # класс формирования клавиатур
 def zayavka_done(bot, message, tovar_name, quantity):
     global ostatok
     kb2 = types.ReplyKeyboardRemove()
-<<<<<<< HEAD
-    if int(quantity) <= int(ostatok):
-        bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                                          'Спасибо, что выбрали нас.🤝\n'
-                                          f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
-        bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                       f'Поступила ЗАЯВКА от:\n'
-                                       f'Имя: {message.from_user.first_name}\n'
-                                       f'Фамилия: {message.from_user.last_name}\n'
-                                       f'Ссылка: @{message.from_user.username}\n'
-                                       f'Товар: {tovar_name}\n'
-                                       f'Количество: {quantity}'
-                                       f'\n')
-        poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
-    else:
-        bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, отправьте '
-                                          f'корректное значение.\n'
-                                          f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
-=======
     try:
         int(quantity)
-    
+
         if int(quantity) <= int(ostatok):
-            bot.send_message(message.chat.id, f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                                               'Спасибо, что выбрали нас.🤝\n'
-                                              f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
+            bot.send_message(message.chat.id,
+                             f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+                             'Спасибо, что выбрали нас.🤝\n'
+                             f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
             bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
                                            f'Поступила ЗАЯВКА от:\n'
                                            f'Имя: {message.from_user.first_name}\n'
@@ -92,15 +73,14 @@ def zayavka_done(bot, message, tovar_name, quantity):
                                            f'\n')
             poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
         else:
-            bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, уменьшите запрос '
-                                              f'до корректного числа.\n'
-                                              f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
+            bot.send_message(message.chat.id,
+                             f'Увы, но указанное количество превышает остатки товара, отправьте '
+                             f'корректное значение.\n'
+                             f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
             model_buttons(bot, message).zayavka_buttons()
     except ValueError:
         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ', reply_markup=kb2)
->>>>>>> e8b430a1cea3757960c9f7dbe2a4fe133bd648eb
         model_buttons(bot, message).zayavka_buttons()
-
 
 
 class poisk_tovar_in_base:
@@ -109,7 +89,8 @@ class poisk_tovar_in_base:
         self.message = message
         self.tovar_name = tovar_name
         self.quantity = quantity
-        gc = gspread.service_account(filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
+        gc = gspread.service_account(
+            filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
         sh = gc.open('CCN')
         self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы

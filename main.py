@@ -59,7 +59,7 @@ def chek_message_category(m):
     if m.text == 'Другое':
         buttons(bot, m, key='Другое', kategoriya='подкатегорию').marks_buttons()
     if m.text == 'Да, хочу!':
-        val = bot.send_message(m.chat.id, 'Пожалуйста введите количество желаемого товара с клавиатуры')
+        val = bot.send_message(m.chat.id, 'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount) # функция оформления заявки. Отправляет админу специальное сообщение о заявке
     if m.text == 'Kоньки':
         buttons(bot, m, key='Kоньки', kategoriya='подкатегорию').marks_buttons()

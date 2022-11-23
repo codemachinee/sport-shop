@@ -46,7 +46,7 @@ class model_buttons:  # класс формирования клавиатур
     def zayavka_buttons(self):
         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         but1 = types.KeyboardButton(text='Да, хочу!')
-        but2 = types.KeyboardButton(text='🔙Вернуться в начало')
+        but2 = types.KeyboardButton(text='Вернуться в начало')
         kb4.add(but1, but2)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
                                                     f'(выбор количества далее) \n'
@@ -70,8 +70,8 @@ def zayavka_done(bot, message, tovar_name, quantity):
                                        f'\n')
         poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
     else:
-        bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, уменьшите запрос '
-                                          f'до корректного числа.\n'
+        bot.send_message(message.chat.id, f'Увы, но указанное количество превышает остатки товара, отправьте '
+                                          f'корректное значение.\n'
                                           f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
         model_buttons(bot, message).zayavka_buttons()
 

@@ -1,15 +1,19 @@
-class chance:
-    def __init__(self, fuck, run, dave):
-        self.fuck = fuck
-        self.run = run
-        self.dave = dave
+import telebot
 
-    def se(self, val):
+bot = telebot.TeleBot('5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY')
 
 
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, f'''Я пробил инфрмацию:
 
-a = chance('fuck', 'run', 'dave')
-b = a.__setattr__('fuck', 23)
-print(a.fuck, a.run, a.dave)
-print(b)
+id чата: {message.chat.id}
+id пользователя: {message.from_user.id}
+имя: {message.from_user.first_name}
+фамилия: {message.from_user.last_name}
+псевдоним: {message.from_user.username}
 
+текст сообщения: {message.text}''')
+
+
+bot.polling()

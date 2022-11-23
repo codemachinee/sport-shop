@@ -123,7 +123,7 @@ class poisk_tovar_in_base:
 
     def zayavka_v_baze(self):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
         try:
-            worksheet_len2 = len(self.worksheet2.col_values(2)) + 1
+            worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
             # запись клиента в свободную строку базы старых клиентов:
             self.worksheet2.update(f'A{worksheet_len2}:G{worksheet_len2}',
                                    [[self.message.chat.id, self.message.from_user.username,

@@ -30,17 +30,17 @@ class buttons:  # класс для создания клавиатур разл
 
 class model_buttons:  # класс формирования клавиатур
 
-    def __init__(self, bot, message, **kwargs):
-        self.bot = bot
-        self.message = message
-        self.kwargs = kwargs
+#    def __init__(self, bot, message, **kwargs):
+ #       self.bot = bot
+  #      self.message = message
+   #     self.kwargs = kwargs
 
-    def model_buttons(self):
-        kb3 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        for key, value in self.kwargs.items():
-            key = types.KeyboardButton(text=f'{value}')
-            kb3.add(key)
-        self.bot.send_message(self.message.chat.id, 'Пожалуйста выберите товар', reply_markup=kb3)
+    #def model_buttons(self):
+     #   kb3 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+      #  for key, value in self.kwargs.items():
+       #     key = types.KeyboardButton(text=f'{value}')
+        #    kb3.add(key)
+        #self.bot.send_message(self.message.chat.id, 'Пожалуйста выберите товар', reply_markup=kb3)
 
     def zayavka_buttons(self):
         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)

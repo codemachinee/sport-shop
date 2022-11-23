@@ -54,7 +54,7 @@ def chek_message_category(m):
     global quantity
     if m.text == 'Вернуться в начало':
         buttons(bot, m, key='general_menu', kategoriya='категорию').marks_buttons()
-    if m.text == 'Вернуться в категорию "Клюшки"':
+    if m.text == "Вернуться в категорию 'Клюшки'":
         buttons(bot, m, key='Kлюшки', kategoriya='подкатегорию').marks_buttons()
     if m.text == 'Другое':
         buttons(bot, m, key='Другое', kategoriya='подкатегорию').marks_buttons()
@@ -76,17 +76,11 @@ def chek_message_category(m):
     if m.text == 'Аксессуары':
         buttons(bot, m, key='Аксессуары', kategoriya='подкатегорию').marks_buttons()
     if m.text == 'Ленты для клюшек':
-        model_buttons(bot=bot, message=m, but1='Красная лента (L)', but2='Красная лента (N SZ)',
-                      but3='Черная лента (L)', but4='Черная лента (N SZ)',
-                      but5='Вернуться в категорию "Клюшки"', but6='Вернуться в начало').model_buttons()
+        buttons(bot, m, key='Ленты для клюшек', kategoriya='товар').marks_buttons()
     if m.text == 'Надставки':
-        model_buttons(bot=bot, message=m, but1='Надставка End Plugg Wood Jr (L)', but2='Надставка End Plugg Wood Jr (R)',
-                      but3='Надставка End Plugg Wood Sr (L)', but4='Надставка End Plugg Wood Sr (R)',
-                      but5='Вернуться в категорию "Клюшки"', but6='Вернуться в начало').model_buttons()
+        buttons(bot, m, key='Надставки', kategoriya='товар').marks_buttons()
     if m.text == 'Клюшки':
-        model_buttons(bot=bot, message=m, but1='Клюшка композитная HS JETSPEED FT5 PRO SR',
-                      but2='Клюшка композитная HS JETSPEED FT5 PRO JR',
-                      but4='Вернуться в категорию "Клюшки"', but5='Вернуться в начало').model_buttons()
+        buttons(bot, m, key='Клюшки', kategoriya='товар').marks_buttons()
     if m.text == 'Красная лента (L)':
         tovar_name = tovar(m.text)
         poisk_tovar_in_base(bot, m, tovar_name.tovar).poisk_ostatok()

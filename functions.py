@@ -30,17 +30,10 @@ class buttons:  # класс для создания клавиатур разл
 
 class model_buttons:  # класс формирования клавиатур
 
-#    def __init__(self, bot, message, **kwargs):
- #       self.bot = bot
-  #      self.message = message
-   #     self.kwargs = kwargs
-
-    #def model_buttons(self):
-     #   kb3 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-      #  for key, value in self.kwargs.items():
-       #     key = types.KeyboardButton(text=f'{value}')
-        #    kb3.add(key)
-        #self.bot.send_message(self.message.chat.id, 'Пожалуйста выберите товар', reply_markup=kb3)
+    def __init__(self, bot, message, **kwargs):
+        self.bot = bot
+        self.message = message
+        self.kwargs = kwargs
 
     def zayavka_buttons(self):
         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -161,3 +154,11 @@ class Quantity:  # класс хранения сообщения для рас�
 
     def get_quantity(self):
         return self.quantity
+
+
+class rasylka_message:  # класс хранения сообщения для рассылки
+    def __init__(self, post):
+        self.post = post
+
+    def _get_message_(self):
+        return self.post

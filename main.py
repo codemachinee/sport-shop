@@ -5,7 +5,7 @@ from telebot import types
 # библиотека для выполнения фоновых процессов в определенное время
 #from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
-from functions import buttons, model_buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity
+from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message
 
 #token = '5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY'
 token = '5108031210:AAFO7ACd3yHNEhYIc7OVl-6G4dviPSZNA_8'
@@ -13,6 +13,7 @@ bot = telebot.TeleBot(token)
 
 tovar_name = None
 quantity = None
+rassylka = None
 
 
 @bot.message_handler(commands=['start'])    # перехватчик команды /start
@@ -35,17 +36,28 @@ def help(message):
         bot.send_message(message.chat.id, f'Основные команды поддерживаемые ботом:\n'
                                           f'/category - ассортимент товара по категориям\n'
                                           f'/start - инициализация бота\n'
-                                          f'/help - справка по боту')
+                                          f'/help - справка по боту\n'
+                                          f'/sent_message - отправить с помощью бота сообщение клиенту по id чата')
     else:
         bot.send_message(message.chat.id, f'Основные команды поддерживаемые ботом:\n'
                                           f'/category - ассортимент товара по категориям\n'
                                           f'/start - инициализация бота\n'
-                                          f'/help - справка по боту')
+                                          f'/help - справка по боту\n')
 
 
 @bot.message_handler(commands=['category'])
 def price(message):
     buttons(bot, message, key='general_menu', kategoriya='категорию').marks_buttons() # класс по формированию различных клавиатур, располагается в functions
+
+
+@bot.message_handler(commands=['sent_message'])  # команда для переброски клиента из базы потенциальных клиентов в
+def sent_message(message):    # базу старых клиентов
+    if message.chat.id == 1338281106:
+        sent = bot.send_message('1338281106', 'Введи id чата клиента, которому нужно написать от лица бота')
+        bot.register_next_step_handler(sent, sent_message_perehvat_1)   # перехватывает ответ пользователя на сообщение "sent" и
+                                                              # и направляет его аргументом в функцию base_perehvat
+    else:
+        bot.send_message(message.chat.id, 'У Вас нет прав для использования данной команды')
 
 
 @bot.message_handler(func=lambda m: m.text)  # перехватчик текстовых сообщений
@@ -113,6 +125,24 @@ def amount(message):  # функция регистрации заявки ав�
     global quantity
     quantity = Quantity(message.text)
     zayavka_done(bot=bot, message=message, tovar_name=tovar_name.tovar, quantity=quantity.quantity)
+
+
+def sent_message_perehvat_1(message):
+    try:
+        global rasylka
+        rasylka = rasylka_message(message.text)  # хз почему message.id а не message.text но bot.copy_message() работает только так
+        sent = bot.send_message('1338281106', 'Введите текст сообщения')
+        bot.register_next_step_handler(sent, sent_message_perehvat_2)
+    except ValueError:
+        bot.send_message('1338281106', 'Неккоректное значение. Воспользуйтесь командой /sent_message еще раз')
+
+
+def sent_message_perehvat_2(message):
+    kb2 = types.ReplyKeyboardRemove()
+    global rasylka
+    bot.copy_message(rasylka.post, '1338281106', message.id, reply_markup=kb2)
+    bot.send_message('1338281106', 'Сообщение отправлено!')
+
 
 bot.infinity_polling()
 

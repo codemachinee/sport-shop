@@ -11,21 +11,42 @@ ostatok = None
 
 
 class buttons:  # класс для создания клавиатур различных категорий товаров
-    def __init__(self, bot, message, key, kategoriya):
+    def __init__(self, bot, message, key='general_menu', kategoriya=None,
+                 image='https://drive.google.com/file/d/1nG0RvJ9L6Ez_O9SOjllhFn2OvszB92TE/view?usp=share_link'):
         self.bot = bot
         self.message = message
+        self.key = key
         self.file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
         self.file = json.load(self.file)  # открытие файла
-        self.file = self.file[key]  # выбор в файле конкретной категории по ключу (возвращает список)
+        self.file = self.file[self.key]  # выбор в файле конкретной категории по ключу (возвращает список)
         self.kategoriya = kategoriya  # уровень меню (категории/подкатегории/товары)
+        self.image = image
+
+    def menu_buttons(self):
+        kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+        but1 = types.KeyboardButton(text='Категории товаров 🗂️')
+        but2 = types.KeyboardButton(text='Заказы 📋')
+        but3 = types.KeyboardButton(text='Корзина 🗑️')
+        but4 = types.KeyboardButton(text='Вопросы-ответы ⁉️')
+        but5 = types.KeyboardButton(text='Контакты ☎️')
+        kb1.add(but1, but2, but3, but4, but5)
+        self.bot.send_message(self.message.chat.id, text='...', reply_markup=kb1)
 
     def marks_buttons(self):  # функция создающая клавиатуру
         keys = {}
-        kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        for i in self.file:  # создаем словарь с парами: "but{i}"-ключ, "types.KeyboardButton(text=i)"-значение
-            keys[f'but{self.file.index(i)}'] = types.KeyboardButton(text=i)
-            kb1.add(keys[f'but{self.file.index(i)}'])
-        self.bot.send_message(self.message.chat.id, f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
+        kb1 = types.InlineKeyboardMarkup()
+        for i in self.file:
+            if self.key in ("general_menu", "Kоньки", "Kлюшки", "Вратарям", "Одежда", "Хоккейная форма", "Аксессуары"):
+                keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
+                if self.file.index(i) > 0 and self.file.index(i) % 2 != 0:
+                    kb1.add(keys[f'but{self.file.index(i) - 1}'], keys[f'but{self.file.index(i)}'])#, row_width=1)
+                elif self.file.index(i) == (len(self.file) - 1):
+                    kb1.add(keys[f'but{self.file.index(i)}'])
+            else:
+                keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
+                kb1.add(keys[f'but{self.file.index(i)}'])
+        self.bot.send_photo(self.message.chat.id, photo=self.image)
+        self.bot.send_message(self.message.chat.id, text=f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
 
 
 class model_buttons:  # класс формирования клавиатур
@@ -52,6 +73,7 @@ def zayavka_done(bot, message, tovar_name, quantity):
         int(quantity)
 
         if int(quantity) <= int(ostatok):
+
             bot.send_message(message.chat.id,
                              f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
                              'Спасибо, что выбрали нас.🤝\n'

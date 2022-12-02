@@ -5,7 +5,7 @@ from telebot import types
 # библиотека для выполнения фоновых процессов в определенное время
 #from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
-from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message
+from functions import buttons, model_buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message
 
 #token = '5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY'
 token = '5108031210:AAFO7ACd3yHNEhYIc7OVl-6G4dviPSZNA_8'
@@ -18,14 +18,13 @@ rassylka = None
 
 @bot.message_handler(commands=['start'])    # перехватчик команды /start
 def start(message):
-    kb2 = types.ReplyKeyboardRemove()    # удаление клавиатуры
-    bot.send_message(message.chat.id, '...', reply_markup=kb2)
     file_open = open("start_logo.png", 'rb')    # открытие и чтение файла стартовой картинки
     bot.send_photo(message.chat.id, file_open, '''Здравствуйте!
-Вас приветствует CCM_bot - Я помогу подобрать профессиональный хоккейный инвентарь для хоккея по лучшим ценам. 🏆🏒🥇
+Вас приветствует CCM_bot - Я помогу подобрать профессиональный хоккейный инвентарь по лучшим ценам. 🏆🏒🥇
 
-/category - асоортимент по категориям
+Выберите "Категории товаров 🗂️" - для просмотра ассортимента по категориям
 /help - все возможности бота''')
+    buttons(bot, message).menu_buttons()
 
 
 @bot.message_handler(commands=['help'])
@@ -45,11 +44,6 @@ def help(message):
                                           f'/help - справка по боту\n')
 
 
-@bot.message_handler(commands=['category'])
-def price(message):
-    buttons(bot, message, key='general_menu', kategoriya='категорию').marks_buttons() # класс по формированию различных клавиатур, располагается в functions
-
-
 @bot.message_handler(commands=['sent_message'])  # команда для переброски клиента из базы потенциальных клиентов в
 def sent_message(message):    # базу старых клиентов
     if message.chat.id == 1338281106:
@@ -64,47 +58,74 @@ def sent_message(message):    # базу старых клиентов
 def chek_message_category(m):
     global tovar_name
     global quantity
-    if m.text == 'Вернуться в начало':
-        buttons(bot, m, key='general_menu', kategoriya='категорию').marks_buttons()
-    if m.text == "Вернуться в категорию 'Клюшки'":
-        buttons(bot, m, key='Kлюшки', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Другое':
-        buttons(bot, m, key='Другое', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Да, хочу!':
-        val = bot.send_message(m.chat.id, 'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
-        bot.register_next_step_handler(val, amount) # функция оформления заявки. Отправляет админу специальное сообщение о заявке
-    if m.text == 'Kоньки':
-        buttons(bot, m, key='Kоньки', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Kлюшки':
-        buttons(bot, m, key='Kлюшки', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Защита':
-        buttons(bot, m, key='Защита', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Вратарям':
-        buttons(bot, m, key='Вратарям', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Одежда':
-        buttons(bot, m, key='Одежда', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Хоккейная форма':
-        buttons(bot, m, key='Хоккейная форма', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Аксессуары':
-        buttons(bot, m, key='Аксессуары', kategoriya='подкатегорию').marks_buttons()
-    if m.text == 'Ленты для клюшек':
-        buttons(bot, m, key='Ленты для клюшек', kategoriya='товар').marks_buttons()
-    if m.text == 'Надставки':
-        buttons(bot, m, key='Надставки', kategoriya='товар').marks_buttons()
-    if m.text == 'Клюшки':
-        buttons(bot, m, key='Клюшки', kategoriya='товар').marks_buttons()
-    if m.text == 'Красная лента (L)':
-        tovar_name = tovar(m.text)
-        poisk_tovar_in_base(bot, m, tovar_name.tovar).poisk_ostatok()
-    if m.text == 'Красная лента (N SZ)':
-        tovar_name = tovar(m.text)
-        poisk_tovar_in_base(bot, m, tovar_name.tovar).poisk_ostatok()
-    if m.text == 'Черная лента (L)':
-        tovar_name = tovar(m.text)
-        poisk_tovar_in_base(bot, m, tovar_name.tovar).poisk_ostatok()
-    if m.text == 'Черная лента (N SZ)':
-        tovar_name = tovar(m.text)
-        poisk_tovar_in_base(bot, m, tovar_name.tovar).poisk_ostatok()
+    if m.text == 'Категории товаров 🗂️':
+        buttons(bot, m, key='general_menu', kategoriya='категорию',
+                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+    if m.text == 'Заказы 📋':
+        bot.send_message(m.chat.id, 'фрагмент в разработке')
+    if m.text == 'Корзина 🗑️':
+        bot.send_message(m.chat.id, 'фрагмент в разработке')
+    if m.text == 'Вопросы-ответы ⁉️':
+        bot.send_message(m.chat.id, 'фрагмент в разработке')
+    if m.text == 'Контакты ☎️':
+        bot.send_message(m.chat.id, 'фрагмент в разработке')
+
+
+@bot.callback_query_handler(func=lambda callback: callback.data)
+def check_callback(callback):
+    if callback.data == "Вернуться в начало":
+        buttons(bot, callback.message, key='general_menu', kategoriya='категорию',
+                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+    if callback.data == "Вернуться в категорию 'Клюшки'":
+        buttons(bot, callback.message, key='Kлюшки', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1azEULeTNaBigbN5LXEBC3C4c-_PXFAHz/view?usp=share_link').marks_buttons()
+    if callback.data == 'Другое':
+        buttons(bot, callback.message, key='Другое', kategoriya='подкатегорию').marks_buttons()
+    if callback.data == 'Да, хочу!':
+        val = bot.send_message(callback.message.chat.id,
+                               'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
+        bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
+    if callback.data == 'Kоньки':
+        buttons(bot, callback.message, key='Kоньки', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1FZc0LZQr5BzN_0ZUDgtPFmILhXlRtwE2/view?usp=share_link').marks_buttons()
+    if callback.data == 'Kлюшки':
+        buttons(bot, callback.message, key='Kлюшки', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1azEULeTNaBigbN5LXEBC3C4c-_PXFAHz/view?usp=share_link').marks_buttons()
+    if callback.data == 'Защита':
+        buttons(bot, callback.message, key='Защита', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_link').marks_buttons()
+    if callback.data == 'Вратарям':
+        buttons(bot, callback.message, key='Вратарям', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1scye6qB6YaGENt7ygSVW4dSZD3cUBqv9/view?usp=share_link').marks_buttons()
+    if callback.data == 'Одежда':
+        buttons(bot, callback.message, key='Одежда', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/16IXw_RBWXsCv-aW6OsHEsbfi2ru4IRh3/view?usp=share_link').marks_buttons()
+    if callback.data == 'Хоккейная форма':
+        buttons(bot, callback.message, key='Хоккейная форма', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/1hop7DZetV0qCjrWWU9xTLgBcoCLz9lUu/view?usp=share_link').marks_buttons()
+    if callback.data == 'Аксессуары':
+        buttons(bot, callback.message, key='Аксессуары', kategoriya='подкатегорию',
+                image='https://drive.google.com/file/d/19kwKVYj1lt4lMqLjeeWdLyPOgX0YnD9_/view?usp=share_link').marks_buttons()
+    if callback.data == 'Ленты для клюшек':
+        buttons(bot, callback.message, key='Ленты для клюшек', kategoriya='товар',
+                image='https://drive.google.com/file/d/13C6xMvyCTyawCSoJzL44yIfmB0UpVqzm/view?usp=share_link').marks_buttons()
+    if callback.data == 'Надставки':
+        buttons(bot, callback.message, key='Надставки', kategoriya='товар',
+                image='https://drive.google.com/file/d/1UA2xpltfxbI0UM27onRjGrnkYYPrTVzw/view?usp=share_link').marks_buttons()
+    if callback.data == 'Клюшки':
+        buttons(bot, callback.message, key='Клюшки', kategoriya='товар').marks_buttons()
+    if callback.data == 'Красная лента (L)':
+        tovar_name = tovar(callback.data)
+        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
+    if callback.data == 'Красная лента (N SZ)':
+        tovar_name = tovar(callback.data)
+        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
+    if callback.data == 'Черная лента (L)':
+        tovar_name = tovar(callback.data)
+        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
+    if callback.data == 'Черная лента (N SZ)':
+        tovar_name = tovar(callback.data)
+        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
 
 
 #def drugoe(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота

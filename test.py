@@ -1,36 +1,21 @@
-import telebot
-from telebot import types
+import gspread
 import json
-bot = telebot.TeleBot('5380562272:AAFqodiUpENCtx7oD8f5xnbIDNOoxJW6YMY')
 
+file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
+file = json.load(file)  # открытие файла
+file = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[0]
 
-@bot.message_handler(commands=['start'])
-def start(message):  # функция создающая клавиатуру
-    buttons(bot, message, 'general_menu', 'категорию',
-            'https://i.gifer.com/U69E.gif').marks_buttons()
+#print(int('9065,000'[0:-4]))
 
-
-class buttons:  # класс для создания клавиатур различных категорий товаров
-    def __init__(self, bot, message, key, kategoriya, image):
-        self.bot = bot
-        self.message = message
-        self.file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
-        self.file = json.load(self.file)  # открытие файла
-        self.file = self.file[key]  # выбор в файле конкретной категории по ключу (возвращает список)
-        self.kategoriya = kategoriya  # уровень меню (категории/подкатегории/товары)
-        self.image = image
-
-    def marks_buttons(self):  # функция создающая клавиатуру
-        keys = {}
-        kb1 = types.InlineKeyboardMarkup()
-        for i in self.file:
-            keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
-            if self.file.index(i) > 0 and self.file.index(i) % 2 != 0:
-                kb1.add(keys[f'but{self.file.index(i)-1}'], keys[f'but{self.file.index(i)}'], row_width=2)
-            elif self.file.index(i) == (len(self.file) - 1):
-                kb1.add(keys[f'but{self.file.index(i)}'])
-        self.bot.send_animation(self.message.chat.id, animation=self.image)
-        self.bot.send_message(self.message.chat.id, text=f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
-
-
-bot.polling()
+gc = gspread.service_account(
+            filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
+        # открытие таблицы по юрл адресу:
+sh = gc.open('CCM')
+quantity = '1'
+worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
+worksheet2 = sh.worksheet('заявки')
+cell = worksheet.find('10338,000', in_column=0)
+update_ostatok = int(worksheet.cell(cell.row, 5).value[0:-4]) - int(quantity)
+worksheet.update(f"E{cell.row}", [[update_ostatok]])
+print(update_ostatok)
+print(cell)

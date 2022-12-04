@@ -8,17 +8,19 @@ from random import *
 import json
 
 ostatok = None
+admin_id = '1338281106'
+file = json.load(open('categories_dict.json', 'rb'))  # файл хранящий структуру категорий товаров
 
 
 class buttons:  # класс для создания клавиатур различных категорий товаров
-    def __init__(self, bot, message, key='general_menu', kategoriya=None,
+    global file
+
+    def __init__(self, bot, message, file=file, key='general_menu', kategoriya=None,
                  image='https://drive.google.com/file/d/1nG0RvJ9L6Ez_O9SOjllhFn2OvszB92TE/view?usp=share_link'):
         self.bot = bot
         self.message = message
         self.key = key
-        self.file = open('categories_dict.json', 'rb')  # файл хранящий структуру категорий товаров
-        self.file = json.load(self.file)  # открытие файла
-        self.file = self.file[self.key]  # выбор в файле конкретной категории по ключу (возвращает список)
+        self.file = file[self.key]  # выбор в файле конкретной категории по ключу (возвращает список)
         self.kategoriya = kategoriya  # уровень меню (категории/подкатегории/товары)
         self.image = image
 
@@ -35,111 +37,104 @@ class buttons:  # класс для создания клавиатур разл
     def marks_buttons(self):  # функция создающая клавиатуру
         keys = {}
         kb1 = types.InlineKeyboardMarkup()
+        self.file = list(self.file.keys())
         for i in self.file:
-            if self.key in ("general_menu", "Kоньки", "Kлюшки", "Вратарям", "Одежда", "Хоккейная форма", "Аксессуары"):
-                keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
-                if self.file.index(i) > 0 and self.file.index(i) % 2 != 0:
+            keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
+            if self.file.index(i) > 0 and self.file.index(i) % 2 != 0:
+                if len(i) <= 16 and len(self.file[self.file.index(i) - 1]) <= 16:
                     kb1.add(keys[f'but{self.file.index(i) - 1}'], keys[f'but{self.file.index(i)}'])#, row_width=1)
-                elif self.file.index(i) == (len(self.file) - 1):
+                else:
+                    kb1.add(keys[f'but{self.file.index(i) - 1}'])
                     kb1.add(keys[f'but{self.file.index(i)}'])
-            else:
-                keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
+            elif self.file.index(i) == (len(self.file) - 1):
                 kb1.add(keys[f'but{self.file.index(i)}'])
         self.bot.send_photo(self.message.chat.id, photo=self.image)
         self.bot.send_message(self.message.chat.id, text=f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
 
-
-class model_buttons:  # класс формирования клавиатур
-
-    def __init__(self, bot, message, **kwargs):
-        self.bot = bot
-        self.message = message
-        self.kwargs = kwargs
-
     def zayavka_buttons(self):
-        kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-        but1 = types.KeyboardButton(text='Да, хочу!')
-        but2 = types.KeyboardButton(text='Вернуться в начало')
+        kb4 = types.InlineKeyboardMarkup(row_width=2)
+        but1 = types.InlineKeyboardButton(text='Да, хочу!', callback_data='Да, хочу!')
+        but2 = types.InlineKeyboardButton(text='Вернуться в начало', callback_data='Вернуться в начало')
         kb4.add(but1, but2)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
                                                     f'(выбор количества далее) \n'
                                                     f'/help - справка по боту\n', reply_markup=kb4)
 
 
-def zayavka_done(bot, message, tovar_name, quantity):
+def zayavka_done(bot, message, article, tovar_name, quantity):
     global ostatok
-    kb2 = types.ReplyKeyboardRemove()
     try:
         int(quantity)
 
-        if int(quantity) <= int(ostatok):
+        if int(quantity) <= int(ostatok) and int(quantity) != 0:
 
             bot.send_message(message.chat.id,
                              f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
                              'Спасибо, что выбрали нас.🤝\n'
-                             f'Чтобы продолжить покупки воспользуйтесь командой /category', reply_markup=kb2)
-            bot.send_message('1338281106', f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                           f'Поступила ЗАЯВКА от:\n'
-                                           f'Имя: {message.from_user.first_name}\n'
-                                           f'Фамилия: {message.from_user.last_name}\n'
-                                           f'Ссылка: @{message.from_user.username}\n'
-                                           f'Товар: {tovar_name}\n'
-                                           f'Количество: {quantity}'
-                                           f'\n')
-            poisk_tovar_in_base(bot, message, tovar_name, quantity).zayavka_v_baze()
+                             f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
+            bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                       f'Поступила ЗАЯВКА от:\n'
+                                       f'id чата: {message.chat.id}\n'
+                                       f'Имя: {message.from_user.first_name}\n'
+                                       f'Фамилия: {message.from_user.last_name}\n'
+                                       f'Ссылка: @{message.from_user.username}\n'
+                                       f'Товар: {tovar_name}\n'
+                                       f'Количество: {quantity}')
+            poisk_tovar_in_base(bot, message, article, tovar_name, quantity).zayavka_v_baze()
         else:
             bot.send_message(message.chat.id,
-                             f'Увы, но указанное количество превышает остатки товара, отправьте '
+                             f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
                              f'корректное значение.\n'
-                             f'Чтобы изменить товар воспользуйтесь командой /category', reply_markup=kb2)
-            model_buttons(bot, message).zayavka_buttons()
+                             f'Чтобы изменить товар выберите "Категории товаров 🗂️"')
+            buttons(bot, message).zayavka_buttons()
     except ValueError:
-        bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ', reply_markup=kb2)
-        model_buttons(bot, message).zayavka_buttons()
+        bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
+        buttons(bot, message).zayavka_buttons()
 
 
 class poisk_tovar_in_base:
-    def __init__(self, bot, message, tovar_name, quantity=None):
+    def __init__(self, bot, message, article='0', tovar_name=None, quantity=None):
         self.bot = bot
         self.message = message
+        self.article = article
         self.tovar_name = tovar_name
         self.quantity = quantity
         gc = gspread.service_account(
             filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
-        sh = gc.open('CCN')
+        sh = gc.open('CCM')
         self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
         self.worksheet2 = sh.worksheet('заявки')
-        self.cell = self.worksheet.find(self.tovar_name)  # поиск ячейки с данными по ключевому слову
+        self.cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
 
     def poisk_ostatok(self):
         global file_open, opisanie, ostatok
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:
-            if self.tovar_name == 'Красная лента (N SZ)':
+            if self.article == '10303,000':
                 file_open = open("red tape.png", 'rb')
                 opisanie = 'Описвание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM RD\nЦена: 500Р'
-            if self.tovar_name == 'Красная лента (L)':
+            elif self.tovar_name == 'Красная лента (L)':
                 file_open = open("red tape.png", 'rb')
                 opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM RD\nЦена: 500Р'
-            if self.tovar_name == 'Черная лента (L)':
+            elif self.tovar_name == 'Черная лента (L)':
                 file_open = open("black tape.png", 'rb')
                 opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM BD\nЦена: 500Р'
-            if self.tovar_name == 'Черная лента (N SZ)':
+            elif self.tovar_name == 'Черная лента (N SZ)':
                 file_open = open("black tape.png", 'rb')
                 opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM BD\nЦена: 500Р'
             self.bot.send_photo(self.message.chat.id, file_open, opisanie)
-            self.bot.send_message(self.message.chat.id, f' В наличии: {self.worksheet.cell(self.cell.row, 5).value}\n')
-            if self.worksheet.cell(self.cell.row, 5).value == '0':
+            self.bot.send_message(self.message.chat.id, f' В наличии: {self.worksheet.cell(self.cell.row, 5).value[0:-4]}\n')
+            if self.worksheet.cell(self.cell.row, 5).value[0:-4] == '0':
                 kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-                but1 = types.KeyboardButton(text='🔙Вернуться в начало')
+                but1 = types.KeyboardButton(text='Вернуться в начало')
                 kb4.add(but1)
                 self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
                                                             f'/help - справка по боту\n', reply_markup=kb4)
             else:
-                model_buttons(self.bot, self.message).zayavka_buttons()
-                ostatok = self.worksheet.cell(self.cell.row, 5).value
+                buttons(self.bot, self.message).zayavka_buttons()
+                ostatok = self.worksheet.cell(self.cell.row, 5).value[0:-4]
         except AttributeError:
             self.bot.send_message(self.message.chat.id, 'Ошибка, товар отсутствует')
 
@@ -151,15 +146,15 @@ class poisk_tovar_in_base:
                                    [[self.message.chat.id, self.message.from_user.username,
                                      self.message.from_user.first_name, self.message.from_user.last_name,
                                      self.tovar_name, self.quantity, str(datetime.now().date())]])
-            update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value) - int(self.quantity)
+            update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value[0:-4]) - int(self.quantity)
             self.worksheet.update(f"E{self.cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
-            update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
-            self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
-            self.bot.send_message('1338281106', 'Заявка внесена в базу ✅\n'
-                                                'смотреть базу: https://docs.google.com/spreadsheets/d/'
-                                                '14P5j3t4Z9kmy4o87WEbLqeTwsKi7YZAx7RiQPlY2c1w/edit?usp=sharing')
+            #update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
+            #self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
+            self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
+                                            'смотреть базу: https://docs.google.com/spreadsheets/d/'
+                                            '14P5j3t4Z9kmy4o87WEbLqeTwsKi7YZAx7RiQPlY2c1w/edit?usp=sharing')
         except AttributeError:
-            self.bot.send_message('1338281106', 'Ошибка! Не удается добавить заказ в базу')
+            self.bot.send_message(admin_id, 'Ошибка! Не удается добавить заказ в базу')
 
 
 class tovar:  # класс хранения сообщения для рассылки

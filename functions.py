@@ -93,12 +93,16 @@ def zayavka_done(bot, message, article, tovar_name, quantity):
 
 
 class poisk_tovar_in_base:
-    def __init__(self, bot, message, article='0', tovar_name=None, quantity=None):
+    def __init__(self, bot, message, article='0', tovar_name=None, quantity=None, image=None, opisanie=None,
+                 price=None):
         self.bot = bot
         self.message = message
         self.article = article
         self.tovar_name = tovar_name
         self.quantity = quantity
+        self.image = image
+        self.opisanie = opisanie
+        self.price = price
         gc = gspread.service_account(
             filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
@@ -112,20 +116,9 @@ class poisk_tovar_in_base:
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:
-            if self.article == '10303,000':
-                file_open = open("red tape.png", 'rb')
-                opisanie = 'Описвание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM RD\nЦена: 500Р'
-            elif self.tovar_name == 'Красная лента (L)':
-                file_open = open("red tape.png", 'rb')
-                opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM RD\nЦена: 500Р'
-            elif self.tovar_name == 'Черная лента (L)':
-                file_open = open("black tape.png", 'rb')
-                opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM BD\nЦена: 500Р'
-            elif self.tovar_name == 'Черная лента (N SZ)':
-                file_open = open("black tape.png", 'rb')
-                opisanie = 'Описание: ЛЕНТА FLEXTAPE CCM 4,5MX38MM BD\nЦена: 500Р'
-            self.bot.send_photo(self.message.chat.id, file_open, opisanie)
-            self.bot.send_message(self.message.chat.id, f' В наличии: {self.worksheet.cell(self.cell.row, 5).value[0:-4]}\n')
+            self.bot.send_photo(self.message.chat.id, self.image, self.opisanie)
+            self.bot.send_message(self.message.chat.id, f'В наличии: {self.worksheet.cell(self.cell.row, 5).value[0:-4]}\n'
+                                                        f'{self.price}')
             if self.worksheet.cell(self.cell.row, 5).value[0:-4] == '0':
                 kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
                 but1 = types.KeyboardButton(text='Вернуться в начало')

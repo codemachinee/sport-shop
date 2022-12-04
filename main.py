@@ -59,17 +59,20 @@ def sent_message(message):    # базу старых клиентов
 @bot.message_handler(func=lambda m: m.text)  # перехватчик текстовых сообщений
 def chek_message_category(m):
     global file
-    if m.text == 'Категории товаров 🗂️' or m.text == "Вернуться в начало":
+    if m.text == 'Категории товаров 🗂️':
+        buttons(bot, m, file=file, key='general_menu', kategoriya='категорию',
+        image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+    elif m.text == "Вернуться в начало":
         buttons(bot, m, file=file, key='general_menu', kategoriya='категорию',
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
         buttons(bot, m).menu_buttons()
-    if m.text == 'Заказы 📋':
+    elif m.text == 'Заказы 📋':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
-    if m.text == 'Корзина 🗑️':
+    elif m.text == 'Корзина 🗑️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
-    if m.text == 'Вопросы-ответы ⁉️':
+    elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
-    if m.text == 'Контакты ☎️':
+    elif m.text == 'Контакты ☎️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
 
 
@@ -111,10 +114,11 @@ def check_callback(callback):
                 image='https://drive.google.com/file/d/19kwKVYj1lt4lMqLjeeWdLyPOgX0YnD9_/view?usp=share_link').marks_buttons()
     elif callback.data == 'Ворота':
         buttons(bot, callback.message, file=file['general_menu'], key='Ворота', kategoriya='товар',
-                image='https://drive.google.com/file/d/13C6xMvyCTyawCSoJzL44yIfmB0UpVqzm/view?usp=share_link').marks_buttons()
+                image='https://hockey-mag.ru/components/com_jshopping/files/img_products/'
+                      'hokkeynyy-vorota-bauer-deuxe-official-pro-net.jpg').marks_buttons()
     elif callback.data == 'Детские наборы':
         buttons(bot, callback.message, file=file['general_menu'], key='Детские наборы', kategoriya='товар',
-                image='https://drive.google.com/file/d/1UA2xpltfxbI0UM27onRjGrnkYYPrTVzw/view?usp=share_link').marks_buttons()
+                image='https://ccm.ru/upload/iblock/29d/jpca93kqrq8yvzs20vlaw187lgg39vvp/STARTER-KIT-YT-01.JPG').marks_buttons()
     elif callback.data == 'Кроссовки':
         buttons(bot, callback.message, file=file['general_menu'], key='Кроссовки', kategoriya='товар').marks_buttons()
     elif callback.data == 'Перчатки':
@@ -139,11 +143,16 @@ def check_callback(callback):
                 kategoriya='товар').marks_buttons()
     elif callback.data == 'Аксессуары для шлемов':
         buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для шлемов', kategoriya='товар').marks_buttons()
+
     elif callback.data == 'Ворота SH MINI STEEL 3x2 Bauer Street Brana':
         tovar_name = tovar(callback.data)
         article = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[0]
+        image = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[1]
+        opisanie = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[2]
+        price = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[3]
         bot.send_message(callback.message.chat.id, 'Секунду..')
-        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar).poisk_ostatok()
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
     elif callback.data == 'Красная лента (N SZ)':
         tovar_name = tovar(callback.data)
         bot.send_message(callback.message.chat.id, 'Секунду..')

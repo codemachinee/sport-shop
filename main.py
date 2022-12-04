@@ -142,29 +142,72 @@ def check_callback(callback):
         buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для коньков',
                 kategoriya='товар').marks_buttons()
     elif callback.data == 'Аксессуары для шлемов':
-        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для шлемов', kategoriya='товар').marks_buttons()
+        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для шлемов',
+                kategoriya='товар').marks_buttons()
+
+    elif callback.data == 'Нагрудники':
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Нагрудники',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'Налокотники':
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Налокотники',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'Трусы':
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Трусы',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'Щитки':
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Щитки',
+                kategoriya='товар').marks_buttons()
 
     elif callback.data == 'Ворота SH MINI STEEL 3x2 Bauer Street Brana':
         tovar_name = tovar(callback.data)
-        article = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[0]
-        image = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[1]
-        opisanie = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[2]
-        price = (file['general_menu']['Ворота']['Ворота SH MINI STEEL 3x2 Bauer Street Brana'])[3]
+        source = (file['general_menu']['Ворота'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
         bot.send_message(callback.message.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok()
-    elif callback.data == 'Красная лента (N SZ)':
+    elif callback.data == 'Перчатки для бенди муж. BG CCM 8K Sr Nv L':
         tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Бенди'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
         bot.send_message(callback.message.chat.id, 'Секунду..')
-        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
-    elif callback.data == 'Черная лента (L)':
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Детский набор STARTER KIT CCM YT L':
         tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Детские наборы'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
         bot.send_message(callback.message.chat.id, 'Секунду..')
-        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
-    elif callback.data == 'Черная лента (N SZ)':
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Детский набор STARTER KIT CCM YT M':
         tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Детские наборы'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
         bot.send_message(callback.message.chat.id, 'Секунду..')
-        poisk_tovar_in_base(bot, callback.message, tovar_name.tovar).poisk_ostatok()
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Экипировка детск. Entry Kit CCM YT XL':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Детские наборы'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
 
 
 #def drugoe(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота

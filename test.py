@@ -7,3 +7,14 @@ file = json.load(file)  # открытие файла
 
 file = str(file).find('general_menu')
 print(file)
+
+gc = gspread.service_account(
+            filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
+        # открытие таблицы по юрл адресу:
+sh = gc.open('CCM')
+worksheet = sh.worksheet('Лист3')
+worksheet1 = sh.worksheet('заявки')
+a = worksheet.get_all_values()
+print(a)
+with open('_dict.json', 'w') as file:
+    json.dump(a, file, indent=4, ensure_ascii=False)

@@ -157,6 +157,58 @@ def check_callback(callback):
     elif callback.data == 'Щитки':
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Щитки',
                 kategoriya='товар').marks_buttons()
+    elif callback.data == 'Назад в подкатегорию \'Защита\'':
+        buttons(bot, callback.message, file=file['general_menu'], key='Защита',
+                kategoriya='товар').marks_buttons()
+
+    elif callback.data == '350':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='350',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == '370':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='370',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == '9040':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9040',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == '9060':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9060',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == '9080':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9080',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == '9550':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9550',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'AS-580':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS-580',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'AS-V PRO':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS-V PRO',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'AS1':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS1',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'BAUER':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='BAUER',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'FT1':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='FT1',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'SP FT4':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT4',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'SP FT4 PRO':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT4 PRO',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'SP FT475':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT475',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'SP FT485':
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT485',
+                kategoriya='товар').marks_buttons()
+    elif callback.data == 'Назад в подкатегорию \'Нагрудники\'':
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Нагрудники',
+                kategoriya='товар').marks_buttons()
 
     elif callback.data == 'Ворота SH MINI STEEL 3x2 Bauer Street Brana':
         tovar_name = tovar(callback.data)
@@ -208,6 +260,407 @@ def check_callback(callback):
         bot.send_message(callback.message.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok()
+    elif callback.data == 'SP350 JS YT SHOULDER PADS CCM-0-S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['350'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP350 JS YT SHOULDER PADS CCM L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['350'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP350 JS SR SHOULDER PADS CCM L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['350'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Защита плеч детск. SPSPTK S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP370 JS SR SHOULDER PADS CCM M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['370'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP9040 YT CCM TACKS L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9040'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP9040 YT CCM TACKS M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9040'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP9040 YT CCM TACKS S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9040'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP9060 JR CCM TACKS L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9060'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP9060 JR CCM TACKS M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9060'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP9060 SR CCM TACKS L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9060'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP9080 SR CCM TACKS M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9080'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP9080 SR CCM TACKS S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9080'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник  дет. SP TACKS 9550 JR S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9550'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник  дет. SP TACKS 9550 YT Lт':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9550'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник  дет. SP TACKS 9550 YT M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9550'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник  дет. SP TACKS 9550 YT S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['9550'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP AS580 SR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['AS-580'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP AS-V PRO SR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['AS-V PRO'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP SUPERTACKS AS1 S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['AS1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SPAS1 JR CCM TACKS M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['AS1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SPAS1 YTH CCM TACKS M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['AS1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник подр. CH&A S18 S27 Bauer 18 JR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP PRODIGY TOP Bauer YTH L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP PRODIGY TOP Bauer YTH M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. BAUER SUPREME 150 yth M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. S17 SUPREME 1S YTH L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. S17 SUPREME S170 YTH S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['BAUER'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SPFT1 JS YT CCM M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['FT1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SPFT1 JS YT CCM S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['FT1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SPPJS PRO M FT1':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['FT1'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP JETSPEED FT4 SR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT4'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP JETSPEED FT4 PRO JR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT4 PRO'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP JETSPEED FT475 SR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT475'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP JETSPEED FT485 JR L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP JETSPEED FT485 JR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник дет. SP JETSPEED FT485 JR S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP JETSPEED FT485 SR L':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP JETSPEED FT485 SR M':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+    elif callback.data == 'Нагрудник муж. SP JETSPEED FT485 SR S':
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok()
+
 
 
 #def drugoe(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота

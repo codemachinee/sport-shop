@@ -8,7 +8,7 @@ from random import *
 import json
 
 ostatok = None
-admin_id = '1338281106'
+admin_id = '893646369'
 file = json.load(open('categories_dict.json', 'rb'))  # файл хранящий структуру категорий товаров
 
 
@@ -90,6 +90,23 @@ def zayavka_done(bot, message, article, tovar_name, quantity):
     except ValueError:
         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
         buttons(bot, message).zayavka_buttons()
+
+
+class BasketAndOrder:
+    def __init__(self, bot, message):
+        self.bot = bot
+        self.message = message
+        gc = gspread.service_account(
+            filename='pidor-of-the-day-af3dd140b860.json'
+        )
+        sh = gc.open('CCM')
+        self.worksheet = sh.worksheet('заявки')
+        self.cell_id = str(self.worksheet.find(self.message.chat.id, in_column=0))
+    #НЕ ПОЛУЧИЛОСЬ ОПИСАТЬ ЛОГИКУ РАБОТЫ ЭТОЙ ФУНКЦИИ ТАК, ЧТОБЫ ОНА ИЗ ТАБЛИЦЫ
+    #ДОСТАВАЛА ЗНАЧЕНИЕ НУЖНЫХ ЯЧЕЕК
+    def basket(self):
+        self.bot.send_message(self.message.chat.id, f'Заказано {self.worksheet.cell(self.cell_id.row, 5).value[0:-4]}'  
+                                                    f'в количестве {self.worksheet.cell(self.cell_id.row, 6).value[0:-4]}')
 
 
 class poisk_tovar_in_base:

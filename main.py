@@ -6,7 +6,7 @@ from telebot import types
 #from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
 import json
-from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file
+from functions import buttons, BasketAndOrder, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file
 from passwords import *
 article = None
 
@@ -69,7 +69,8 @@ def chek_message_category(m):
     elif m.text == 'Заказы 📋':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Корзина 🗑️':
-        bot.send_message(m.chat.id, 'фрагмент в разработке')
+        BasketAndOrder(bot, m).basket()
+        #bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Контакты ☎️':

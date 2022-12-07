@@ -6,11 +6,11 @@ from telebot import types
 #from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
 import json
-from functions import buttons, BasketAndOrder, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file
+from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file
 from passwords import *
 article = None
 
-token = code_mashine
+token = lemonade
 bot = telebot.TeleBot(token)
 
 tovar_name = None
@@ -69,7 +69,7 @@ def chek_message_category(m):
     elif m.text == 'Заказы 📋':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Корзина 🗑️':
-        BasketAndOrder(bot, m).basket()
+        poisk_tovar_in_base(bot, m).basket()
         #bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -92,123 +92,16 @@ def check_callback(callback):
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
-    elif callback.data == 'Коньки':
-        buttons(bot, callback.message, file=file['general_menu'], key='Коньки', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1FZc0LZQr5BzN_0ZUDgtPFmILhXlRtwE2/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Клюшки':
-        buttons(bot, callback.message, file=file['general_menu'], key='Клюшки', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1azEULeTNaBigbN5LXEBC3C4c-_PXFAHz/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Защита':
-        buttons(bot, callback.message, file=file['general_menu'], key='Защита', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Бенди':
-        buttons(bot, callback.message, file=file['general_menu'], key='Бенди', kategoriya='товар',
-                image='https://drive.google.com/file/d/1Q-mrh_MN2VzxNgfrD03XuhAMGzmwttp7/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Одежда':
-        buttons(bot, callback.message, file=file['general_menu'], key='Одежда', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/16IXw_RBWXsCv-aW6OsHEsbfi2ru4IRh3/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Игровая форма':
-        buttons(bot, callback.message, file=file['general_menu'], key='Игровая форма', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1hop7DZetV0qCjrWWU9xTLgBcoCLz9lUu/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Аксессуары':
-        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/19kwKVYj1lt4lMqLjeeWdLyPOgX0YnD9_/view?usp=share_link').marks_buttons()
-    elif callback.data == 'Ворота':
-        buttons(bot, callback.message, file=file['general_menu'], key='Ворота', kategoriya='товар',
-                image='https://hockey-mag.ru/components/com_jshopping/files/img_products/'
-                      'hokkeynyy-vorota-bauer-deuxe-official-pro-net.jpg').marks_buttons()
-    elif callback.data == 'Детские наборы':
-        buttons(bot, callback.message, file=file['general_menu'], key='Детские наборы', kategoriya='товар',
-                image='https://ccm.ru/upload/iblock/29d/jpca93kqrq8yvzs20vlaw187lgg39vvp/STARTER-KIT-YT-01.JPG').marks_buttons()
-    elif callback.data == 'Кроссовки':
-        buttons(bot, callback.message, file=file['general_menu'], key='Кроссовки', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Перчатки':
-        buttons(bot, callback.message, file=file['general_menu'], key='Перчатки', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Ролики':
-        buttons(bot, callback.message, file=file['general_menu'], key='Ролики', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Судейская форма':
-        buttons(bot, callback.message, file=file['general_menu'], key='Судейская форма', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Термобельё':
-        buttons(bot, callback.message, file=file['general_menu'], key='Термобельё', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Услуги':
-        buttons(bot, callback.message, file=file['general_menu'], key='Услуги', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Шапки/кепки':
-        buttons(bot, callback.message, file=file['general_menu'], key='Шапки/кепки', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Шлемы':
-        buttons(bot, callback.message, file=file['general_menu'], key='Шлемы', kategoriya='товар').marks_buttons()
-    elif callback.data == 'Аксессуары для клюшек':
-        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для клюшек',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Аксессуары для коньков':
-        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для коньков',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Аксессуары для шлемов':
-        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары для шлемов',
-                kategoriya='товар').marks_buttons()
 
-    elif callback.data == 'Нагрудники':
-        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Нагрудники',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Налокотники':
-        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Налокотники',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Трусы':
-        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Трусы',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Щитки':
-        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Щитки',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Назад в подкатегорию \'Защита\'':
-        buttons(bot, callback.message, file=file['general_menu'], key='Защита',
-                kategoriya='товар').marks_buttons()
+    elif callback.data in file['general_menu']:
+        buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
+              image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_link').marks_buttons()
+    elif callback.data in file['general_menu']['Защита']:
+        buttons(bot, callback.message, file=file['general_menu']['Защита'], key=callback.data,
+        kategoriya='товар').marks_buttons()
 
-    elif callback.data == '350':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='350',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == '370':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='370',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == '9040':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9040',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == '9060':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9060',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == '9080':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9080',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == '9550':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='9550',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'AS-580':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS-580',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'AS-V PRO':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS-V PRO',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'AS1':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='AS1',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'BAUER':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='BAUER',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'FT1':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='FT1',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'SP FT4':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT4',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'SP FT4 PRO':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT4 PRO',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'SP FT475':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT475',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'SP FT485':
-        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key='SP FT485',
-                kategoriya='товар').marks_buttons()
-    elif callback.data == 'Назад в подкатегорию \'Нагрудники\'':
-        buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Нагрудники',
+    elif callback.data in file['general_menu']['Защита']['Нагрудники']:
+        buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key=callback.data,
                 kategoriya='товар').marks_buttons()
 
     elif callback.data == 'Ворота SH MINI STEEL 3x2 Bauer Street Brana':

@@ -92,23 +92,6 @@ def zayavka_done(bot, message, article, tovar_name, quantity):
         buttons(bot, message).zayavka_buttons()
 
 
-class BasketAndOrder:
-    def __init__(self, bot, message):
-        self.bot = bot
-        self.message = message
-        gc = gspread.service_account(
-            filename='pidor-of-the-day-af3dd140b860.json'
-        )
-        sh = gc.open('CCM')
-        self.worksheet = sh.worksheet('заявки')
-        self.cell_id = str(self.worksheet.find(self.message.chat.id, in_column=0))
-    #НЕ ПОЛУЧИЛОСЬ ОПИСАТЬ ЛОГИКУ РАБОТЫ ЭТОЙ ФУНКЦИИ ТАК, ЧТОБЫ ОНА ИЗ ТАБЛИЦЫ
-    #ДОСТАВАЛА ЗНАЧЕНИЕ НУЖНЫХ ЯЧЕЕК
-    def basket(self):
-        self.bot.send_message(self.message.chat.id, f'Заказано {self.worksheet.cell(self.cell_id.row, 5).value[0:-4]}'  
-                                                    f'в количестве {self.worksheet.cell(self.cell_id.row, 6).value[0:-4]}')
-
-
 class poisk_tovar_in_base:
     def __init__(self, bot, message, article='0', tovar_name=None, quantity=None, image=None, opisanie=None,
                  price=None):
@@ -126,17 +109,17 @@ class poisk_tovar_in_base:
         sh = gc.open('CCM')
         self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
         self.worksheet2 = sh.worksheet('заявки')
-        self.cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
 
     def poisk_ostatok(self):
+        cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
         global file_open, opisanie, ostatok
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:
             self.bot.send_photo(self.message.chat.id, self.image, self.opisanie)
-            self.bot.send_message(self.message.chat.id, f'В наличии: {self.worksheet.cell(self.cell.row, 5).value[0:-4]}\n'
+            self.bot.send_message(self.message.chat.id, f'В наличии: {self.worksheet.cell(cell.row, 5).value[0:-4]}\n'
                                                         f'{self.price}')
-            if self.worksheet.cell(self.cell.row, 5).value[0:-4] == '0':
+            if self.worksheet.cell(cell.row, 5).value[0:-4] == '0':
                 kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
                 but1 = types.KeyboardButton(text='Вернуться в начало')
                 kb4.add(but1)
@@ -144,11 +127,12 @@ class poisk_tovar_in_base:
                                                             f'/help - справка по боту\n', reply_markup=kb4)
             else:
                 buttons(self.bot, self.message).zayavka_buttons()
-                ostatok = self.worksheet.cell(self.cell.row, 5).value[0:-4]
+                ostatok = self.worksheet.cell(cell.row, 5).value[0:-4]
         except AttributeError:
             self.bot.send_message(self.message.chat.id, 'Ошибка, товар отсутствует')
 
     def zayavka_v_baze(self):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
+        cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
         try:
             worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
             # запись клиента в свободную строку базы старых клиентов:
@@ -156,8 +140,8 @@ class poisk_tovar_in_base:
                                    [[self.message.chat.id, self.message.from_user.username,
                                      self.message.from_user.first_name, self.message.from_user.last_name,
                                      self.tovar_name, self.quantity, str(datetime.now().date())]])
-            update_ostatok = int(self.worksheet.cell(self.cell.row, 5).value[0:-4]) - int(self.quantity)
-            self.worksheet.update(f"E{self.cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
+            update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
+            self.worksheet.update(f"E{cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
             #update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
             #self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
             self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
@@ -165,6 +149,16 @@ class poisk_tovar_in_base:
                                             '14P5j3t4Z9kmy4o87WEbLqeTwsKi7YZAx7RiQPlY2c1w/edit?usp=sharing')
         except AttributeError:
             self.bot.send_message(admin_id, 'Ошибка! Не удается добавить заказ в базу')
+
+    def basket(self):
+        cell_id = self.worksheet2.findall(str(self.message.chat.id), in_column=0)
+        for i in cell_id:
+            try:
+                d[self.worksheet2.cell(i.row, 5).value] = int(d.get(self.worksheet2.cell(i.row, 5).value)) + int(self.worksheet2.cell(i.row, 6).value)
+            except TypeError:
+                d[self.worksheet2.cell(i.row, 5).value] = int(self.worksheet2.cell(i.row, 6).value)
+        self.bot.send_message(self.message.chat.id, f'{d.keys()}\n {d.values()}')
+        print(d.items())
 
 
 class tovar:  # класс хранения сообщения для рассылки

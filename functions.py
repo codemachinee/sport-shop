@@ -6,9 +6,10 @@ from datetime import *
 # библиотека рандома
 from random import *
 import json
+from passwords import*
 
 ostatok = None
-admin_id = '893646369'
+admin_id = igor
 file = json.load(open('categories_dict.json', 'rb'))  # файл хранящий структуру категорий товаров
 
 
@@ -51,13 +52,13 @@ class buttons:  # класс для создания клавиатур разл
         self.bot.send_photo(self.message.chat.id, photo=self.image)
         self.bot.send_message(self.message.chat.id, text=f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
 
-    def zayavka_buttons(self):
+    def zayavka_buttons(self, back_value='Вернуться в начало'):
         kb4 = types.InlineKeyboardMarkup(row_width=2)
         but1 = types.InlineKeyboardButton(text='Да, хочу!', callback_data='Да, хочу!')
-        but2 = types.InlineKeyboardButton(text='Вернуться в начало', callback_data='Вернуться в начало')
+        but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
         kb4.add(but1, but2)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
-                                                    f'(выбор количества далее) \n'
+                                                    # f'(выбор количества далее) \n' 
                                                     f'/help - справка по боту\n', reply_markup=kb4)
 
 
@@ -110,7 +111,7 @@ class poisk_tovar_in_base:
         self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
         self.worksheet2 = sh.worksheet('заявки')
 
-    def poisk_ostatok(self):
+    def poisk_ostatok(self, back_value='Вернуться в начало'):
         cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
         global file_open, opisanie, ostatok
         try:
@@ -126,7 +127,7 @@ class poisk_tovar_in_base:
                 self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
                                                             f'/help - справка по боту\n', reply_markup=kb4)
             else:
-                buttons(self.bot, self.message).zayavka_buttons()
+                buttons(self.bot, self.message).zayavka_buttons(back_value=back_value)
                 ostatok = self.worksheet.cell(cell.row, 5).value[0:-4]
         except AttributeError:
             self.bot.send_message(self.message.chat.id, 'Ошибка, товар отсутствует')

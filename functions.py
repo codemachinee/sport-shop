@@ -134,32 +134,44 @@ class poisk_tovar_in_base:
 
     def zayavka_v_baze(self):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
         cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
+        cell_2 = self.worksheet2.findall(self.tovar_name, in_column=5)
+        cell_id = self.worksheet2.findall(self.message.chat.id, in_column=1)
         try:
+            for i, n in cell_2, cell_id:
+                if self.worksheet2.cell(i.row, 8).value == 'FALSE' and i.row == n.row:
+                    self.worksheet2.update(f'A{i.row}', [[int(self.worksheet2.cell(i.row, 6)) + int(self.quantity)]])
+                    update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
+                    self.worksheet.update(f"E{cell.row}", [[update_ostatok]])
+                    self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
+                                                                    'смотреть базу: https://docs.google.com/spreadsheets/d/'
+                                                                    '14P5j3t4Z9kmy4o87WEbLqeTwsKi7YZAx7RiQPlY2c1w/edit?usp=sharing')
+        except AttributeError:
             worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
             # запись клиента в свободную строку базы старых клиентов:
-            self.worksheet2.update(f'A{worksheet_len2}:G{worksheet_len2}',
+            self.worksheet2.update(f'A{worksheet_len2}:H{worksheet_len2}',
                                    [[self.message.chat.id, self.message.from_user.username,
                                      self.message.from_user.first_name, self.message.from_user.last_name,
-                                     self.tovar_name, self.quantity, str(datetime.now().date())]])
+                                     self.tovar_name, self.quantity, str(datetime.now().date()), 'FALSE']])
             update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
             self.worksheet.update(f"E{cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
-            #update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
-            #self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
+            # update_zakaz = int(self.worksheet.cell(self.cell.row, 4).value) + int(self.quantity)
+            # self.worksheet.update(f"D{self.cell.row}", [[update_zakaz]])  # удаление клиента из базы потенциальных
             self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
                                             'смотреть базу: https://docs.google.com/spreadsheets/d/'
                                             '14P5j3t4Z9kmy4o87WEbLqeTwsKi7YZAx7RiQPlY2c1w/edit?usp=sharing')
-        except AttributeError:
-            self.bot.send_message(admin_id, 'Ошибка! Не удается добавить заказ в базу')
 
     def basket(self):
-        cell_id = self.worksheet2.findall(str(self.message.chat.id), in_column=0)
-        for i in cell_id:
-            try:
-                d[self.worksheet2.cell(i.row, 5).value] = int(d.get(self.worksheet2.cell(i.row, 5).value)) + int(self.worksheet2.cell(i.row, 6).value)
-            except TypeError:
-                d[self.worksheet2.cell(i.row, 5).value] = int(self.worksheet2.cell(i.row, 6).value)
-        self.bot.send_message(self.message.chat.id, f'{d.keys()}\n {d.values()}')
-        print(d.items())
+        cell_id = self.worksheet2.findall(str(self.message.chat.id), in_column=1)
+        cell_ = self.worksheet2.findall('FALSE', in_column=8)
+        print(cell_)
+        print(cell_id)
+        cell = list(set(cell_) & set(cell_id))
+        for i in cell:
+            print(self.worksheet2.cell(i.row, 5).value) #= int(d.get(self.worksheet2.cell(i.row, 5).value)) + int(self.worksheet2.cell(i.row, 6).value)
+          #  except TypeError:
+                #d[self.worksheet2.cell(i.row, 5).value] = int(self.worksheet2.cell(i.row, 6).value)
+        #self.bot.send_message(self.message.chat.id, f'{d.keys()}\n {d.values()}')
+        #print(d.items())
 
 
 class tovar:  # класс хранения сообщения для рассылки

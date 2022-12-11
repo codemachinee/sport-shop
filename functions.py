@@ -194,11 +194,8 @@ class poisk_tovar_in_base:
         self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
                                         f'Клиент отменил заявку:\n'
                                         f'id чата: {self.message.chat.id}\n'
-                                        f'Имя: {self.message.from_user.first_name}\n'
-                                        f'Фамилия: {self.message.from_user.last_name}\n'
-                                        f'Ссылка: @{self.message.from_user.username}\n'
-                                        
-                                        f'данные удаленны из корзины')
+                                        f'/sent_message - отправить сообщение клиенту от имени бота\n'
+                                        f'/help - cправка по боту')
 
 
 class tovar:  # класс хранения сообщения для рассылки

@@ -69,7 +69,7 @@ def chek_message_category(m):
     elif m.text == 'Заказы 📋':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Корзина 🗑️':
-        poisk_tovar_in_base(bot, m).basket()
+        poisk_tovar_in_base(bot, m).basket_search()
         #bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -232,16 +232,6 @@ def check_callback(callback):
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['FT1']:
         tovar_name = tovar(callback.data)
         source = (file['general_menu']['Защита']['Нагрудники']['FT1'][callback.data])
-        article = source[0]
-        image = source[1]
-        opisanie = source[2]
-        price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
-        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
-                            price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
-    elif callback.data in file['general_menu']['Защита']['Нагрудники']['SP FT485']:
-        tovar_name = tovar(callback.data)
-        source = (file['general_menu']['Защита']['Нагрудники']['SP FT485'][callback.data])
         article = source[0]
         image = source[1]
         opisanie = source[2]

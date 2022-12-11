@@ -70,7 +70,6 @@ def chek_message_category(m):
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Корзина 🗑️':
         poisk_tovar_in_base(bot, m).basket_search()
-        #bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Контакты ☎️':
@@ -84,6 +83,8 @@ def check_callback(callback):
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
+    elif int(callback.data) > 1:
+        poisk_tovar_in_base(bot, callback.message).basket_delete(callback.data)
     elif callback.data == "Вернуться в начало":
         buttons(bot, callback.message, file=file, key='general_menu', kategoriya='категорию',
                 image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()

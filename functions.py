@@ -6,7 +6,7 @@ from datetime import *
 # библиотека рандома
 from random import *
 import json
-from passwords import*
+from passwords import *
 
 ostatok = None
 admin_id = igor
@@ -14,7 +14,7 @@ file = json.load(open('categories_dict.json', 'rb'))  # файл хранящи�
 
 
 class buttons:  # класс для создания клавиатур различных категорий товаров
-    global file
+    global file, tovar_row
 
     def __init__(self, bot, message, file=file, key='general_menu', kategoriya=None,
                  image='https://drive.google.com/file/d/1nG0RvJ9L6Ez_O9SOjllhFn2OvszB92TE/view?usp=share_link'):
@@ -43,7 +43,7 @@ class buttons:  # класс для создания клавиатур разл
             keys[f'but{self.file.index(i)}'] = types.InlineKeyboardButton(text=i, callback_data=i)
             if self.file.index(i) > 0 and self.file.index(i) % 2 != 0:
                 if len(i) <= 16 and len(self.file[self.file.index(i) - 1]) <= 16:
-                    kb1.add(keys[f'but{self.file.index(i) - 1}'], keys[f'but{self.file.index(i)}'])#, row_width=1)
+                    kb1.add(keys[f'but{self.file.index(i) - 1}'], keys[f'but{self.file.index(i)}'])  # , row_width=1)
                 else:
                     kb1.add(keys[f'but{self.file.index(i) - 1}'])
                     kb1.add(keys[f'but{self.file.index(i)}'])
@@ -58,17 +58,16 @@ class buttons:  # класс для создания клавиатур разл
         but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
         kb4.add(but1, but2)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
-                                                    # f'(выбор количества далее) \n' 
+        # f'(выбор количества далее) \n' 
                                                     f'/help - справка по боту\n', reply_markup=kb4)
 
     def basket_buttons(self, name=None, r=None):
+        keys = {}
         kb4 = types.InlineKeyboardMarkup(row_width=2)
-        for i in name:
-            kb4.add(types.InlineKeyboardButton(text=i, callback_data=poisk_tovar_in_base(self.bot, self.message).
-                                               basket_delete(row=r[name.index(i)])))
-        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
-        # f'(выбор количества далее) \n' 
-                                                    f'/help - справка по боту\n', reply_markup=kb4)
+        for i in r:
+            keys[f'but{r.index(i)}'] = types.InlineKeyboardButton(text=name[r.index(i)], callback_data=i)
+            kb4.add(keys[f'but{r.index(i)}'])
+        self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
 
 
 def zayavka_done(bot, message, article, tovar_name, quantity):
@@ -142,12 +141,14 @@ class poisk_tovar_in_base:
             self.bot.send_message(self.message.chat.id, 'Ошибка, товар отсутствует')
 
     def zayavka_v_baze(self):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
-        cell = self.worksheet.find(self.article, in_column=0) # поиск ячейки с данными по ключевому слову
+        cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         try:
             for i in cell_id:
-                if self.worksheet2.cell(i.row, 8).value == 'FALSE' and self.worksheet2.cell(i.row, 5).value == self.tovar_name:
-                    self.worksheet2.update(f'F{i.row}', [[int(self.worksheet2.cell(i.row, 6).value) + int(self.quantity)]])
+                if self.worksheet2.cell(i.row, 8).value == 'FALSE' and self.worksheet2.cell(i.row,
+                                                                                            5).value == self.tovar_name:
+                    self.worksheet2.update(f'F{i.row}',
+                                           [[int(self.worksheet2.cell(i.row, 6).value) + int(self.quantity)]])
                     update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
                     self.worksheet.update(f"E{cell.row}", [[update_ostatok]])
                     self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
@@ -173,28 +174,31 @@ class poisk_tovar_in_base:
         name = []
         r = []
         self.bot.send_message(self.message.chat.id, "Собираем данные..")
-        cell_id = self.worksheet2.findall(str(self.message.chat.id), in_column=1)
-        print(cell_id[0].row)
+        cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         for i in cell_id:
             if self.worksheet2.cell(i.row, 8).value == 'FALSE':
                 name.append(f'\n{self.worksheet2.cell(i.row, 5).value} - {self.worksheet2.cell(i.row, 6).value} шт.')
                 r.append(i.row)
 
-        name = ' '.join(name)
-        self.bot.send_message(self.message.chat.id, f'На данный момент в обработке следующие заявки:\n'
-                                                    f'{name}')
-        buttons(self.bot, self.message).basket_buttons(name, r)
+        name_ = ' '.join(name)
+        if len(name) != 0:
+            self.bot.send_message(self.message.chat.id, f'На данный момент в обработке следующие заявки:\n'
+                                                        f'{name_}')
+            buttons(self.bot, self.message).basket_buttons(name, r)
+        else:
+            self.bot.send_message(self.message.chat.id, f'Товары отсутствуют')
 
     def basket_delete(self, row):
         self.worksheet2.batch_clear([f"A{row}:G{row}"])
-        self.bot.send_message(self.message.chat.id, 'данные удаленны из корзины')
+        self.bot.send_message(self.message.chat.id, 'Товар успешно удаленн из корзины')
         self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                           f'Клиент отменил заявку:\n'
-                                           f'id чата: {self.message.chat.id}\n'
-                                           f'Имя: {self.message.from_user.first_name}\n'
-                                           f'Фамилия: {self.message.from_user.last_name}\n'
-                                           f'Ссылка: @{self.message.from_user.username}\n'
-                                           f'данные удаленны из корзины')
+                                        f'Клиент отменил заявку:\n'
+                                        f'id чата: {self.message.chat.id}\n'
+                                        f'Имя: {self.message.from_user.first_name}\n'
+                                        f'Фамилия: {self.message.from_user.last_name}\n'
+                                        f'Ссылка: @{self.message.from_user.username}\n'
+                                        
+                                        f'данные удаленны из корзины')
 
 
 class tovar:  # класс хранения сообщения для рассылки

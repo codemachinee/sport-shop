@@ -67,8 +67,10 @@ def chek_message_category(m):
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
         buttons(bot, m).menu_buttons()
     elif m.text == 'Заказы 📋':
-        bot.send_message(m.chat.id, 'фрагмент в разработке')
+        bot.send_message(m.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
+        bot.send_message(m.chat.id, f'Секунду..')
         poisk_tovar_in_base(bot, m).basket_search()
     elif m.text == 'Вопросы-ответы ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -83,41 +85,45 @@ def check_callback(callback):
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
-    elif int(callback.data) > 1:
-        poisk_tovar_in_base(bot, callback.message).basket_delete(callback.data)
+    elif callback.data[:10] == 'delete_row':
+        bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
+        poisk_tovar_in_base(bot, callback.message).basket_delete(callback.data[10:])
     elif callback.data == "Вернуться в начало":
         buttons(bot, callback.message, file=file, key='general_menu', kategoriya='категорию',
                 image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
     elif callback.data == "Назад в категорию 'Защита'":
         buttons(bot, callback.message, file=file['general_menu'], key='Защита', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://drive.google.com/file/d/1nG0RvJ9L6Ez_O9SOjllhFn2OvszB92TE/view?usp=share_link').marks_buttons()
     elif callback.data == "Назад в категорию 'Детские наборы'":
         buttons(bot, callback.message, file=file['general_menu'], key='Детские наборы', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://ccm.ru/upload/iblock/c87/cs1395t51nkhc535xwgsnt7xz54upeoi/STARTER-KIT-YT-2.jpg').marks_buttons()
     elif callback.data == "Назад в подкатегорию 'Нагрудники'":
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Нагрудники', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_link').marks_buttons()
     elif callback.data == "Назад в подкатегорию 'Налокотники'":
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Налокотники', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://ccm.ru/upload/iblock/917/o7zoblszps82kks580grj9qaijern4gm/EP-AS580-01.jpg').marks_buttons()
     elif callback.data == "Назад в подкатегорию 'Трусы'":
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Трусы', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://ccm.ru/upload/iblock/dcc/hp230.jpg').marks_buttons()
     elif callback.data == "Назад в подкатегорию 'Щитки'":
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Щитки', kategoriya='подкатегорию',
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                image='https://ccm.ru/upload/iblock/4af/5e58qkwxwmbr0rqy6eizqxcnstq4dd0b/SG-AS580-JR-01.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']:
         buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
-              image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_link').marks_buttons()
+              image='https://drive.google.com/file/d/1nG0RvJ9L6Ez_O9SOjllhFn2OvszB92TE/view?usp=share_'
+                    'link').marks_buttons()
     elif callback.data in file['general_menu']['Защита']:
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key=callback.data,
-        kategoriya='товар').marks_buttons()
+        kategoriya='товар', image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_'
+                                  'link').marks_buttons()
 
     elif callback.data in file['general_menu']['Защита']['Нагрудники']:
         try:
             buttons(bot, callback.message, file=file['general_menu']['Защита']['Нагрудники'], key=callback.data,
-                    kategoriya='товар').marks_buttons()
+                    kategoriya='товар', image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?'
+                                              'usp=share_link').marks_buttons()
         except AttributeError:
             tovar_name = tovar(callback.data)
             source = (file['general_menu']['Защита']['Нагрудники'][callback.data])

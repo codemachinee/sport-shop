@@ -12,4 +12,8 @@ b = tovar(4)
 for i in r:
     rows.append(i)
 a = tovar(rows)
-print(b.tovar)
+
+i = 543
+s = f'delete_row{i}'
+print(s[:10])
+print(s[10:])

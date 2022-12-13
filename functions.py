@@ -57,15 +57,14 @@ class buttons:  # класс для создания клавиатур разл
         but1 = types.InlineKeyboardButton(text='Да, хочу!', callback_data='Да, хочу!')
         but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
         kb4.add(but1, but2)
-        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар? '
-        # f'(выбор количества далее) \n' 
-                                                    f'/help - справка по боту\n', reply_markup=kb4)
+        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар?\n '
+                                                    f'/help - справка по боту', reply_markup=kb4)
 
     def basket_buttons(self, name=None, r=None):
         keys = {}
-        kb4 = types.InlineKeyboardMarkup(row_width=2)
+        kb4 = types.InlineKeyboardMarkup()
         for i in r:
-            keys[f'but{r.index(i)}'] = types.InlineKeyboardButton(text=name[r.index(i)], callback_data=i)
+            keys[f'but{r.index(i)}'] = types.InlineKeyboardButton(text=name[r.index(i)], callback_data=f'delete_row{i}')
             kb4.add(keys[f'but{r.index(i)}'])
         self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
 
@@ -145,8 +144,8 @@ class poisk_tovar_in_base:
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         try:
             for i in cell_id:
-                if self.worksheet2.cell(i.row, 8).value == 'FALSE' and self.worksheet2.cell(i.row,
-                                                                                            5).value == self.tovar_name:
+                if self.worksheet2.cell(i.row, 9).value == 'FALSE' and self.worksheet2.cell(i.row,
+                                                                                            8).value == self.article:
                     self.worksheet2.update(f'F{i.row}',
                                            [[int(self.worksheet2.cell(i.row, 6).value) + int(self.quantity)]])
                     update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
@@ -158,10 +157,10 @@ class poisk_tovar_in_base:
             else:
                 worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
                 # запись клиента в свободную строку базы старых клиентов:
-                self.worksheet2.update(f'A{worksheet_len2}:H{worksheet_len2}',
+                self.worksheet2.update(f'A{worksheet_len2}:I{worksheet_len2}',
                                        [[self.message.chat.id, self.message.from_user.username,
                                          self.message.from_user.first_name, self.message.from_user.last_name,
-                                         self.tovar_name, self.quantity, str(datetime.now().date()), False]])
+                                         self.tovar_name, self.quantity, str(datetime.now().date()), self.article, False]])
                 update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
                 self.worksheet.update(f"E{cell.row}", [[update_ostatok]])  # удаление клиента из базы потенциальных
                 self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
@@ -176,8 +175,8 @@ class poisk_tovar_in_base:
         self.bot.send_message(self.message.chat.id, "Собираем данные..")
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         for i in cell_id:
-            if self.worksheet2.cell(i.row, 8).value == 'FALSE':
-                name.append(f'\n{self.worksheet2.cell(i.row, 5).value} - {self.worksheet2.cell(i.row, 6).value} шт.')
+            if self.worksheet2.cell(i.row, 9).value == 'FALSE':
+                name.append(f'\n{self.worksheet2.cell(i.row, 5).value} - {self.worksheet2.cell(i.row, 6).value} шт.\n')
                 r.append(i.row)
 
         name_ = ' '.join(name)
@@ -189,13 +188,36 @@ class poisk_tovar_in_base:
             self.bot.send_message(self.message.chat.id, f'Товары отсутствуют')
 
     def basket_delete(self, row):
-        self.worksheet2.batch_clear([f"A{row}:G{row}"])
-        self.bot.send_message(self.message.chat.id, 'Товар успешно удаленн из корзины')
-        self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                        f'Клиент отменил заявку:\n'
-                                        f'id чата: {self.message.chat.id}\n'
-                                        f'/sent_message - отправить сообщение клиенту от имени бота\n'
-                                        f'/help - cправка по боту')
+        try:
+            cell = self.worksheet.find(self.worksheet2.cell(row, 8).value, in_column=0)
+            update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) + int(self.worksheet2.cell(row, 6).value)
+            self.worksheet.update(f"E{cell.row}", [[update_ostatok]])
+            self.worksheet2.batch_clear([f"A{row}:H{row}"])
+            self.bot.send_message(self.message.chat.id, 'Товар успешно удаленн из корзины')
+            self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                            f'Клиент отменил заявку:\n'
+                                            f'id чата: {self.message.chat.id}\n'
+                                            f'/sent_message - отправить сообщение клиенту от имени бота\n'
+                                            f'/help - cправка по боту')
+        except AttributeError:
+            self.bot.send_message(self.message.chat.id, 'Товар уже был удален ранее. Перейдите в корзину снова, чтобы '
+                                                        'обновить данные')
+
+    def zakazy_search(self):
+        name = []
+        r = []
+        self.bot.send_message(self.message.chat.id, "Собираем данные..")
+        cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))
+        for i in cell_id:
+            if self.worksheet2.cell(i.row, 9).value == 'TRUE':
+                name.append(f'\n({self.worksheet2.cell(i.row, 7).value}) {self.worksheet2.cell(i.row, 5).value} - '
+                            f'{self.worksheet2.cell(i.row, 6).value} шт.\n')
+        name = ' '.join(name)
+        if len(name) != 0:
+            self.bot.send_message(self.message.chat.id, f'Ваша история заказов:\n'
+                                                        f'{name}')
+        else:
+            self.bot.send_message(self.message.chat.id, f'Заказы отсутствуют')
 
 
 class tovar:  # класс хранения сообщения для рассылки

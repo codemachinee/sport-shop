@@ -28,7 +28,7 @@ class buttons:  # класс для создания клавиатур разл
     def menu_buttons(self):
         kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
         but1 = types.KeyboardButton(text='Категории товаров 🗂️')
-        but2 = types.KeyboardButton(text='Заказы 📋')
+        but2 = types.KeyboardButton(text='История заказов 📋')
         but3 = types.KeyboardButton(text='Корзина 🗑️')
         but4 = types.KeyboardButton(text='Вопросы-ответы ⁉️')
         but5 = types.KeyboardButton(text='Контакты ☎️')

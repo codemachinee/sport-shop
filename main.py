@@ -66,7 +66,7 @@ def chek_message_category(m):
         buttons(bot, m, file=file, key='general_menu', kategoriya='категорию',
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
         buttons(bot, m).menu_buttons()
-    elif m.text == 'Заказы 📋':
+    elif m.text == 'История заказов 📋':
         bot.send_message(m.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':

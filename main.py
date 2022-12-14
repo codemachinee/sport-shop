@@ -81,7 +81,7 @@ def chek_message_category(m):
 @bot.callback_query_handler(func=lambda callback: callback.data)
 def check_callback(callback):
     global tovar_name, quantity, file, article
-    if callback.data == 'Да, хочу!':
+    if callback.data == 'Да, хочу!' or callback.data == 'Онлайн оплата':
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
@@ -109,6 +109,9 @@ def check_callback(callback):
     elif callback.data == "Назад в подкатегорию 'Щитки'":
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key='Щитки', kategoriya='подкатегорию',
                 image='https://ccm.ru/upload/iblock/4af/5e58qkwxwmbr0rqy6eizqxcnstq4dd0b/SG-AS580-JR-01.jpg').marks_buttons()
+    elif callback.data == "Назад в категорию 'Аксессуары'":
+        buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары', kategoriya='подкатегорию',
+                image='https://ccm.ru/upload/iblock/4af/5e58qkwxwmbr0rqy6eizqxcnstq4dd0b/SG-AS580-JR-01.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']:
         buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
@@ -118,6 +121,21 @@ def check_callback(callback):
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key=callback.data,
         kategoriya='товар', image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_'
                                   'link').marks_buttons()
+    elif callback.data in file['general_menu']['Аксессуары']:
+        try:
+            buttons(bot, callback.message, file=file['general_menu']['Аксессуары'], key=callback.data,
+                    kategoriya='товар', image='https://drive.google.com/file/d/19kwKVYj1lt4lMqLjeeWdLyPOgX0YnD9_/view?'
+                                              'usp=share_link').marks_buttons()
+        except AttributeError:
+            tovar_name = tovar(callback.data)
+            source = (file['general_menu']['Аксессуары'][callback.data])
+            article = source[0]
+            image = source[1]
+            opisanie = source[2]
+            price = source[3]
+            bot.send_message(callback.message.chat.id, 'Секунду..')
+            poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                                price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
 
     elif callback.data in file['general_menu']['Защита']['Нагрудники']:
         try:

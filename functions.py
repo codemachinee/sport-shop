@@ -53,11 +53,12 @@ class buttons:  # класс для создания клавиатур разл
         self.bot.send_message(self.message.chat.id, text=f'Пожалуйста выберите {self.kategoriya}', reply_markup=kb1)
 
     def zayavka_buttons(self, back_value='Вернуться в начало'):
-        kb4 = types.InlineKeyboardMarkup(row_width=2)
-        but1 = types.InlineKeyboardButton(text='Да, хочу!', callback_data='Да, хочу!')
-        but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
-        kb4.add(but1, but2)
-        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку на выбранный товар?\n '
+        kb4 = types.InlineKeyboardMarkup(row_width=1)
+        but1 = types.InlineKeyboardButton(text='Оформить заявку!', callback_data='Да, хочу!')
+        but2 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!', callback_data='Онлайн оплата')
+        but3 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
+        kb4.add(but1, but2, but3)
+        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку/купить онлайн выбранный товар?\n '
                                                     f'/help - справка по боту', reply_markup=kb4)
 
     def basket_buttons(self, name=None, r=None):
@@ -67,6 +68,18 @@ class buttons:  # класс для создания клавиатур разл
             keys[f'but{r.index(i)}'] = types.InlineKeyboardButton(text=name[r.index(i)], callback_data=f'delete_row{i}')
             kb4.add(keys[f'but{r.index(i)}'])
         self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
+
+    def oplata_buttons(self, back_value='Вернуться в начало'):
+        kb5 = types.InlineKeyboardMarkup(row_width=2)
+        but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!', url='https://yoomoney.ru/quickpay/confirm.xml?'
+                                                                             'receiver=4100116460956966&quickpay-form='
+                                                                             'shop&targets=payment&paymentType=SB&sum='
+                                                                             '150&label=15')
+        but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
+        kb5.add(but1, but2)
+        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку/купить онлайн выбранный товар?(Выбор '
+                                                    f'количества далее)\n '
+                                                    f'/help - справка по боту', reply_markup=kb5)
 
 
 def zayavka_done(bot, message, article, tovar_name, quantity):

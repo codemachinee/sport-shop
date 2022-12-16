@@ -78,10 +78,17 @@ class buttons:  # класс для создания клавиатур разл
         but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
         but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
         kb5.add(but1, but2, but3, but4)
-        self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
-                                                    f'менеджер для уточнения деталей. (Выбор '
-                                                    f'количества далее)\n '
-                                                    f'/help - справка по боту', reply_markup=kb5)
+        try:
+            self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+                                                        f'менеджер для уточнения деталей. (Выбор '
+                                                        f'количества далее)\n '
+                                                        f'/help - справка по боту', reply_markup=kb5)
+        except AttributeError:
+            self.bot.send_message(self.message.message.chat.id,
+                                  f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+                                  f'менеджер для уточнения деталей. (Выбор '
+                                  f'количества далее)\n '
+                                  f'/help - справка по боту', reply_markup=kb5)
 
 
 def zayavka_done(bot, message, quantity):
@@ -259,15 +266,26 @@ class platezhy:
         self.quantity = quantity
 
     def url_generation(self):
-        quickpay = Quickpay(
-            receiver="4100116460956966",
-            quickpay_form="shop",
-            targets="payment",
-            paymentType="SB",
-            sum=10,
-            label=self.message.chat.id
-        )
-        return quickpay.base_url
+        try:
+            quickpay = Quickpay(
+                receiver="4100116460956966",
+                quickpay_form="shop",
+                targets="payment",
+                paymentType="SB",
+                sum=10,
+                label=self.message.chat.id
+            )
+            return quickpay.base_url
+        except AttributeError:
+            quickpay = Quickpay(
+                receiver="4100116460956966",
+                quickpay_form="shop",
+                targets="payment",
+                paymentType="SB",
+                sum=10,
+                label=self.message.message.chat.id
+            )
+            return quickpay.base_url
 
     def chec_control(self):
         token = "4100116460956966.47E0EA43A8D91E10F709F2EB8566AF852B8A37BB682D92179C76F70872D7BCB47F1649F0F31CC6B2AB4" \
@@ -275,13 +293,13 @@ class platezhy:
                 "A82DF5851C66DC4A2522C1FBD01F16CDF5AADD56E55081CC2CD8A0360CC353103964BED59"
         client = Client(token)
         history = client.operation_history(label=self.message.message.chat.id)
-        try:
-            if str(history.operations[0].datetime).find(str(datetime.now().date())) != -1:
-                self.bot.send_message(self.message.message.chat.id,
+       # try:
+        if str(history.operations[0].datetime).find(str(datetime.now().date())) != -1:
+            self.bot.send_message(self.message.message.chat.id,
                                       f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
                                       'Спасибо, что выбрали нас.🤝\n'
                                       f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
-                self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+            self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
                                            f'Поступила ЗАЯВКА от:\n'
                                            f'id чата: {self.message.message.chat.id}\n'
                                            f'Имя: {self.message.from_user.first_name}\n'
@@ -290,11 +308,11 @@ class platezhy:
                                            f'Товар: {self.tovar_name}\n'
                                            f'Количество: {self.quantity}\n'
                                            f'Оплата: Оплачено')
-                poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
-            else:
-                self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден')
-                buttons(self.bot, self.message).oplata_buttons()
-        except Exception:
+            poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
+        else:
             self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден')
-            buttons(self.bot, self.message.message).oplata_buttons()
+            buttons(self.bot, self.message).oplata_buttons()
+        #except Exception:
+            #self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден-')
+            #buttons(self.bot, self.message.message).oplata_buttons()
 

@@ -137,8 +137,8 @@ def check_callback(callback):
                     'link').marks_buttons()
     elif callback.data in file['general_menu']['Защита']:
         buttons(bot, callback.message, file=file['general_menu']['Защита'], key=callback.data,
-        kategoriya='товар', image='https://drive.google.com/file/d/1UYHhznQxW19HywsxNgrKBFNO4BH5-TnH/view?usp=share_'
-                                  'link').marks_buttons()
+        kategoriya='товар', image='https://sportishka.com/uploads/posts/2021-12/1639710078_6-sportishka-com-p-'
+                                  'ekipirovka-khokkeista-sport-krasvivo-foto-6.jpg').marks_buttons()
     elif callback.data in file['general_menu']['Аксессуары']:
         try:
             buttons(bot, callback.message, file=file['general_menu']['Аксессуары'], key=callback.data,
@@ -170,6 +170,21 @@ def check_callback(callback):
             bot.send_message(callback.message.chat.id, 'Секунду..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
+    elif callback.data in file['general_menu']['Защита']['Налокотники']:
+        try:
+            buttons(bot, callback.message, file=file['general_menu']['Защита']['Налокотники'], key=callback.data,
+                    kategoriya='товар', image='https://ccm.ru/upload/iblock/9a5/f7nbtw8nw0oepiwvm08mn0sguimof09j/'
+                                              'EP-AS5-PRO-01.jpg').marks_buttons()
+        except AttributeError:
+            tovar_name = tovar(callback.data)
+            source = (file['general_menu']['Защита']['Налокотники'][callback.data])
+            article = source[0]
+            image = source[1]
+            opisanie = source[2]
+            price = source[3]
+            bot.send_message(callback.message.chat.id, 'Секунду..')
+            poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                                price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
 
     elif callback.data in file['general_menu']['Ворота']:
         tovar_name = tovar(callback.data)

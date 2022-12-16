@@ -6,7 +6,8 @@ from telebot import types
 #from apscheduler.schedulers.background import BackgroundScheduler
 # импорт из файла functions
 import json
-from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file
+from functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file, \
+    platezhy
 from passwords import *
 article = None
 
@@ -81,13 +82,30 @@ def chek_message_category(m):
 @bot.callback_query_handler(func=lambda callback: callback.data)
 def check_callback(callback):
     global tovar_name, quantity, file, article
-    if callback.data == 'Да, хочу!' or callback.data == 'Онлайн оплата':
+    if callback.data == 'Да, хочу!':
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
+    elif callback.data == 'Не оплачено':
+        bot.send_message(callback.message.chat.id,
+                         f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+                         'Спасибо, что выбрали нас.🤝\n'
+                         f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
+        bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                   f'Поступила ЗАЯВКА от:\n'
+                                   f'id чата: {callback.message.chat.id}\n'
+                                   f'Имя: {callback.from_user.first_name}\n'
+                                   f'Фамилия: {callback.from_user.last_name}\n'
+                                   f'Ссылка: @{callback.from_user.username}\n'
+                                   f'Товар: {tovar_name.tovar}\n'
+                                   f'Количество: {quantity.quantity}\n'
+                                   f'Оплата: Не оплачено')
+        poisk_tovar_in_base(bot, callback, article, tovar_name.tovar, quantity.quantity).zayavka_v_baze()
+    elif callback.data == 'Оплачено':
+        platezhy(bot, callback, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity).chec_control()
     elif callback.data[:10] == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
-        poisk_tovar_in_base(bot, callback.message).basket_delete(callback.data[10:])
+        poisk_tovar_in_base(bot, callback).basket_delete(callback.data[10:])
     elif callback.data == "Вернуться в начало":
         buttons(bot, callback.message, file=file, key='general_menu', kategoriya='категорию',
                 image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
@@ -292,7 +310,7 @@ def check_callback(callback):
 def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
     global quantity, article
     quantity = Quantity(message.text)
-    zayavka_done(bot=bot, message=message, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity)
+    zayavka_done(bot=bot, message=message, quantity=quantity.quantity)
 
 
 def sent_message_perehvat_1(message):

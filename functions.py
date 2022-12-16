@@ -7,6 +7,8 @@ from datetime import *
 from random import *
 import json
 from passwords import *
+from yoomoney import Client, Quickpay
+
 
 ostatok = None
 admin_id = igor
@@ -55,9 +57,8 @@ class buttons:  # класс для создания клавиатур разл
     def zayavka_buttons(self, back_value='Вернуться в начало'):
         kb4 = types.InlineKeyboardMarkup(row_width=1)
         but1 = types.InlineKeyboardButton(text='Оформить заявку!', callback_data='Да, хочу!')
-        but2 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!', callback_data='Онлайн оплата')
         but3 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
-        kb4.add(but1, but2, but3)
+        kb4.add(but1, but3)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку/купить онлайн выбранный товар?\n '
                                                     f'/help - справка по боту', reply_markup=kb4)
 
@@ -70,38 +71,26 @@ class buttons:  # класс для создания клавиатур разл
         self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
 
     def oplata_buttons(self, back_value='Вернуться в начало'):
-        kb5 = types.InlineKeyboardMarkup(row_width=2)
-        but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!', url='https://yoomoney.ru/quickpay/confirm.xml?'
-                                                                             'receiver=4100116460956966&quickpay-form='
-                                                                             'shop&targets=payment&paymentType=SB&sum='
-                                                                             '150&label=15')
-        but2 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
-        kb5.add(but1, but2)
-        self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку/купить онлайн выбранный товар?(Выбор '
+        kb5 = types.InlineKeyboardMarkup(row_width=1)
+        but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
+                                          url=platezhy(self.bot, self.message).url_generation())
+        but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
+        but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
+        but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
+        kb5.add(but1, but2, but3, but4)
+        self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+                                                    f'менеджер для уточнения деталей. (Выбор '
                                                     f'количества далее)\n '
                                                     f'/help - справка по боту', reply_markup=kb5)
 
 
-def zayavka_done(bot, message, article, tovar_name, quantity):
+def zayavka_done(bot, message, quantity):
     global ostatok
     try:
         int(quantity)
 
         if int(quantity) <= int(ostatok) and int(quantity) != 0:
-
-            bot.send_message(message.chat.id,
-                             f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                             'Спасибо, что выбрали нас.🤝\n'
-                             f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
-            bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                       f'Поступила ЗАЯВКА от:\n'
-                                       f'id чата: {message.chat.id}\n'
-                                       f'Имя: {message.from_user.first_name}\n'
-                                       f'Фамилия: {message.from_user.last_name}\n'
-                                       f'Ссылка: @{message.from_user.username}\n'
-                                       f'Товар: {tovar_name}\n'
-                                       f'Количество: {quantity}')
-            poisk_tovar_in_base(bot, message, article, tovar_name, quantity).zayavka_v_baze()
+            buttons(bot, message).oplata_buttons()
         else:
             bot.send_message(message.chat.id,
                              f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
@@ -154,13 +143,14 @@ class poisk_tovar_in_base:
 
     def zayavka_v_baze(self):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
         cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
-        cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
+        cell_id = (self.worksheet2.findall(str(self.message.message.chat.id), in_column=1))[::-1]
         try:
             for i in cell_id:
                 if self.worksheet2.cell(i.row, 9).value == 'FALSE' and self.worksheet2.cell(i.row,
                                                                                             8).value == self.article:
-                    self.worksheet2.update(f'F{i.row}',
-                                           [[int(self.worksheet2.cell(i.row, 6).value) + int(self.quantity)]])
+                    self.worksheet2.update(f'F{i.row}:G{i.row}',
+                                           [[int(self.worksheet2.cell(i.row, 6).value) + int(self.quantity),
+                                             str(datetime.now().date())]])
                     update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
                     self.worksheet.update(f"E{cell.row}", [[update_ostatok]])
                     self.bot.send_message(admin_id, 'Заявка внесена в базу ✅\n'
@@ -171,7 +161,7 @@ class poisk_tovar_in_base:
                 worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
                 # запись клиента в свободную строку базы старых клиентов:
                 self.worksheet2.update(f'A{worksheet_len2}:I{worksheet_len2}',
-                                       [[self.message.chat.id, self.message.from_user.username,
+                                       [[self.message.message.chat.id, self.message.from_user.username,
                                          self.message.from_user.first_name, self.message.from_user.last_name,
                                          self.tovar_name, self.quantity, str(datetime.now().date()), self.article, False]])
                 update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) - int(self.quantity)
@@ -198,7 +188,7 @@ class poisk_tovar_in_base:
                                                         f'{name_}')
             buttons(self.bot, self.message).basket_buttons(name, r)
         else:
-            self.bot.send_message(self.message.chat.id, f'Товары отсутствуют')
+            self.bot.send_message(self.message.chat.id, f'Товары отсутствуют..Проверьте историю заказов.')
 
     def basket_delete(self, row):
         try:
@@ -206,14 +196,17 @@ class poisk_tovar_in_base:
             update_ostatok = int(self.worksheet.cell(cell.row, 5).value[0:-4]) + int(self.worksheet2.cell(row, 6).value)
             self.worksheet.update(f"E{cell.row}", [[update_ostatok]])
             self.worksheet2.batch_clear([f"A{row}:H{row}"])
-            self.bot.send_message(self.message.chat.id, 'Товар успешно удаленн из корзины')
+            self.bot.send_message(self.message.message.chat.id, 'Товар успешно удаленн из корзины')
             self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                            f'Клиент отменил заявку:\n'
-                                            f'id чата: {self.message.chat.id}\n'
+                                            f'Клиент отменил заявку\n'
+                                            f'id чата: {self.message.message.chat.id}\n'
+                                            f'Имя: {self.message.from_user.first_name}\n'
+                                            f'Фамилия: {self.message.from_user.last_name}\n'
+                                            f'Ссылка: @{self.message.from_user.username}\n'
                                             f'/sent_message - отправить сообщение клиенту от имени бота\n'
                                             f'/help - cправка по боту')
         except AttributeError:
-            self.bot.send_message(self.message.chat.id, 'Товар уже был удален ранее. Перейдите в корзину снова, чтобы '
+            self.bot.send_message(self.message.message.chat.id, 'Товар уже был удален ранее. Перейдите в корзину снова, чтобы '
                                                         'обновить данные')
 
     def zakazy_search(self):
@@ -255,3 +248,53 @@ class rasylka_message:  # класс хранения сообщения для 
 
     def _get_message_(self):
         return self.post
+
+
+class platezhy:
+    def __init__(self, bot, message, article=None, tovar_name=None, quantity=0):
+        self.bot = bot
+        self.message = message
+        self.article = article
+        self.tovar_name = tovar_name
+        self.quantity = quantity
+
+    def url_generation(self):
+        quickpay = Quickpay(
+            receiver="4100116460956966",
+            quickpay_form="shop",
+            targets="payment",
+            paymentType="SB",
+            sum=10,
+            label=self.message.chat.id
+        )
+        return quickpay.base_url
+
+    def chec_control(self):
+        token = "4100116460956966.47E0EA43A8D91E10F709F2EB8566AF852B8A37BB682D92179C76F70872D7BCB47F1649F0F31CC6B2AB4" \
+                "D4F33EFCB9FD6200045936DD3CDFE5E9E70B7CBA5AFF18056C02C1EAA8630938EDCFA04D8A11CA5AA70775A9CFD95CD82A1C" \
+                "A82DF5851C66DC4A2522C1FBD01F16CDF5AADD56E55081CC2CD8A0360CC353103964BED59"
+        client = Client(token)
+        history = client.operation_history(label=self.message.message.chat.id)
+        try:
+            if str(history.operations[0].datetime).find(str(datetime.now().date())) != -1:
+                self.bot.send_message(self.message.message.chat.id,
+                                      f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+                                      'Спасибо, что выбрали нас.🤝\n'
+                                      f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
+                self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+                                           f'Поступила ЗАЯВКА от:\n'
+                                           f'id чата: {self.message.message.chat.id}\n'
+                                           f'Имя: {self.message.from_user.first_name}\n'
+                                           f'Фамилия: {self.message.from_user.last_name}\n'
+                                           f'Ссылка: @{self.message.from_user.username}\n'
+                                           f'Товар: {self.tovar_name}\n'
+                                           f'Количество: {self.quantity}\n'
+                                           f'Оплата: Оплачено')
+                poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
+            else:
+                self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден')
+                buttons(self.bot, self.message).oplata_buttons()
+        except Exception:
+            self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден')
+            buttons(self.bot, self.message.message).oplata_buttons()
+

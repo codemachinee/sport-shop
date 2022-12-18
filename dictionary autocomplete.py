@@ -1,6 +1,19 @@
 import gspread
 import json
 
+print('Введите строку начала:')
+start_row = int(input())
+print('Введите строку конца:')
+end_row = int(input())
+print('Введите url картинки:')
+photo = str(input())
+print('Введите начало среза названия:')
+start_slice_of_name = int(input())
+print('Введите конец среза названия:')
+end_slice_of_name = int(input())
+print('Введите конец среза описания:')
+end_slice_of_description = int(input())
+
 with open('categories_dict.json', 'r') as file:  #открытие json файла и преобразование в словарь питона
     src = file.read()
     new_file = json.loads(src)
@@ -9,15 +22,15 @@ gc = gspread.service_account(filename='pidor-of-the-day-af3dd140b860.json')  # �
 sh = gc.open('CCM')
 worksheet = sh.worksheet('остатки')
 
-photo = 'https://cdn.shoplightspeed.com/shops/617630/files/23727444/ccm-epft1-js-yt-elbow-pads-v1-l.jpg'
 
-
-new_file['general_menu']['Защита']['Налокотники'].update({'(FT1) Налокотники':
-                                                         {"Назад в подкатегорию 'Налокотники'": []}})
-for i in range(486, 489):
-    new_file['general_menu']['Защита']['Налокотники']['(FT1) Налокотники'][str(worksheet.cell(i, 2).value[:-13])]\
-        = [worksheet.cell(i, 1).value, photo,
-           'Описание: ' + worksheet.cell(i, 2).value[:-6], 'Цена:']
+new_file['general_menu']['Защита']['Трусы'].update({'(9080) Трусы':
+                                                   {"Назад в подкатегорию 'Трусы'": []}})
+for i in range(start_row, end_row + 1):
+    new_file['general_menu']['Защита']['Трусы']['(9080) Трусы'][str(worksheet.cell(i, 2).
+                                                                               value[start_slice_of_name:
+                                                                                     (- end_slice_of_name)])] = \
+        [worksheet.cell(i, 1).value, photo, 'Описание: ' + worksheet.cell(i, 2).value[:(- end_slice_of_description)],
+         'Цена:']
 with open('categories_dict.json', 'w') as file:
     json.dump(new_file, file, indent=4, ensure_ascii=False)
 

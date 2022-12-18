@@ -70,10 +70,10 @@ class buttons:  # класс для создания клавиатур разл
             kb4.add(keys[f'but{r.index(i)}'])
         self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
 
-    def oplata_buttons(self, back_value='Вернуться в начало'):
+    def oplata_buttons(self, tovar_name, back_value='Вернуться в начало'):
         kb5 = types.InlineKeyboardMarkup(row_width=1)
         but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
-                                          url=platezhy(self.bot, self.message).url_generation())
+                                          url=platezhy(self.bot, self.message, tovar_name=tovar_name).url_generation())
         but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
         but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
         but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
@@ -91,13 +91,13 @@ class buttons:  # класс для создания клавиатур разл
                                   f'/help - справка по боту', reply_markup=kb5)
 
 
-def zayavka_done(bot, message, quantity):
+def zayavka_done(bot, message, quantity, tovar_name):
     global ostatok
     try:
         int(quantity)
 
         if int(quantity) <= int(ostatok) and int(quantity) != 0:
-            buttons(bot, message).oplata_buttons()
+            buttons(bot, message).oplata_buttons(tovar_name=tovar_name)
         else:
             bot.send_message(message.chat.id,
                              f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
@@ -293,8 +293,9 @@ class platezhy:
                 "A82DF5851C66DC4A2522C1FBD01F16CDF5AADD56E55081CC2CD8A0360CC353103964BED59"
         client = Client(token)
         history = client.operation_history(label=self.message.message.chat.id)
-       # try:
-        if str(history.operations[0].datetime).find(str(datetime.now().date())) != -1:
+        if (int(datetime.now().time().hour * 3600 + datetime.now().time().minute * 60 + datetime.now().time().second) -
+                int(history.operations[0].datetime.time().hour * 3600 + history.operations[0].datetime.minute * 60 +
+                    history.operations[0].datetime.time().second)) <= int(11400):
             self.bot.send_message(self.message.message.chat.id,
                                       f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
                                       'Спасибо, что выбрали нас.🤝\n'
@@ -306,12 +307,12 @@ class platezhy:
                                            f'Фамилия: {self.message.from_user.last_name}\n'
                                            f'Ссылка: @{self.message.from_user.username}\n'
                                            f'Товар: {self.tovar_name}\n'
-                                           f'Количество: {self.quantity}\n'
-                                           f'Оплата: Оплачено')
+                                           f'Количество: {self.quantity}\n')
             poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
         else:
-            self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден')
-            buttons(self.bot, self.message).oplata_buttons()
+            self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден. Если Вы оплатили товар, '
+                                                                'напишите в поддержку @hloapps')
+            buttons(self.bot, self.message).oplata_buttons(tovar_name=self.tovar_name)
         #except Exception:
             #self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден-')
             #buttons(self.bot, self.message.message).oplata_buttons()

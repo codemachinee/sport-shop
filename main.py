@@ -460,7 +460,7 @@ def check_callback(callback):
 def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
     global quantity, article
     quantity = Quantity(message.text)
-    zayavka_done(bot=bot, message=message, quantity=quantity.quantity, tovar_name=tovar_name.tovar)
+    zayavka_done(bot=bot, message=message, quantity=quantity.quantity, article=article)
 
 
 def sent_message_perehvat_1(message):

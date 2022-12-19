@@ -23,14 +23,21 @@ sh = gc.open('CCM')
 worksheet = sh.worksheet('остатки')
 
 
-new_file['general_menu']['Защита']['Трусы'].update({'(9080) Трусы':
+new_file['general_menu']['Защита']['Трусы'].update({'(BAUER) Трусы':
                                                    {"Назад в подкатегорию 'Трусы'": []}})
 for i in range(start_row, end_row + 1):
-    new_file['general_menu']['Защита']['Трусы']['(9080) Трусы'][str(worksheet.cell(i, 2).
+    new_file['general_menu']['Защита']['Трусы']['(BAUER) Трусы'][str(worksheet.cell(i, 2).
                                                                                value[start_slice_of_name:
                                                                                      (- end_slice_of_name)])] = \
         [worksheet.cell(i, 1).value, photo, 'Описание: ' + worksheet.cell(i, 2).value[:(- end_slice_of_description)],
          'Цена:']
+
+    #new_file['general_menu']['Защита']['Трусы'][str(worksheet.cell(i, 2).
+     #                                                                          value[start_slice_of_name:
+      #                                                                               (- end_slice_of_name)])] = \
+       # [worksheet.cell(i, 1).value, photo, 'Описание: ' + worksheet.cell(i, 2).value[:(- end_slice_of_description)],
+        # 'Цена:']
+
 with open('categories_dict.json', 'w') as file:
     json.dump(new_file, file, indent=4, ensure_ascii=False)
 

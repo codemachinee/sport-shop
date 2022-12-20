@@ -130,6 +130,9 @@ def check_callback(callback):
     elif callback.data == "Назад в категорию 'Аксессуары'":
         buttons(bot, callback.message, file=file['general_menu'], key='Аксессуары', kategoriya='подкатегорию',
                 image='https://ccm.ru/upload/iblock/4af/5e58qkwxwmbr0rqy6eizqxcnstq4dd0b/SG-AS580-JR-01.jpg').marks_buttons()
+    elif callback.data == "Назад в категорию 'Вратарская эки..'":
+        buttons(bot, callback.message, file=file['general_menu'], key='Вратарская экипировка', kategoriya='подкатегорию',
+                image='https://sportishka.com/uploads/posts/2022-11/thumbs/1667454848_31-sportishka-com-p-stoika-vratarya-v-khokkee-instagram-36.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']:
         buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
@@ -154,6 +157,21 @@ def check_callback(callback):
             bot.send_message(callback.message.chat.id, 'Секунду..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
+    elif callback.data in file['general_menu']['Вратарская экипировка']:
+        try:
+            buttons(bot, callback.message, file=file['general_menu']['Вратарская экипировка'], key=callback.data,
+                    kategoriya='товар', image='https://sportishka.com/uploads/posts/2022-11/thumbs/1667454848_31-sportishka-com-p-stoika-vratarya-v-khokkee-instagram-36.jpg?'
+                                              'usp=share_link').marks_buttons()
+        except AttributeError:
+            tovar_name = tovar(callback.data)
+            source = (file['general_menu']['Вратарская экипировка'][callback.data])
+            article = source[0]
+            image = source[1]
+            opisanie = source[2]
+            price = source[3]
+            bot.send_message(callback.message.chat.id, 'Секунду..')
+            poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                                price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
 
     elif callback.data in file['general_menu']['Защита']['Нагрудники']:
         try:
@@ -548,6 +566,78 @@ def check_callback(callback):
         bot.send_message(callback.message.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
+    elif callback.data in file['general_menu']['Защита']['Щитки']['(BAUER) Щитки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Щитки']['(BAUER) Щитки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
+    elif callback.data in file['general_menu']['Защита']['Щитки']['(SG 9040) Щитки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Щитки']['(SG 9040) Щитки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
+    elif callback.data in file['general_menu']['Защита']['Щитки']['(SG 9080) Щитки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Щитки']['(SG 9080) Щитки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
+    elif callback.data in file['general_menu']['Защита']['Щитки']['(SG FT485) Щитки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Защита']['Щитки']['(SG FT485) Щитки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
+
+    elif callback.data in file['general_menu']['Вратарская экипировка']['Вратарские блины']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Вратарская экипировка']['Вратарские блины'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
+    elif callback.data in file['general_menu']['Вратарская экипировка']['Вратарские панцыри-нагрудники']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Вратарская экипировка']['Вратарские панцыри-нагрудники'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
+    elif callback.data in file['general_menu']['Вратарская экипировка']['Вратарские шлемы']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Вратарская экипировка']['Вратарские шлемы'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
+
 #def drugoe(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
  #   global tovar_name
   #  tovar_name = tovar(message.text)   # модели присваивается название введенное клиентов в сообщении

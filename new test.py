@@ -1,8 +1,3 @@
-import pandas as pd
-from pandas import *
+list = [a,b,c,d,e,f,g]
 
-cols = [0]
-rows = [4]
-
-worksheet = pd.read_excel('CCM.xlsx', sheet_name='остатки', usecols=[0])
-print(f'{worksheet[589:590].values.item()},000')
+for i in range([list[0], list[2]], list[6]):

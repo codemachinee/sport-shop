@@ -123,9 +123,13 @@ class poisk_tovar_in_base:
         gc = gspread.service_account(
             filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
-        sh = gc.open('CCM')
-        self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
-        self.worksheet2 = sh.worksheet('заявки')
+        try:
+            sh = gc.open('CCM')
+            self.worksheet = sh.worksheet('остатки')  # выбор листа 'общая база клиентов' таблицы
+            self.worksheet2 = sh.worksheet('заявки')
+        except Exception:
+            self.bot.send_message(self.message.chat.id, 'Ошибка подключения. Повторите запрос через 1 минуту.')
+
 
     def poisk_ostatok(self, back_value='Вернуться в начало'):
         cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову

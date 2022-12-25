@@ -132,8 +132,11 @@ class poisk_tovar_in_base:
 
 
     def poisk_ostatok(self, back_value='Вернуться в начало'):
-        cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
         global file_open, opisanie, ostatok
+        try:
+            cell = self.worksheet.find(self.article, in_column=0)  # поиск ячейки с данными по ключевому слову
+        except Exception:
+            self.bot.send_message(self.message.chat.id, 'Ошибка подключения..Попробуйте через 1 мин.')
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             # запись клиента в свободную строку базы старых клиентов:

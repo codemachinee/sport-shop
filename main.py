@@ -151,6 +151,9 @@ def check_callback(callback):
     elif callback.data == "Назад в категорию 'Коньки'":
         buttons(bot, callback.message, file=file['general_menu'], key='Коньки', kategoriya='подкатегорию',
                 image='https://limpopo.kz/image/cache/catalog/produsts/CCM/2028148-2000x2000w.jpg').marks_buttons()
+    elif callback.data == "Назад в категорию 'Ролики'":
+        buttons(bot, callback.message, file=file['general_menu'], key='Ролики', kategoriya='товар',
+                image='https://cdn.shoplightspeed.com/shops/608796/files/28620336/image.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']:
         buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
@@ -306,6 +309,16 @@ def check_callback(callback):
         bot.send_message(callback.message.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Кроссовки'")
+    elif callback.data in file['general_menu']['Ролики']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Ролики'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Ролики'")
 
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(350) Нагрудники']:
         tovar_name = tovar(callback.data)

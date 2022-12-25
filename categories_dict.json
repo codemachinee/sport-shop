@@ -3120,7 +3120,7 @@
                     "Описание: Коньки хоккейные муж. SKFT2 SR CCM JS Skates Player 6.0 EE 2028524",
                     "Цена:"
                 ],
-                 "Назад в категорию 'Коньки'": []
+                "Назад в категорию 'Коньки'": []
             },
             "(FT460) Коньки": {
                 "дет. SK CCM JS FT460 JR 3D": [
@@ -3240,7 +3240,7 @@
                     "Описание: Коньки хоккейные муж. SK JETSPEED FT475 SR REGULAR 9.5 3311063",
                     "Цена:"
                 ],
-                 "Назад в категорию 'Коньки'": []
+                "Назад в категорию 'Коньки'": []
             },
             "(SK FT4) Коньки": {
                 "дет. SK JETSPEED FT4 JR REGULAR 1.0": [
@@ -3937,7 +3937,122 @@
         },
         "Одежда": {},
         "Перчатки": {},
-        "Ролики": {},
+        "Ролики": {
+            "Ролики 9.0-2": [
+                "11485,000",
+                "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                "Описание: Коньки/ролики 9.0-2 1047268",
+                "Цена:"
+            ],
+            "дет. 9370 YTH 10.0D": [
+                "11486,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370 YTH 10.0D 2344001",
+                "Цена:"
+            ],
+            "дет. 9370 YTH 11.0D": [
+                "11487,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370 YTH 11.0D 2344002",
+                "Цена:"
+            ],
+            "дет. 9370R 1.5.D": [
+                "11488,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 1.5.D 2343992",
+                "Цена:"
+            ],
+            "дет. 9370R 1.D": [
+                "11489,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 1.D 2343991",
+                "Цена:"
+            ],
+            "дет. 9370R 2.5.D": [
+                "11490,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 2.5.D 2343994",
+                "Цена:"
+            ],
+            "дет. 9370R 3.D": [
+                "11491,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 3.D 2343995",
+                "Цена:"
+            ],
+            "дет. 9370R 5.5.D": [
+                "11492,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 5.5.D 2344000",
+                "Цена:"
+            ],
+            "дет. 9370R 5.D": [
+                "11493,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 5.D 2343999",
+                "Цена:"
+            ],
+            "дет. 9370R 6.D": [
+                "11494,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики дет. 9370R 6.D 2343978",
+                "Цена:"
+            ],
+            "дет. RH TACKS 9350 ROLLER SKATE JR 5.0 D": [
+                "11495,000",
+                "https://cdn.shoplightspeed.com/shops/608796/files/28620336/image.jpg",
+                "Описание: Ролики дет. RH TACKS 9350 ROLLER SKATE JR 5.0 D 2344066",
+                "Цена:"
+            ],
+            "дет. RH TACKS 9350 ROLLER SKATE YTH 12.0 D": [
+                "11496,000",
+                "https://cdn.shoplightspeed.com/shops/608796/files/28620336/image.jpg",
+                "Описание: Ролики дет. RH TACKS 9350 ROLLER SKATE YTH 12.0 D 2344069",
+                "Цена:"
+            ],
+            "муж. 9370R 10.5.D": [
+                "11497,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 10.5.D 2343987",
+                "Цена:"
+            ],
+            "муж. 9370R 10.D": [
+                "11498,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 10.D 2343986",
+                "Цена:"
+            ],
+            "муж. 9370R 11.5.D": [
+                "11499,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 11.5.D 2343989",
+                "Цена:"
+            ],
+            "муж. 9370R 11.D": [
+                "11500,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 11.D 2343988",
+                "Цена:"
+            ],
+            "муж. 9370R 12.D": [
+                "11501,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 12.D 2343990",
+                "Цена:"
+            ],
+            "муж. 9370R 9.D": [
+                "11502,000",
+                "https://ccm.ru/upload/iblock/1f1/9370-roller-skates-ccm-1.png",
+                "Описание: Ролики муж. 9370R 9.D 2343984",
+                "Цена:"
+            ],
+            "муж. RH TACKS 9350 ROLLER SKATE SR 6.0 D": [
+                "11503,000",
+                "https://cdn.shoplightspeed.com/shops/608796/files/28620336/image.jpg",
+                "Описание: Ролики муж. RH TACKS 9350 ROLLER SKATE SR 6.0 D 2359895",
+                "Цена:"
+            ]
+        },
         "Судейская форма": {},
         "Термобельё": {},
         "Услуги": {},

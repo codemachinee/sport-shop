@@ -154,6 +154,9 @@ def check_callback(callback):
     elif callback.data == "Назад в категорию 'Ролики'":
         buttons(bot, callback.message, file=file['general_menu'], key='Ролики', kategoriya='товар',
                 image='https://cdn.shoplightspeed.com/shops/608796/files/28620336/image.jpg').marks_buttons()
+    elif callback.data == "Назад в категорию 'Перчатки'":
+        buttons(bot, callback.message, file=file['general_menu'], key='Перчатки', kategoriya='подкатегорию',
+                image='https://ccm.ru/upload/iblock/744/CCM-Jetspeed-FT4-Senior-Hockey-Gloves-NVWH.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']:
         buttons(bot, callback.message, file=file['general_menu'], key=callback.data, kategoriya='подкатегорию',
@@ -189,6 +192,10 @@ def check_callback(callback):
         buttons(bot, callback.message, file=file['general_menu']['Коньки'], key=callback.data,
         kategoriya='товар', image='https://limpopo.kz/image/cache/catalog/produsts/CCM/2028148-'
                                          '2000x2000w.jpg').marks_buttons()
+    elif callback.data in file['general_menu']['Перчатки']:
+        buttons(bot, callback.message, file=file['general_menu']['Перчатки'], key=callback.data,
+        kategoriya='товар', image='https://ccm.ru/upload/iblock/744/CCM-Jetspeed-FT4-Senior-Hockey-Gloves-'
+                                  'NVWH.jpg').marks_buttons()
 
     elif callback.data in file['general_menu']['Защита']['Нагрудники']:
         try:
@@ -1102,6 +1109,117 @@ def check_callback(callback):
         bot.send_message(callback.message.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
+
+    elif callback.data in file['general_menu']['Перчатки']['(4R) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(4R) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(9040) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(9040) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(9060) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(9060) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(9080) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(9080) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(BAUER) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(BAUER) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(EASTON) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(EASTON) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(HG 475) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(HG 475) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(HG 485) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(HG 485) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(HG FT4 PRO) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(HG FT4 PRO) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(SHER-WOOD) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(SHER-WOOD) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
+    elif callback.data in file['general_menu']['Перчатки']['(Другие) Перчатки']:
+        tovar_name = tovar(callback.data)
+        source = (file['general_menu']['Перчатки']['(Другие) Перчатки'][callback.data])
+        article = source[0]
+        image = source[1]
+        opisanie = source[2]
+        price = source[3]
+        bot.send_message(callback.message.chat.id, 'Секунду..')
+        poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
+                            price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
 
 #def drugoe(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
  #   global tovar_name

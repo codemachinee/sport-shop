@@ -3936,7 +3936,485 @@
             ]
         },
         "Одежда": {},
-        "Перчатки": {},
+        "Перчатки": {
+            "(4R) Перчатки": {
+                "дет. HG 4 ROLL 2 GLOVES JR BK 12": [
+                    "11396,000",
+                    "https://ccm.ru/upload/iblock/52c/HG-4-ROLL-2-GLOVES-SR-BK.png",
+                    "Описание: Перчатки игрока дет. HG 4 ROLL 2 GLOVES JR BK/BK 12 2570275",
+                    "Цена:"
+                ],
+                "дет. HG 4 ROLL 2 GLOVES JR NV 11": [
+                    "11397,000",
+                    "https://ccm.ru/upload/iblock/144/HG-4-ROLL-PRO2-GLOVES-SR-NV-01.png",
+                    "Описание: Перчатки игрока дет. HG 4 ROLL 2 GLOVES JR NV/NV 11 2570274",
+                    "Цена:"
+                ],
+                "дет. HG 4 ROLL 2 GLOVES JR NV 12": [
+                    "11398,000",
+                    "https://ccm.ru/upload/iblock/144/HG-4-ROLL-PRO2-GLOVES-SR-NV-01.png",
+                    "Описание: Перчатки игрока дет. HG 4 ROLL 2 GLOVES JR NV/NV 12 2570276",
+                    "Цена:"
+                ],
+                "дет. HG 4 ROLL 2 GLOVES YT BK 8": [
+                    "11399,000",
+                    "https://ccm.ru/upload/iblock/52c/HG-4-ROLL-2-GLOVES-SR-BK.png",
+                    "Описание: Перчатки игрока дет. HG 4 ROLL 2 GLOVES YT BK/BK 8 2570277",
+                    "Цена:"
+                ],
+                "дет. HGT4R ROL JR GLOVES CCM BK": [
+                    "11400,000",
+                    "https://ccm.ru/upload/iblock/666/CCM-HGT4R-BK.png",
+                    "Описание: Перчатки игрока дет. HGT4R ROL JR GLOVES CCM BKBK 11 29579",
+                    "Цена:"
+                ],
+                "муж. HG 4 ROLL 2 GLOVES SR BK 14": [
+                    "11401,000",
+                    "https://ccm.ru/upload/iblock/52c/HG-4-ROLL-2-GLOVES-SR-BK.png",
+                    "Описание: Перчатки игрока муж. HG 4 ROLL 2 GLOVES SR BK/BK 14 2570267",
+                    "Цена:"
+                ],
+                "муж. HG 4 ROLL 2 GLOVES SR NV 13": [
+                    "11402,000",
+                    "https://ccm.ru/upload/iblock/144/HG-4-ROLL-PRO2-GLOVES-SR-NV-01.png",
+                    "Описание: Перчатки игрока муж. HG 4 ROLL 2 GLOVES SR NV/NV 13 2570266",
+                    "Цена:"
+                ],
+                "муж. HG 4 ROLL 2 GLOVES SR NV 14": [
+                    "11403,000",
+                    "https://ccm.ru/upload/iblock/144/HG-4-ROLL-PRO2-GLOVES-SR-NV-01.png",
+                    "Описание: Перчатки игрока муж. HG 4 ROLL 2 GLOVES SR NV/NV 14 2570268",
+                    "Цена:"
+                ],
+                "муж. HG 4 ROLL 2 GLOVES SR NV 15": [
+                    "11404,000",
+                    "https://ccm.ru/upload/iblock/144/HG-4-ROLL-PRO2-GLOVES-SR-NV-01.png",
+                    "Описание: Перчатки игрока муж. HG 4 ROLL 2 GLOVES SR NV/NV 15 2570270",
+                    "Цена:"
+                ],
+                "муж. HGT4R ROL SR GLOVES CCM BK": [
+                    "11405,000",
+                    "https://ccm.ru/upload/iblock/666/CCM-HGT4R-BK.png",
+                    "Описание: Перчатки игрока муж. HGT4R ROL SR GLOVES CCM BKBK 13 64042",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(9040) Перчатки": {
+                "дет. HG9040 JR CCM TACKS 12": [
+                    "11409,000",
+                    "https://ccm.ru/upload/iblock/d43/HG9040-JR-CCM-TACKS-Prot-Gloves-BlackWhite-palm.png",
+                    "Описание: Перчатки игрока дет. HG9040 JR CCM TACKS Prot Gloves Black/White 12 2027381",
+                    "Цена:"
+                ],
+                "муж. HG9040 SR CCM TACKS 14": [
+                    "11410,000",
+                    "https://ccm.ru/upload/iblock/d43/HG9040-JR-CCM-TACKS-Prot-Gloves-BlackWhite-palm.png",
+                    "Описание: Перчатки игрока муж. HG9040 SR CCM TACKS Prot Gloves Black/White 14 2026879",
+                    "Цена:"
+                ],
+                "муж. HG9040 SR CCM TACKS 15": [
+                    "11411,000",
+                    "https://ccm.ru/upload/iblock/d43/HG9040-JR-CCM-TACKS-Prot-Gloves-BlackWhite-palm.png",
+                    "Описание: Перчатки игрока муж. HG9040 SR CCM TACKS Prot Gloves Black/White 15 2026880",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(9060) Перчатки": {
+                "дет. HG9060 JR CCM TACKS N/W 10": [
+                    "11413,000",
+                    "https://ccm.ru/upload/iblock/572/HG9060-SR-CCM-TACKS-Prot-Gloves-Navy.png",
+                    "Описание: Перчатки игрока дет. HG9060 JR CCM TACKS Prot Gloves Navy/White 10 2027367",
+                    "Цена:"
+                ],
+                "дет. HG9060 JR CCM TACKS N/W 12": [
+                    "11414,000",
+                    "https://ccm.ru/upload/iblock/572/HG9060-SR-CCM-TACKS-Prot-Gloves-Navy.png",
+                    "Описание: Перчатки игрока дет. HG9060 JR CCM TACKS Prot Gloves Navy/White 12 2027369",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS B/W 13": [
+                    "11415,000",
+                    "https://ccm.ru/upload/iblock/254/HG9060-JR-CCM-TACKS-Prot-Gloves-BlackWhite.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Black/White 13 2026860",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS B/W 15": [
+                    "11416,000",
+                    "https://ccm.ru/upload/iblock/254/HG9060-JR-CCM-TACKS-Prot-Gloves-BlackWhite.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Black/White 15 2026862",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS N/W 13": [
+                    "11417,000",
+                    "https://ccm.ru/upload/iblock/572/HG9060-SR-CCM-TACKS-Prot-Gloves-Navy.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Navy/White 13 2026866",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS N/W 14": [
+                    "11418,000",
+                    "https://ccm.ru/upload/iblock/572/HG9060-SR-CCM-TACKS-Prot-Gloves-Navy.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Navy/White 14 2026867",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS N/W 15": [
+                    "11419,000",
+                    "https://ccm.ru/upload/iblock/572/HG9060-SR-CCM-TACKS-Prot-Gloves-Navy.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Navy/White 15 2026868",
+                    "Цена:"
+                ],
+                "муж. HG9060 SR CCM TACKS R/W 14": [
+                    "11420,000",
+                    "https://ccm.ru/upload/iblock/65a/ccm_tacks_9060_gloves.png",
+                    "Описание: Перчатки игрока муж. HG9060 SR CCM TACKS Prot Gloves Red/White 14 2081576",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(9080) Перчатки": {
+                "дет. HG9080 JR CCM TACKS N/W 12": [
+                    "11422,000",
+                    "https://ccm.ru/upload/resize_cache/iblock/bcb/s5p1qjnb849n0ug4vyooxunt6ksnf1s4/252_290_1/HG-AS580-NVWH_01.jpg",
+                    "Описание: Перчатки игрока дет. HG9080 JR CCM TACKS Prot Gloves Navy/White 12 2027351",
+                    "Цена:"
+                ],
+                "муж. HG9080 SR CCM TACKS B/W 13": [
+                    "11423,000",
+                    "https://ccm.ru/upload/iblock/148/HG9080-SR-CCM-TACKS-Prot-Gloves-BlackWhite.png",
+                    "Описание: Перчатки игрока муж. HG9080 SR CCM TACKS Prot Gloves Black/White 13 2026830",
+                    "Цена:"
+                ],
+                "муж. HG9080 SR CCM TACKS B/W14": [
+                    "11424,000",
+                    "https://ccm.ru/upload/iblock/148/HG9080-SR-CCM-TACKS-Prot-Gloves-BlackWhite.png",
+                    "Описание: Перчатки игрока муж. HG9080 SR CCM TACKS Prot Gloves Black/White 14 2026831",
+                    "Цена:"
+                ],
+                "муж. HG9080 SR CCM TACKS B/W 15": [
+                    "11425,000",
+                    "https://ccm.ru/upload/iblock/148/HG9080-SR-CCM-TACKS-Prot-Gloves-BlackWhite.png",
+                    "Описание: Перчатки игрока муж. HG9080 SR CCM TACKS Prot Gloves Black/White 15 2026832",
+                    "Цена:"
+                ],
+                "муж. HG9080 SR CCM TACKS N/W 15": [
+                    "11426,000",
+                    "https://ccm.ru/upload/resize_cache/iblock/bcb/s5p1qjnb849n0ug4vyooxunt6ksnf1s4/252_290_1/HG-AS580-NVWH_01.jpg",
+                    "Описание: Перчатки игрока муж. HG9080 SR CCM TACKS Prot Gloves Navy/White 15 2026850",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(BAUER) Перчатки": {
+                " муж. S17 SUPREME S17 SR NAV 14": [
+                    "11433,000",
+                    "https://avatars.mds.yandex.net/get-mpic/7722094/img_id771639548008549803.jpeg/600x800",
+                    "Описание:  Перчатки муж. S17 SUPREME S17  SR NAV 14 1050855",
+                    "Цена:"
+                ],
+                " муж. S18 NSX SR NAV 15": [
+                    "11434,000",
+                    "https://hockey-shop.ru/upload/iblock/d6a/d6a957d9b8463062c2f7d15935e2cb2d.jpg",
+                    "Описание:  Перчатки муж. S18 NSX  SR NAV 15 1053134",
+                    "Цена:"
+                ],
+                " муж. S18 VAPOR 1X LITE SR BKR 15": [
+                    "11435,000",
+                    "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                    "Описание:  Перчатки муж. S18 VAPOR 1X LITE  SR BKR 15 1053049",
+                    "Цена:"
+                ],
+                " муж. S19 SUPREME S29 SR NAV 15": [
+                    "11436,000",
+                    "https://hockey-overtime.ru/upload/iblock/fb2/fb25fe50799f0682e21f0060304f0711.jpeg",
+                    "Описание:  Перчатки муж. S19 SUPREME S29  SR NAV 15 1054616",
+                    "Цена:"
+                ],
+                " муж. WARRIOR ALPHA QR PRO NAVY 13": [
+                    "11437,000",
+                    "https://media.purehockey.com/images/q_auto,f_auto,fl_lossy,c_lpad,b_auto,w_400,h_400/products/44828/21/147538/warrior-alpha-pro-hockey-gloves-junior",
+                    "Описание:  Перчатки муж. WARRIOR ALPHA QR PRO NAVY 13 QXPGSR7",
+                    "Цена:"
+                ],
+                "муж. GANT SR VAPOR 1X S RED": [
+                    "11438,000",
+                    "https://avatars.mds.yandex.net/get-mpic/4415357/img_id4916963563385229325.png/600x800",
+                    "Описание: Перчатки муж. GANT SR VAPOR 1X  SR 15 RED",
+                    "Цена:"
+                ],
+                "муж. S18 BAUER NSX SR RED 14": [
+                    "11439,000",
+                    "https://www.hc5.ru/wa-data/public/shop/products/08/72/27208/images/216120/216120.970x0.jpg",
+                    "Описание: Перчатки муж. S18 BAUER NSX SR RED 14 1053134",
+                    "Цена:"
+                ],
+                "муж. S18 NSX SR NAV 14": [
+                    "11440,000",
+                    "https://hockeyclub.ru/upload/resize_cache/iblock/16f/1000_1000_1/1053134_1_.JPG",
+                    "Описание: Перчатки муж. S18 NSX  SR NAV 14 1053134",
+                    "Цена:"
+                ],
+                "муж. S18 VAPOR X800 LITE SR NAV 15": [
+                    "11441,000",
+                    "https://avatars.mds.yandex.net/get-mpic/5220932/img_id8187883427928466900.jpeg/orig",
+                    "Описание: Перчатки муж. S18 VAPOR X800 LITE  SR NAV 15 1053133",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(EASTON) Перчатки": {
+                "EASTON GX 15 BKRDWH IHG": [
+                    "11443,000",
+                    "https://www.sportdepo.ru/upload/iblock/909/9093ee78b487e232d82b3347b770d5cc.jpeg",
+                    "Описание: Перчатки EASTON GX 15 BKRDWH IHG 1730155",
+                    "Цена:"
+                ],
+                "EASTON SYNERGY GX 15 RD IHG": [
+                    "11444,000",
+                    "https://konki-sportum.ru/img/upload/f_2072.jpg",
+                    "Описание: Перчатки EASTON SYNERGY GX 15 RD IHG 1730165",
+                    "Цена:"
+                ],
+                "EASTON SYNERGY GX HL 13 RD IHG": [
+                    "11445,000",
+                    "https://konki-sportum.ru/img/upload/f_2072.jpg",
+                    "Описание: Перчатки EASTON SYNERGY GX HL 13 RD IHG 1730109",
+                    "Цена:"
+                ],
+                "EASTON SYNERGY GX HL 14 BKRDWH IHG": [
+                    "11446,000",
+                    "https://www.sportdepo.ru/upload/iblock/909/9093ee78b487e232d82b3347b770d5cc.jpeg",
+                    "Описание: Перчатки EASTON SYNERGY GX HL 14 BKRDWH IHG 1730103",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(HG 475) Перчатки": {
+                "дет. HG JS FT475 JR B/W 12": [
+                    "11450,000",
+                    "https://ccm.ru/upload/iblock/46d/CCM-Gloves-475-BKWH-palm.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT475 GLOVES JR BK/WH 12 3433660",
+                    "Цена:"
+                ],
+                "дет. HG JS FT475 JR N/W 11": [
+                    "11451,000",
+                    "https://ccm.ru/upload/iblock/186/CCM-Gloves-475-NVWH.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT475 GLOVES JR NV/WH 11 3433662",
+                    "Цена:"
+                ],
+                "дет. HG JS FT475 JR N/W 12": [
+                    "11452,000",
+                    "https://ccm.ru/upload/iblock/186/CCM-Gloves-475-NVWH.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT475 GLOVES JR NV/WH 12 3433663",
+                    "Цена:"
+                ],
+                "муж. HG JS FT475 SR B/W 14": [
+                    "11453,000",
+                    "https://ccm.ru/upload/iblock/46d/CCM-Gloves-475-BKWH-palm.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT475 GLOVES SR BK/WH 14 3433478",
+                    "Цена:"
+                ],
+                "муж. HG JS FT475 SR N/W 13": [
+                    "11454,000",
+                    "https://ccm.ru/upload/iblock/186/CCM-Gloves-475-NVWH.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT475 GLOVES SR NV/WH 13 3433480",
+                    "Цена:"
+                ],
+                "муж. HG JS FT475 SR N/W 14": [
+                    "11455,000",
+                    "https://ccm.ru/upload/iblock/186/CCM-Gloves-475-NVWH.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT475 GLOVES SR NV/WH 14 3433481",
+                    "Цена:"
+                ],
+                "муж. HG JS FT475 SR N/W 15": [
+                    "11456,000",
+                    "https://ccm.ru/upload/iblock/186/CCM-Gloves-475-NVWH.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT475 GLOVES SR NV/WH 15 3433482",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(HG 485) Перчатки": {
+                "дет. HG JS FT485 JR BK/SF 12": [
+                    "11458,000",
+                    "https://ccm.ru/upload/iblock/019/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-NV-WH.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT485 GLOVES JR BK/SF 12 3433656",
+                    "Цена:"
+                ],
+                "дет. HG JS FT485 JR NV/SF 13": [
+                    "11459,000",
+                    "https://ccm.ru/upload/iblock/b99/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-NV-WH-palm.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT485 GLOVES JR NV/SF 13 3433464",
+                    "Цена:"
+                ],
+                "дет. HG JS FT485 JR NV/SF 15": [
+                    "11460,000",
+                    "https://ccm.ru/upload/iblock/b99/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-NV-WH-palm.png",
+                    "Описание: Перчатки игрока дет. HG JETSPEED FT485 GLOVES JR NV/SF 15 3433466",
+                    "Цена:"
+                ],
+                "муж. HG JS FT485 SR BK/SUN": [
+                    "11461,000",
+                    "https://worldhockey.market/upload/iblock/9eb/343c8700_71be_11eb_aaa0_a4bf0158c9f5_4cc40fe0_bc77_11eb_aaa0_a4bf0158c9f5.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT485 GLOVES SR BK/SUN 15 ",
+                    "Цена:"
+                ],
+                "муж. HG JS FT485 SR BK/WH 14": [
+                    "11462,000",
+                    "https://ccm.ru/upload/iblock/a6d/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-BK-palm.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT485 GLOVES SR BK/WH 14 3433447",
+                    "Цена:"
+                ],
+                "муж. HG JS FT485 SR BK/WH 15": [
+                    "11463,000",
+                    "https://ccm.ru/upload/iblock/a6d/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-BK-palm.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT485 GLOVES SR BK/WH 15 3433448",
+                    "Цена:"
+                ],
+                "муж. HG JS FT485 SR NV/WH 13": [
+                    "11464,000",
+                    "https://ccm.ru/upload/iblock/019/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-NV-WH.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT485 GLOVES SR NV/WH 13 3433449",
+                    "Цена:"
+                ],
+                "муж. HG JS FT485 SR NV/WH 15": [
+                    "11465,000",
+                    "https://ccm.ru/upload/iblock/019/CCM-Jetspeed-FT485-Senior-Hockey-Gloves-NV-WH.png",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT485 GLOVES SR NV/WH 15 3433451",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(HG FT4 PRO) Перчатки": {
+                "муж. HG JS FT4 PRO SR BK/SF 13": [
+                    "11470,000",
+                    "https://ccm.ru/upload/iblock/079/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR BK/SF 13 3467765",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR BK/SF 15": [
+                    "11471,000",
+                    "https://ccm.ru/upload/iblock/079/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR BK/SF 15 3467767",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR BK/WH 13": [
+                    "11472,000",
+                    "https://ccm.ru/upload/iblock/079/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR BK/WH 13 3433405",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR BK/WH 14": [
+                    "11473,000",
+                    "https://ccm.ru/upload/iblock/079/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR BK/WH 14 3433406",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR BK/WH 15": [
+                    "11474,000",
+                    "https://ccm.ru/upload/iblock/079/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR BK/WH 15 3433407",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR NV/SF 13": [
+                    "11475,000",
+                    "https://ccm.ru/upload/iblock/6da/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-NV.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR NV/SF 13 3467768",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR NV/SF 14": [
+                    "11476,000",
+                    "https://ccm.ru/upload/iblock/6da/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-NV.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR NV/SF 14 3467769",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR NV/SF 15": [
+                    "11477,000",
+                    "https://ccm.ru/upload/iblock/6da/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-NV.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR NV/SF 15 3467770",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 PRO SR NV/WH 15": [
+                    "11478,000",
+                    "https://ccm.ru/upload/iblock/6da/CCM-Jetspeed-FT4-Pro-Senior-Hockey-Gloves-NV.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 PRO GLOVES SR NV/WH 15 3433410",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(SHER-WOOD) Перчатки": {
+                "дет. Sher-wood синий 11-27.5см": [
+                    "11480,000",
+                    "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                    "Описание: Перчатки дет. Sher-wood синий 11-27.5 см",
+                    "Цена:"
+                ],
+                "муж. Sher-wood крас 13-32.5см": [
+                    "11481,000",
+                    "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                    "Описание: Перчатки муж. Sher-wood крас 13-32.5 см",
+                    "Цена:"
+                ],
+                "муж. Sher-wood красн 14-35см": [
+                    "11482,000",
+                    "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                    "Описание: Перчатки муж. Sher-wood красн 14-35 см",
+                    "Цена:"
+                ],
+                "муж. Sher-wood синий 14-35см": [
+                    "11483,000",
+                    "https://drive.google.com/file/d/1PQk9qBGAubAhc_eC3aCvvAE4rr4zHkoe/view?usp=share_link",
+                    "Описание: Перчатки муж. Sher-wood синий 14-35 см",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            },
+            "(Другие) Перчатки": {
+                "муж. HG 4 ROLL PRO2 SR BK/WH 15": [
+                    "11407,000",
+                    "https://ccm.ru/upload/iblock/e04/HG-4-ROLL-PRO2-GLOVES-SR-BKWH-palm.png",
+                    "Описание: Перчатки игрока муж. HG 4 ROLL PRO2 GLOVES SR BK/WH  15  2454939",
+                    "Цена:"
+                ],
+                "муж. HG AS580 SR BK/WH 14": [
+                    "11428,000",
+                    "https://ccm.ru/upload/iblock/0f1/cwcobik2eqj45pyu1wka7jx45kmu3fib/HG-AS580-BKWH_01.jpg",
+                    "Описание: Перчатки игрока муж. HG AS580 GLOVES SR BK/WH 14 4109999",
+                    "Цена:"
+                ],
+                "муж. HG AS580 SR BK/WH 15": [
+                    "11429,000",
+                    "https://ccm.ru/upload/iblock/0f1/cwcobik2eqj45pyu1wka7jx45kmu3fib/HG-AS580-BKWH_01.jpg",
+                    "Описание: Перчатки игрока муж. HG AS580 GLOVES SR BK/WH 15 4110000",
+                    "Цена:"
+                ],
+                "муж. HG AS-V SR BK/WH 14": [
+                    "11431,000",
+                    "https://ccm.ru/upload/resize_cache/iblock/e97/2uckv2hj64eyxv2323sab24td461bqfo/252_290_1/HG-AS5-BKWH-01.jpg",
+                    "Описание: Перчатки игрока муж. HG AS-V GLOVES SR BK/WH 14 4110094",
+                    "Цена:"
+                ],
+                "муж. HG350 JS SR CCM BKWH 14": [
+                    "11448,000",
+                    "https://ccm.ru/upload/iblock/648/CCM-HG350-BKWH.png",
+                    "Описание: Перчатки игрока муж. HG350 JS SR GLOVES CCM BKWH 14 194530",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 SR BK/WH 15": [
+                    "11467,000",
+                    "https://ccm.ru/upload/iblock/690/CCM-Jetspeed-FT4-Senior-Hockey-Gloves-BKWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 GLOVES SR BK/WH 15 3433423",
+                    "Цена:"
+                ],
+                "муж. HG JS FT4 SR NV/WH 15": [
+                    "11468,000",
+                    "https://ccm.ru/upload/iblock/744/CCM-Jetspeed-FT4-Senior-Hockey-Gloves-NVWH.jpg",
+                    "Описание: Перчатки игрока муж. HG JETSPEED FT4 GLOVES SR NV/WH 15 3433426",
+                    "Цена:"
+                ],
+                "Назад в категорию 'Перчатки'": []
+            }
+        },
         "Ролики": {
             "Ролики 9.0-2": [
                 "11485,000",

@@ -299,9 +299,7 @@ class platezhy:
             return quickpay.base_url
 
     def chec_control(self):
-        token = "4100116460956966.47E0EA43A8D91E10F709F2EB8566AF852B8A37BB682D92179C76F70872D7BCB47F1649F0F31CC6B2AB4" \
-                "D4F33EFCB9FD6200045936DD3CDFE5E9E70B7CBA5AFF18056C02C1EAA8630938EDCFA04D8A11CA5AA70775A9CFD95CD82A1C" \
-                "A82DF5851C66DC4A2522C1FBD01F16CDF5AADD56E55081CC2CD8A0360CC353103964BED59"
+        token = token_umany
         client = Client(token)
         try:
             history = client.operation_history(label=self.marker_mess)

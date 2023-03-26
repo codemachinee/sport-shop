@@ -130,7 +130,6 @@ class poisk_tovar_in_base:
         except Exception:
             self.bot.send_message(self.message.chat.id, 'Ошибка подключения. Повторите запрос через 1 минуту.')
 
-
     def poisk_ostatok(self, back_value='Вернуться в начало'):
         global file_open, opisanie, ostatok
         try:

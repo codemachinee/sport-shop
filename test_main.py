@@ -7,9 +7,10 @@ from telebot import types
 # импорт из файла functions
 import json
 from openpyxl import workbook, worksheet, load_workbook
-from test_functions import buttons, zayavka_done, poisk_tovar_in_base, tovar, Quantity, rasylka_message, admin_id, file,\
+from test_functions import buttons, zayavka_done, poisk_tovar_in_base, rasylka_message, admin_id, file,\
     platezhy
 from passwords import *
+import asyncio
 article = None
 
 token = lemonade
@@ -128,7 +129,7 @@ def check_callback(callback):
                 break
             list_one.append(row)
         buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
+                      image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
         buttons(bot, callback.message).menu_buttons()
 
     elif len(list_one) == 0:

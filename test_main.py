@@ -13,7 +13,8 @@ from passwords import *
 import asyncio
 article = None
 
-token = lemonade
+token = code_mashine
+#token = lemonade
 bot = telebot.TeleBot(token)
 
 tovar_name = None
@@ -25,10 +26,13 @@ rassylka = None
 def start(message):
     file_open = open("start_logo.png", 'rb')    # открытие и чтение файла стартовой картинки
     bot.send_photo(message.chat.id, file_open, '''Здравствуйте!
-Вас приветствует CCM_bot - Я помогу подобрать профессиональный хоккейный инвентарь по лучшим ценам. 🏆🏒🥇
+Вас приветствует бот CCM_Club.
+Я помогу подобрать хоккейный инвентарь из наличия по лучшим ценам. 🏆🏒🥇
 
-Выберите "Категории товаров 🗂️" - для просмотра ассортимента по категориям
-/help - все возможности бота''')
+Выберите «Каталог 🗂️» для просмотра товаров.
+«О нас» расскажет вам о нас и как мы работаем.
+Команда в строке /help – о всех возможностях бота.
+''')
     buttons(bot, message).menu_buttons()
 
 
@@ -64,30 +68,32 @@ def chek_message_category(m):
     list_one = []
     wb = load_workbook('CCM.xlsx')
     ws = wb['МЛ Остатки штаб']
-    if m.text == 'Категории товаров 🗂️':
+    if m.text == 'Каталог 🗂️':
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
                 break
             list_one.append(*row)
         list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
+                image=file_open).razdely_buttons()
     elif m.text == "Вернуться в начало":
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
                 break
             list_one.append(*row)
         list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
-                image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
+                image=file_open).razdely_buttons()
         buttons(bot, m).menu_buttons()
-    elif m.text == 'История заказов 📋':
+    elif m.text == 'Мои заказы 📋':
         bot.send_message(m.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
         bot.send_message(m.chat.id, f'Секунду..')
         poisk_tovar_in_base(bot, m).basket_search()
-    elif m.text == 'Вопросы-ответы ⁉️':
+    elif m.text == 'О нас ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Контакты ☎️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -127,10 +133,11 @@ def check_callback(callback):
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
                 break
-            list_one.append(row)
+            list_one.append(*row)
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
-                      image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
-        buttons(bot, callback.message).menu_buttons()
+                image=file_open).razdely_buttons()
 
     elif len(list_one) == 0:
         back_value = "Вернуться в начало"
@@ -164,15 +171,18 @@ def check_callback(callback):
                 bot.send_message(callback.message.chat.id, 'Секунду..')
                 poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
-                                    your_price=your_price, size_web=size_web).poisk_ostatok(back_value=row[8])
+                                    your_price=your_price, size_web=size_web).poisk_ostatok(back_value=row[1])
                 list_three.append((row[0], row[10]))
         if len(list_one) != 0:
+            file_open = open("menu_logo.jpeg", 'rb')
+            list_one.append('Вернуться в начало')
             buttons(bot, callback.message, kategoriya=kategoriya, list_one=list_one,
-                    image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').razdely_buttons()
+                    image=file_open).razdely_buttons()
         elif len(list_two) != 0:
+            file_open = open("menu_logo.jpeg", 'rb')
             list_two.append(('Вернуться назад', back_value))
             buttons(bot, callback.message, kategoriya=kategoriya, list_one=list_two,
-                    image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
+                    image=file_open).marks_buttons()
 
 
 def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота

@@ -12,6 +12,7 @@ from passwords import *
 article = None
 
 token = lemonade
+
 bot = telebot.TeleBot(token)
 
 tovar_name = None
@@ -60,20 +61,20 @@ def sent_message(message):    # базу старых клиентов
 @bot.message_handler(func=lambda m: m.text)  # перехватчик текстовых сообщений
 def chek_message_category(m):
     global file
-    if m.text == 'Категории товаров 🗂️':
+    if m.text == 'Каталог 🗂️':
         buttons(bot, m, file=file, key='general_menu', kategoriya='категорию',
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
     elif m.text == "Вернуться в начало":
         buttons(bot, m, file=file, key='general_menu', kategoriya='категорию',
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
         buttons(bot, m).menu_buttons()
-    elif m.text == 'История заказов 📋':
+    elif m.text == 'Мои заказы 📋':
         bot.send_message(m.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
         bot.send_message(m.chat.id, f'Секунду..')
         poisk_tovar_in_base(bot, m).basket_search()
-    elif m.text == 'Вопросы-ответы ⁉️':
+    elif m.text == 'О нас ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
     elif m.text == 'Контакты ☎️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')

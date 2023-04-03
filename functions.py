@@ -29,12 +29,13 @@ class buttons:  # класс для создания клавиатур разл
 
     def menu_buttons(self):
         kb1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-        but1 = types.KeyboardButton(text='Категории товаров 🗂️')
-        but2 = types.KeyboardButton(text='История заказов 📋')
-        but3 = types.KeyboardButton(text='Корзина 🗑️')
-        but4 = types.KeyboardButton(text='Вопросы-ответы ⁉️')
-        but5 = types.KeyboardButton(text='Контакты ☎️')
-        kb1.add(but1, but2, but3, but4, but5)
+        but1 = types.KeyboardButton(text='Каталог 🗂️')
+        but2 = types.KeyboardButton(text='Поступления 🆕')
+        but3 = types.KeyboardButton(text='Распродажа 🏷️')
+        but4 = types.KeyboardButton(text='О нас ⁉️')
+        but5 = types.KeyboardButton(text='Мои заказы 📋')
+        but6 = types.KeyboardButton(text='Корзина 🗑️')
+        kb1.add(but1, but2, but3, but4, but5, but6)
         self.bot.send_message(self.message.chat.id, text='...', reply_markup=kb1)
 
     def marks_buttons(self):  # функция создающая клавиатуру

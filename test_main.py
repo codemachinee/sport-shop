@@ -1,20 +1,14 @@
-# библиотека телеграм-бота
-import telebot
-# с помощью типов можно создавать клавиатуры
-from telebot import types
-# библиотека для выполнения фоновых процессов в определенное время
-#from apscheduler.schedulers.background import BackgroundScheduler
-# импорт из файла functions
-import json
-from openpyxl import workbook, worksheet, load_workbook
-from test_functions import buttons, zayavka_done, poisk_tovar_in_base, rasylka_message, admin_id, file,\
-    platezhy
+import telebot  # библиотека телеграм-бота
+from telebot import types  # с помощью типов можно создавать клавиатуры
+#from apscheduler.schedulers.background import BackgroundScheduler  # библиотека для выполнения фоновых процессов в определенное время
+# import json
+from openpyxl import load_workbook
+from test_functions import buttons, zayavka_done, poisk_tovar_in_base, rasylka_message, admin_id
 from passwords import *
-import asyncio
 article = None
 
 token = code_mashine
-#token = lemonade
+# token = lemonade
 bot = telebot.TeleBot(token)
 
 tovar_name = None
@@ -53,8 +47,8 @@ def help(message):
                                           f'/help - справка по боту\n')
 
 
-@bot.message_handler(commands=['sent_message'])  # команда для переброски клиента из базы потенциальных клиентов в
-def sent_message(message):    # базу старых клиентов
+@bot.message_handler(commands=['sent_message'])
+def sent_message(message):
     if message.chat.id == admin_id:
         sent = bot.send_message(admin_id, 'Введи id чата клиента, которому нужно написать от лица бота')
         bot.register_next_step_handler(sent, sent_message_perehvat_1)   # перехватывает ответ пользователя на сообщение "sent" и
@@ -77,6 +71,16 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+    elif m.text == 'Поступления 🆕':
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[14] is not None:
+                list_one.append(f'🆕{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, m, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
     elif m.text == "Вернуться в начало":
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
@@ -86,7 +90,16 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
-        buttons(bot, m).menu_buttons()
+    elif m.text == '🆕Вернуться в начало':
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[14] is not None:
+                list_one.append(f'🆕{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, m, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
     elif m.text == 'Мои заказы 📋':
         bot.send_message(m.chat.id, 'Секунду..')
         poisk_tovar_in_base(bot, m).zakazy_search()
@@ -101,7 +114,7 @@ def chek_message_category(m):
 
 @bot.callback_query_handler(func=lambda callback: callback.data)
 def check_callback(callback):
-    global tovar_name, quantity, file, article, back_value
+    global tovar_name, quantity, article, back_value
     wb = load_workbook('CCM.xlsx')
     ws = wb['МЛ Остатки штаб']
     list_one = []
@@ -124,8 +137,8 @@ def check_callback(callback):
                                    f'Количество: {quantity.quantity}\n'
                                    f'Оплата: Не оплачено')
         #poisk_tovar_in_base(bot, callback, article, tovar_name.tovar, quantity.quantity).zayavka_v_baze()
-    elif callback.data == 'Оплачено':
-        platezhy(bot, callback, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity).chec_control()
+    # elif callback.data == 'Оплачено':
+    #     platezhy(bot, callback, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity).chec_control()
     elif callback.data[:10] == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
         poisk_tovar_in_base(bot, callback).basket_delete(callback.data[10:])
@@ -138,27 +151,54 @@ def check_callback(callback):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+    elif callback.data == '🆕Вернуться в начало':
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[14] is not None:
+                list_one.append(f'🆕{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
 
     elif len(list_one) == 0:
-        back_value = "Вернуться в начало"
+        # back_value = "Вернуться в начало"
         list_two = []
         list_three = []
         kategoriya = None
-        for row in ws.iter_rows(min_row=2, min_col=1, max_col=14, values_only=True):
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row == (None,):
                 break
+            elif f'🆕{row[8]}' == callback.data:
+                if row[14] is not None:
+                    list_one.append(f'🆕{row[1][0:30]}')
+                    list_one = list(set(list_one))
+                    kategoriya = 'категорию'
+                    back_value = '🆕Вернуться в начало'
             elif row[8] == callback.data:
                 list_one.append(row[1][0:30])
                 list_one = list(set(list_one))
                 kategoriya = 'категорию'
+                back_value = 'Вернуться в начало'
+            elif (callback.data in str(f'🆕{row[1]}')) and ('🆕' in callback.data) and row[14] is not None:
+                if len(row[2]) <= 25:
+                    list_two.append((f'🆕{str(row[2])}' + '-' + str(row[3]), f'🆕{row[0]}'))
+                    back_value = f'🆕{row[8]}'
+                    kategoriya = 'товар'
+                else:
+                    list_two.append((f'🆕{row[2][:15]}...{str((row[2]) + str(row[3]))[-12:]}', f'🆕{row[0]}'))
+                    back_value = f'🆕{row[8]}'
+                    kategoriya = 'товар'
             elif callback.data in str(row[1]):
                 if len(row[2]) <= 25:
                     list_two.append((str(row[2])+'-'+str(row[3]), row[0]))
                     back_value = row[8]
+                    kategoriya = 'товар'
                 else:
                     list_two.append((f'{row[2][:15]}...{str((row[2])+str(row[3]))[-12:]}', row[0]))
                     back_value = row[8]
-                kategoriya = 'товар'
+                    kategoriya = 'товар'
             elif str(row[0]) == str(callback.data):
                 tovar_name = row[2]
                 article = row[0]
@@ -172,10 +212,22 @@ def check_callback(callback):
                 poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
                                     your_price=your_price, size_web=size_web).poisk_ostatok(back_value=row[1])
-                list_three.append((row[0], row[10]))
+            elif f'🆕{row[0]}' == str(callback.data):
+                tovar_name = row[2]
+                article = row[0]
+                image = row[10]
+                size = row[3]
+                price = row[4]
+                vnalichii = row[7]
+                your_price = row[5]
+                size_web = row[13]
+                bot.send_message(callback.message.chat.id, 'Секунду..')
+                poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
+                                    image=image, size=size, price=price,
+                                    your_price=your_price, size_web=size_web).poisk_ostatok(back_value=f'🆕{row[1]}')
         if len(list_one) != 0:
             file_open = open("menu_logo.jpeg", 'rb')
-            list_one.append('Вернуться в начало')
+            list_one.append(back_value)
             buttons(bot, callback.message, kategoriya=kategoriya, list_one=list_one,
                     image=file_open).razdely_buttons()
         elif len(list_two) != 0:
@@ -185,7 +237,7 @@ def check_callback(callback):
                     image=file_open).marks_buttons()
 
 
-def amount(message):  # функция регистрации заявки авто, которое отсутствует в каталоге бота
+def amount(message):
     wb = load_workbook('CCM.xlsx')
     ws = wb['кэш']
     try:

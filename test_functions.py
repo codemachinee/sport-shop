@@ -1,21 +1,16 @@
-import gspread
+import gspread  # библиотека работы с гугл таблицами
 from telebot import types
-# библиотека работы с гугл таблицами
-#import gspread
-# библиотека проверки даты
-from datetime import *
-# библиотека рандома
-#from random import *
-import json
+from datetime import *  # библиотека проверки даты
+# from random import *
 from passwords import *
-from yoomoney import Client, Quickpay
-from openpyxl import load_workbook
-import asyncio
+# from yoomoney import Client, Quickpay
+from openpyxl import load_workbook  # библиотека работы с exel таблицами
+
 
 tovar_descriptions = None
 ostatok = None
 admin_id = igor
-file = json.load(open('categories_dict.json', 'rb'))  # файл хранящий структуру категорий товаров
+# file = json.load(open('categories_dict.json', 'rb'))  # файл хранящий структуру категорий товаров
 
 
 class buttons:  # класс для создания клавиатур различных категорий товаров
@@ -92,45 +87,45 @@ class buttons:  # класс для создания клавиатур разл
             kb4.add(keys[f'but{r.index(i)}'])
         self.bot.send_message(self.message.chat.id, f'Для удаления заявки выберите товар:', reply_markup=kb4)
 
-    def oplata_buttons(self, article, back_value='Вернуться в начало'):
-        kb5 = types.InlineKeyboardMarkup(row_width=1)
-        but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
-                                          url=platezhy(self.bot, self.message, article=article).url_generation())
-        but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
-        but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
-        but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
-        kb5.add(but1, but2, but3, but4)
-        try:
-            self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
-                                                        f'менеджер для уточнения деталей. (Выбор '
-                                                        f'количества далее)\n '
-                                                        f'/help - справка по боту', reply_markup=kb5)
-        except AttributeError:
-            self.bot.send_message(self.message.message.chat.id,
-                                  f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
-                                  f'менеджер для уточнения деталей. (Выбор '
-                                  f'количества далее)\n '
-                                  f'/help - справка по боту', reply_markup=kb5)
-
-    def without_oplata_buttons(self, article, back_value='Вернуться в начало'):
-        kb5 = types.InlineKeyboardMarkup(row_width=1)
-        but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
-                                          url=platezhy(self.bot, self.message, article=article).url_generation())
-        but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
-        but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
-        but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
-        kb5.add(but1, but2, but3, but4)
-        try:
-            self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
-                                                        f'менеджер для уточнения деталей. (Выбор '
-                                                        f'количества далее)\n '
-                                                        f'/help - справка по боту', reply_markup=kb5)
-        except AttributeError:
-            self.bot.send_message(self.message.message.chat.id,
-                                  f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
-                                  f'менеджер для уточнения деталей. (Выбор '
-                                  f'количества далее)\n '
-                                  f'/help - справка по боту', reply_markup=kb5)
+    # def oplata_buttons(self, article, back_value='Вернуться в начало'):
+    #     kb5 = types.InlineKeyboardMarkup(row_width=1)
+    #     but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
+    #                                       url=platezhy(self.bot, self.message, article=article).url_generation())
+    #     but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
+    #     but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
+    #     but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
+    #     kb5.add(but1, but2, but3, but4)
+    #     try:
+    #         self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+    #                                                     f'менеджер для уточнения деталей. (Выбор '
+    #                                                     f'количества далее)\n '
+    #                                                     f'/help - справка по боту', reply_markup=kb5)
+    #     except AttributeError:
+    #         self.bot.send_message(self.message.message.chat.id,
+    #                               f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+    #                               f'менеджер для уточнения деталей. (Выбор '
+    #                               f'количества далее)\n '
+    #                               f'/help - справка по боту', reply_markup=kb5)
+    #
+    # def without_oplata_buttons(self, article, back_value='Вернуться в начало'):
+    #     kb5 = types.InlineKeyboardMarkup(row_width=1)
+    #     but1 = types.InlineKeyboardButton(text='Оплатить онлайн (-5%)!',
+    #                                       url=platezhy(self.bot, self.message, article=article).url_generation())
+    #     but2 = types.InlineKeyboardButton(text='Я оплатил, что дальше?', callback_data='Оплачено')
+    #     but3 = types.InlineKeyboardButton(text='Оплатить позже', callback_data='Не оплачено')
+    #     but4 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
+    #     kb5.add(but1, but2, but3, but4)
+    #     try:
+    #         self.bot.send_message(self.message.chat.id, f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+    #                                                     f'менеджер для уточнения деталей. (Выбор '
+    #                                                     f'количества далее)\n '
+    #                                                     f'/help - справка по боту', reply_markup=kb5)
+    #     except AttributeError:
+    #         self.bot.send_message(self.message.message.chat.id,
+    #                               f'Выберите способ оплаты. После оформления заявки с Вами свяжется '
+    #                               f'менеджер для уточнения деталей. (Выбор '
+    #                               f'количества далее)\n '
+    #                               f'/help - справка по боту', reply_markup=kb5)
 
 
 def zayavka_done(bot, message, number):
@@ -346,7 +341,7 @@ class poisk_tovar_in_base:
             for a in range(1, self.ws2.max_row + 1):
                 if str(self.ws2.cell(a, 1).value) == str(article):
                     self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) + int(self.worksheet2.cell(cell_id.row, 7).value)
-                    self.bot.send_message(self.message.message.chat.id, 'Товар успешно удаленн из корзины')
+                    self.bot.send_message(self.message.message.chat.id, 'Товар успешно удален из корзины')
                     self.worksheet2.batch_clear([f"A{cell_id.row}:K{cell_id.row}"])
                     self.wb.save('CCM.xlsx')
                     self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
@@ -387,71 +382,71 @@ class rasylka_message:  # класс хранения сообщения для 
         return self.post
 
 
-class platezhy:
-    def __init__(self, bot, message, article, tovar_name=None, quantity=0):
-        self.bot = bot
-        self.message = message
-        self.article = article
-        self.tovar_name = tovar_name
-        self.quantity = quantity
-        try:
-            self.marker_mess = self.message.chat.id + int(self.article[0:-4])
-        except AttributeError:
-            self.marker_mess = self.message.message.chat.id + int(self.article[0:-4])
-
-    def url_generation(self):
-        try:
-            quickpay = Quickpay(
-                receiver="4100116460956966",
-                quickpay_form="shop",
-                targets="payment",
-                paymentType="SB",
-                sum=10,
-                label=self.marker_mess
-            )
-            return quickpay.base_url
-        except AttributeError:
-            quickpay = Quickpay(
-                receiver="4100116460956966",
-                quickpay_form="shop",
-                targets="payment",
-                paymentType="SB",
-                sum=10,
-                label=self.marker_mess
-            )
-            return quickpay.base_url
-
-    def chec_control(self):
-        token = token_umany
-        client = Client(token)
-        try:
-            history = client.operation_history(label=self.marker_mess)
-        except AttributeError:
-            history = client.operation_history(label=self.marker_mess)
-        try:
-            if (int(datetime.now().time().hour * 3600 + datetime.now().time().minute * 60 + datetime.now().time().second) -
-                    int(history.operations[0].datetime.time().hour * 3600 + history.operations[0].datetime.minute * 60 +
-                        history.operations[0].datetime.time().second)) <= 12600:        # 3 часа 30 мин
-                self.bot.send_message(self.message.message.chat.id,
-                                          f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                                          'Спасибо, что выбрали нас.🤝\n'
-                                          f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
-                self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                               f'Поступила ЗАЯВКА от:\n'
-                                               f'id чата: {self.message.message.chat.id}\n'
-                                               f'Имя: {self.message.from_user.first_name}\n'
-                                               f'Фамилия: {self.message.from_user.last_name}\n'
-                                               f'Ссылка: @{self.message.from_user.username}\n'
-                                               f'Товар: {self.tovar_name}\n'
-                                               f'Количество: {self.quantity}\n')
-                poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
-            else:
-                self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден. Если Вы оплатили товар, '
-                                                                    'напишите в поддержку @hloapps')
-                buttons(self.bot, self.message).oplata_buttons(article=self.article)
-        except IndexError:
-            self.bot.send_message(self.message.message.chat.id, 'Платеж не найден. Если Вы оплатили товар, '
-                                                                'напишите в поддержку @hloapps')
-            buttons(self.bot, self.message).oplata_buttons(article=self.article)
+# class platezhy:
+#     def __init__(self, bot, message, article, tovar_name=None, quantity=0):
+#         self.bot = bot
+#         self.message = message
+#         self.article = article
+#         self.tovar_name = tovar_name
+#         self.quantity = quantity
+#         try:
+#             self.marker_mess = self.message.chat.id + int(self.article[0:-4])
+#         except AttributeError:
+#             self.marker_mess = self.message.message.chat.id + int(self.article[0:-4])
+#
+#     def url_generation(self):
+#         try:
+#             quickpay = Quickpay(
+#                 receiver="4100116460956966",
+#                 quickpay_form="shop",
+#                 targets="payment",
+#                 paymentType="SB",
+#                 sum=10,
+#                 label=self.marker_mess
+#             )
+#             return quickpay.base_url
+#         except AttributeError:
+#             quickpay = Quickpay(
+#                 receiver="4100116460956966",
+#                 quickpay_form="shop",
+#                 targets="payment",
+#                 paymentType="SB",
+#                 sum=10,
+#                 label=self.marker_mess
+#             )
+#             return quickpay.base_url
+#
+#     def chec_control(self):
+#         token = token_umany
+#         client = Client(token)
+#         try:
+#             history = client.operation_history(label=self.marker_mess)
+#         except AttributeError:
+#             history = client.operation_history(label=self.marker_mess)
+#         try:
+#             if (int(datetime.now().time().hour * 3600 + datetime.now().time().minute * 60 + datetime.now().time().second) -
+#                     int(history.operations[0].datetime.time().hour * 3600 + history.operations[0].datetime.minute * 60 +
+#                         history.operations[0].datetime.time().second)) <= 12600:        # 3 часа 30 мин
+#                 self.bot.send_message(self.message.message.chat.id,
+#                                           f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+#                                           'Спасибо, что выбрали нас.🤝\n'
+#                                           f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
+#                 self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+#                                                f'Поступила ЗАЯВКА от:\n'
+#                                                f'id чата: {self.message.message.chat.id}\n'
+#                                                f'Имя: {self.message.from_user.first_name}\n'
+#                                                f'Фамилия: {self.message.from_user.last_name}\n'
+#                                                f'Ссылка: @{self.message.from_user.username}\n'
+#                                                f'Товар: {self.tovar_name}\n'
+#                                                f'Количество: {self.quantity}\n')
+#                 poisk_tovar_in_base(self.bot, self.message, self.article, self.tovar_name, self.quantity).zayavka_v_baze()
+#             else:
+#                 self.bot.send_message(self.message.message.chat.id, 'Платеж не был подтвержден. Если Вы оплатили товар, '
+#                                                                     'напишите в поддержку @hloapps')
+#                 buttons(self.bot, self.message).oplata_buttons(article=self.article)
+#         except IndexError:
+#             self.bot.send_message(self.message.message.chat.id, 'Платеж не найден. Если Вы оплатили товар, '
+#                                                                 'напишите в поддержку @hloapps')
+#             buttons(self.bot, self.message).oplata_buttons(article=self.article)
 
 

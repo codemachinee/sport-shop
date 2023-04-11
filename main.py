@@ -69,10 +69,10 @@ def chek_message_category(m):
         image='https://drive.google.com/file/d/1m00gJSNw3vY6BB-3G-TA_Ec3b_Us2iZ3/view?usp=sharing').marks_buttons()
         buttons(bot, m).menu_buttons()
     elif m.text == 'Мои заказы 📋':
-        bot.send_message(m.chat.id, 'Секунду..')
+        bot.send_message(m.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
-        bot.send_message(m.chat.id, f'Секунду..')
+        bot.send_message(m.chat.id, f'Загружаем..')
         poisk_tovar_in_base(bot, m).basket_search()
     elif m.text == 'О нас ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -182,7 +182,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
     elif callback.data in file['general_menu']['Клюшки']:
@@ -210,7 +210,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']:
@@ -225,7 +225,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Трусы']:
@@ -239,7 +239,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Щитки']:
@@ -253,7 +253,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
 
@@ -264,7 +264,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok()
     elif callback.data in file['general_menu']['Бенди']:
@@ -274,7 +274,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok()
     elif callback.data in file['general_menu']['Детские наборы']:
@@ -284,7 +284,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Детские наборы'")
     elif callback.data in file['general_menu']['Аксессуары для клюшек']:
@@ -294,7 +294,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары клю'")
     elif callback.data in file['general_menu']['Аксессуары для шлемов']:
@@ -304,7 +304,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары шле'")
     elif callback.data in file['general_menu']['Кроссовки']:
@@ -314,7 +314,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Кроссовки'")
     elif callback.data in file['general_menu']['Ролики']:
@@ -324,7 +324,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Ролики'")
 
@@ -335,7 +335,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(9060) Нагрудники']:
@@ -345,7 +345,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(9040) Нагрудники']:
@@ -355,7 +355,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(9080) Нагрудники']:
@@ -365,7 +365,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(9550) Нагрудники']:
@@ -375,7 +375,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(AS1) Нагрудники']:
@@ -385,7 +385,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(BAUER) Нагрудники']:
@@ -395,7 +395,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(FT1) Нагрудники']:
@@ -405,7 +405,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
     elif callback.data in file['general_menu']['Защита']['Нагрудники']['(SP FT485) Нагрудники']:
@@ -415,7 +415,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Нагрудники'")
 
@@ -426,7 +426,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(9040) Налокотники']:
@@ -436,7 +436,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(9060) Налокотники']:
@@ -446,7 +446,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(9080) Налокотники']:
@@ -456,7 +456,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(AS1) Налокотники']:
@@ -466,7 +466,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(BAUER) Налокотники']:
@@ -476,7 +476,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(EP 9550) Налокотники']:
@@ -486,7 +486,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(EP FT485) Налокотники']:
@@ -496,7 +496,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
     elif callback.data in file['general_menu']['Защита']['Налокотники']['(FT1) Налокотники']:
@@ -506,7 +506,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Налокотники'")
 
@@ -517,7 +517,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(9060) Трусы']:
@@ -527,7 +527,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(9080) Трусы']:
@@ -537,7 +537,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(9550) Трусы']:
@@ -547,7 +547,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(AS1) Трусы']:
@@ -557,7 +557,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(BAUER) Трусы']:
@@ -567,7 +567,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(FT350) Трусы']:
@@ -577,7 +577,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(FT370) Трусы']:
@@ -587,7 +587,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(HP 485) Трусы']:
@@ -597,7 +597,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(HP FT4) Трусы']:
@@ -607,7 +607,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
     elif callback.data in file['general_menu']['Защита']['Трусы']['(HP FT4 PRO) Трусы']:
@@ -617,7 +617,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Трусы'")
 
@@ -628,7 +628,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
     elif callback.data in file['general_menu']['Защита']['Щитки']['(BAUER) Щитки']:
@@ -638,7 +638,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
     elif callback.data in file['general_menu']['Защита']['Щитки']['(SG 9040) Щитки']:
@@ -648,7 +648,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
     elif callback.data in file['general_menu']['Защита']['Щитки']['(SG 9080) Щитки']:
@@ -658,7 +658,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
     elif callback.data in file['general_menu']['Защита']['Щитки']['(SG FT485) Щитки']:
@@ -668,7 +668,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Щитки'")
 
@@ -679,7 +679,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
     elif callback.data in file['general_menu']['Вратарская экипировка']['Вратарские панцыри-нагрудники']:
@@ -689,7 +689,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
     elif callback.data in file['general_menu']['Вратарская экипировка']['Вратарские шлемы']:
@@ -699,7 +699,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Вратарская эки..'")
 
@@ -710,7 +710,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Бутылки']:
@@ -720,7 +720,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Защита шеи']:
@@ -730,7 +730,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Капы']:
@@ -740,7 +740,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Ленты']:
@@ -750,7 +750,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Подтяжки']:
@@ -760,7 +760,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Защита паха']:
@@ -770,7 +770,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Сумки']:
@@ -780,7 +780,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Хоккейный свитер']:
@@ -790,7 +790,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Другое']:
@@ -800,7 +800,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Носки']:
@@ -815,7 +815,7 @@ def check_callback(callback):
             image = source[1]
             opisanie = source[2]
             price = source[3]
-            bot.send_message(callback.message.chat.id, 'Секунду..')
+            bot.send_message(callback.message.chat.id, 'Загружаем..')
             poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                                 price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Аксессуары'")
     elif callback.data in file['general_menu']['Аксессуары']['Носки']['Носки Bauer']:
@@ -825,7 +825,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Носки'")
     elif callback.data in file['general_menu']['Аксессуары']['Носки']['Носки CCM']:
@@ -835,7 +835,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Носки'")
     elif callback.data in file['general_menu']['Аксессуары']['Носки']['Носки Kappa']:
@@ -845,7 +845,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в подкатегорию 'Носки'")
 
@@ -856,7 +856,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(BAUER) Клюшки']:
@@ -866,7 +866,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(HS FT5) Клюшки']:
@@ -876,7 +876,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(HS TACKS YTH) Клюшки']:
@@ -886,7 +886,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(TRIGGER 6 PRO) Клюшки']:
@@ -896,7 +896,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(Вратарские) Клюшки']:
@@ -906,7 +906,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(Деревянные ULTIMATE) Клюшки']:
@@ -916,7 +916,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
     elif callback.data in file['general_menu']['Клюшки']['(Другие) Клюшки']:
@@ -926,7 +926,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Клюшки'")
 
@@ -937,7 +937,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(9360) Коньки']:
@@ -947,7 +947,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(9370) Коньки']:
@@ -957,7 +957,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(9380) Коньки']:
@@ -967,7 +967,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(AS3) Коньки']:
@@ -977,7 +977,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(AS3 PRO) Коньки']:
@@ -987,7 +987,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(BAUER) Коньки']:
@@ -997,7 +997,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(FT2) Коньки']:
@@ -1007,7 +1007,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(FT460) Коньки']:
@@ -1017,7 +1017,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(FT475) Коньки']:
@@ -1027,7 +1027,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(SK FT4) Коньки']:
@@ -1037,7 +1037,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(SK FT4PRO) Коньки']:
@@ -1047,7 +1047,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(SK RIB 100K PRO) Коньки']:
@@ -1057,7 +1057,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(SK RIB 86K) Коньки']:
@@ -1067,7 +1067,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(SK RIB 90K) Коньки']:
@@ -1077,7 +1077,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(Вратарские) Коньки']:
@@ -1087,7 +1087,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(Фигурные) Коньки']:
@@ -1097,7 +1097,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
     elif callback.data in file['general_menu']['Коньки']['(Другие) Коньки']:
@@ -1107,7 +1107,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Коньки'")
 
@@ -1118,7 +1118,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(9040) Перчатки']:
@@ -1128,7 +1128,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(9060) Перчатки']:
@@ -1138,7 +1138,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(9080) Перчатки']:
@@ -1148,7 +1148,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(BAUER) Перчатки']:
@@ -1158,7 +1158,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(EASTON) Перчатки']:
@@ -1168,7 +1168,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(HG 475) Перчатки']:
@@ -1178,7 +1178,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(HG 485) Перчатки']:
@@ -1188,7 +1188,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(HG FT4 PRO) Перчатки']:
@@ -1198,7 +1198,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(SHER-WOOD) Перчатки']:
@@ -1208,7 +1208,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
     elif callback.data in file['general_menu']['Перчатки']['(Другие) Перчатки']:
@@ -1218,7 +1218,7 @@ def check_callback(callback):
         image = source[1]
         opisanie = source[2]
         price = source[3]
-        bot.send_message(callback.message.chat.id, 'Секунду..')
+        bot.send_message(callback.message.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, callback.message, article, tovar_name.tovar, image=image, opisanie=opisanie,
                             price=price).poisk_ostatok(back_value="Назад в категорию 'Перчатки'")
 

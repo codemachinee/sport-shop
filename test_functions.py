@@ -77,7 +77,7 @@ class buttons:  # класс для создания клавиатур разл
         but3 = types.InlineKeyboardButton(text='Вернуться назад', callback_data=back_value)
         kb4.add(but1, but3)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заявку/купить онлайн выбранный товар?\n '
-                                                    f'/help - справка по боту', reply_markup=kb4)
+                                                    f'/help - Подробности покупки', reply_markup=kb4)
 
     def basket_buttons(self, name=None, r=None, article=None):
         keys = {}
@@ -132,7 +132,7 @@ def zayavka_done(bot, message, number):
     global ostatok
     wb = load_workbook('CCM.xlsx')
     ws = wb['кэш']
-    for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=7, values_only=True):
+    for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=9, values_only=True):
         if row[0] == message.chat.id:
             quantity = row[5]
             bot.send_message(message.chat.id,
@@ -152,10 +152,11 @@ def zayavka_done(bot, message, number):
                                        f'Размер: {row[3]}\n'
                                        f'Цена за штуку: {row[4]}\n'
                                        f'Количество: {quantity}\n'
+                                       f'Склад: {row[8]}\n'
                                        f'ИТОГО: {int(quantity)*(float(row[4][:-2].replace(",", ".").replace(" ", "")))}'
                                        f' ₽')
             poisk_tovar_in_base(bot, message, row[2], row[1], quantity, size=row[3],
-                                price=row[4]).zayavka_v_baze(number,
+                                price=row[4], dostavka=row[8]).zayavka_v_baze(number,
                                                              int(quantity)*(float(row[4][:-2].replace(",", ".").replace(
                                                                  " ", ""))))
             break
@@ -164,7 +165,7 @@ def zayavka_done(bot, message, number):
 class poisk_tovar_in_base:
 
     def __init__(self, bot, message, article=None, tovar_name=None, vnalichii=None, image=None, size=None,
-                 price=None, your_price=None, size_web=None):
+                 price=None, your_price=None, size_web=None, tovar_type=None, dostavka=None):
         self.bot = bot
         self.message = message
         self.article = article
@@ -175,6 +176,8 @@ class poisk_tovar_in_base:
         self.price = price
         self.your_price = your_price
         self.size_web = size_web
+        self.tovar_type = tovar_type
+        self.dostavka = dostavka
         self.wb = load_workbook('CCM.xlsx')
         self.ws = self.wb['кэш']
         self.ws2 = self.wb['МЛ Остатки штаб']
@@ -192,9 +195,11 @@ class poisk_tovar_in_base:
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
             if self.image is not None:
-                self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}')
-                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\nПрайс: {self.price}\n'
-                                                            f'Ваша цена: {self.your_price}\n'
+                self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}\n'
+                                                                      f'Артикул: {self.article}')
+                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
+                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
+                                                            f'Ваша цена: {self.your_price}\nДоставка: {self.dostavka}\n'
                                                             f'Таблица размеров: {self.size_web}')
                 if self.ws.max_row >= 10:
                     self.ws.delete_rows(5, self.ws.max_row)
@@ -205,6 +210,7 @@ class poisk_tovar_in_base:
                     self.ws['D1'] = self.size
                     self.ws['E1'] = self.your_price
                     self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
                     self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
                     self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
@@ -216,6 +222,7 @@ class poisk_tovar_in_base:
                     self.ws['D1'] = self.size
                     self.ws['E1'] = self.your_price
                     self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
                     self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
                     self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
@@ -230,9 +237,10 @@ class poisk_tovar_in_base:
                     ostatok = self.vnalichii
             else:
                 self.bot.send_message(self.message.chat.id, f'Фото товара временно отсутствует\n{self.tovar_name}\n'
-                                                            f'Размер: {self.size}')
-                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\nПрайс: {self.price}\n'
-                                                            f'Ваша цена: {self.your_price}\n'
+                                                            f'Размер: {self.size}\nАртикул: {self.article}')
+                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
+                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
+                                                            f'Ваша цена: {self.your_price}\nДоставка: {self.dostavka}\n'
                                                             f'Таблица размеров: {self.size_web}')
                 if self.ws.max_row >= 10:
                     self.ws.delete_rows(5, self.ws.max_row)
@@ -243,6 +251,7 @@ class poisk_tovar_in_base:
                     self.ws['D1'] = self.size
                     self.ws['E1'] = self.your_price
                     self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
                     self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
                     self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
@@ -254,6 +263,7 @@ class poisk_tovar_in_base:
                     self.ws['D1'] = self.size
                     self.ws['E1'] = self.your_price
                     self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
                     self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
                     self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
@@ -273,13 +283,14 @@ class poisk_tovar_in_base:
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1] # поиск ячейки с данными по ключевому слову
         try:
             for i in cell_id:
-                if self.worksheet2.cell(i.row, 12).value == 'FALSE' and str(self.worksheet2.cell(i.row, 9).value) == str(self.article):
-                    self.worksheet2.update(f'G{i.row}:K{i.row}',
+                if self.worksheet2.cell(i.row, 13).value == 'FALSE' and str(self.worksheet2.cell(i.row, 9).value) == str(self.article):
+                    self.worksheet2.update(f'G{i.row}:L{i.row}',
                                            [[int(self.worksheet2.cell(i.row, 7).value) + int(self.vnalichii),
                                              str(datetime.now().date()), self.worksheet2.cell(i.row, 9).value,
                                              self.worksheet2.cell(i.row, 10).value,
                                              (int(self.worksheet2.cell(i.row, 7).value) + int(self.vnalichii)) *
-                                             float(self.worksheet2.cell(i.row, 10).value[:-2].replace(",", ".").replace(" ", ""))]])
+                                             float(self.worksheet2.cell(i.row, 10).value[:-2].replace(",", ".").replace(" ", "")),
+                                             self.dostavka]])
                     for a in range(1, self.ws2.max_row + 1):
                         if str(self.ws2.cell(a, 1).value) == str(self.article):
                             self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) - int(self.vnalichii)
@@ -292,11 +303,11 @@ class poisk_tovar_in_base:
             else:
                 worksheet_len2 = len(self.worksheet2.col_values(1)) + 1
                 # запись клиента в свободную строку базы старых клиентов:
-                self.worksheet2.update(f'A{worksheet_len2}:l{worksheet_len2}',
+                self.worksheet2.update(f'A{worksheet_len2}:M{worksheet_len2}',
                                        [[self.message.chat.id, self.message.from_user.username,
                                          self.message.from_user.first_name, self.message.from_user.last_name, number,
                                          self.tovar_name, self.vnalichii, str(datetime.now().date()), self.article,
-                                         self.price, itogo, False]])
+                                         self.price, itogo, self.dostavka, False]])
                 for a in range(1, self.ws2.max_row + 1):
                     if str(self.ws2.cell(a, 1).value) == str(self.article):
                         self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) - int(self.vnalichii)
@@ -323,7 +334,7 @@ class poisk_tovar_in_base:
         self.bot.send_message(self.message.chat.id, "Собираем данные..")
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         for i in cell_id:
-            if self.worksheet2.cell(i.row, 12).value == 'FALSE':
+            if self.worksheet2.cell(i.row, 13).value == 'FALSE':
                 name.append(f'\n{self.worksheet2.cell(i.row, 6).value} - {self.worksheet2.cell(i.row, 7).value} шт.\n')
                 r.append(i.row, )
                 article.append(self.worksheet2.cell(i.row, 9).value)
@@ -342,7 +353,7 @@ class poisk_tovar_in_base:
                 if str(self.ws2.cell(a, 1).value) == str(article):
                     self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) + int(self.worksheet2.cell(cell_id.row, 7).value)
                     self.bot.send_message(self.message.message.chat.id, 'Товар успешно удален из корзины')
-                    self.worksheet2.batch_clear([f"A{cell_id.row}:K{cell_id.row}"])
+                    self.worksheet2.batch_clear([f"A{cell_id.row}:L{cell_id.row}"])
                     self.wb.save('CCM.xlsx')
                     self.bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
                                                     f'Клиент отменил заявку\n'
@@ -363,7 +374,7 @@ class poisk_tovar_in_base:
         self.bot.send_message(self.message.chat.id, "Собираем данные..")
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))
         for i in cell_id:
-            if self.worksheet2.cell(i.row, 12).value == 'TRUE':
+            if self.worksheet2.cell(i.row, 13).value == 'TRUE':
                 name.append(f'\n({self.worksheet2.cell(i.row, 8).value}) {self.worksheet2.cell(i.row, 6).value} - '
                             f'{self.worksheet2.cell(i.row, 7).value} шт.\n')
         name = ' '.join(name)

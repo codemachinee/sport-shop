@@ -81,6 +81,16 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+    elif m.text == 'Распродажа 🏷️':
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[9] is not None:
+                list_one.append(f'🏷️{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, m, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
     elif m.text == "Вернуться в начало":
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
@@ -100,11 +110,21 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+    elif m.text == '🏷️Вернуться в начало':
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[9] is not None:
+                list_one.append(f'🏷️{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, m, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
     elif m.text == 'Мои заказы 📋':
-        bot.send_message(m.chat.id, 'Секунду..')
+        bot.send_message(m.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
-        bot.send_message(m.chat.id, f'Секунду..')
+        bot.send_message(m.chat.id, f'Загружаем..')
         poisk_tovar_in_base(bot, m).basket_search()
     elif m.text == 'О нас ⁉️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
@@ -142,7 +162,7 @@ def check_callback(callback):
     elif callback.data[:10] == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
         poisk_tovar_in_base(bot, callback).basket_delete(callback.data[10:])
-    elif callback.data == "Вернуться в начало":
+    elif callback.data == "Вернуться в начало":   # кнопка "вернуться в начало" для каталога
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
                 break
@@ -151,7 +171,7 @@ def check_callback(callback):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
-    elif callback.data == '🆕Вернуться в начало':
+    elif callback.data == '🆕Вернуться в начало':     # кнопка "вернуться в начало" для поступлений
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[14] is not None:
                 list_one.append(f'🆕{row[8]}')
@@ -161,34 +181,57 @@ def check_callback(callback):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+    elif callback.data == '🏷️Вернуться в начало':     # кнопка "вернуться в начало" для поступлений
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+            if row[9] is not None:
+                list_one.append(f'🏷️{row[8]}')
+            elif row[8] == (None,):
+                break
+        list_one = list(set(list_one))
+        file_open = open("menu_logo.jpeg", 'rb')
+        buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
+                image=file_open).razdely_buttons()
 
     elif len(list_one) == 0:
-        # back_value = "Вернуться в начало"
         list_two = []
-        list_three = []
         kategoriya = None
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=16, values_only=True):
             if row == (None,):
                 break
-            elif f'🆕{row[8]}' == callback.data:
+            elif f'🆕{row[8]}' == callback.data:  # если колбек равен разделу из поступлений
                 if row[14] is not None:
                     list_one.append(f'🆕{row[1][0:30]}')
                     list_one = list(set(list_one))
                     kategoriya = 'категорию'
                     back_value = '🆕Вернуться в начало'
-            elif row[8] == callback.data:
+            elif row[8] == callback.data:     # если колбек равен разделу
                 list_one.append(row[1][0:30])
                 list_one = list(set(list_one))
                 kategoriya = 'категорию'
                 back_value = 'Вернуться в начало'
-            elif (callback.data in str(f'🆕{row[1]}')) and ('🆕' in callback.data) and row[14] is not None:
-                if len(row[2]) <= 25:
-                    list_two.append((f'🆕{str(row[2])}' + '-' + str(row[3]), f'🆕{row[0]}'))
-                    back_value = f'🆕{row[8]}'
+            elif f'🏷️{row[8]}' == callback.data:  # если колбек равен разделу из поступлений
+                if row[9] is not None:
+                    list_one.append(f'🏷️{row[1][0:30]}')
+                    list_one = list(set(list_one))
+                    kategoriya = 'категорию'
+                    back_value = '🏷️Вернуться в начало'
+            elif (callback.data in str(f'🆕{row[1]}')) and ('🆕' in callback.data) and row[14] is not None:  # если колбек содержится в категории из поступлений, содержит смайл нев и колонка поступление не пустая
+                if len(row[2]) <= 25:  # проверка длины названия категории
+                    list_two.append((f'🆕{str(row[2])}' + '-' + str(row[3]), f'🆕{row[0]}')) # формирование наименования из имени и размера, второе значение - атрибут
+                    back_value = f'🆕{row[8]}'  # метка для кнопки вернуться назад (будет возвращаться в разделы поступлений)
                     kategoriya = 'товар'
                 else:
                     list_two.append((f'🆕{row[2][:15]}...{str((row[2]) + str(row[3]))[-12:]}', f'🆕{row[0]}'))
                     back_value = f'🆕{row[8]}'
+                    kategoriya = 'товар'
+            elif (callback.data in str(f'🏷️{row[1]}')) and ('🏷️' in callback.data) and row[9] is not None:  # если колбек содержится в категории из поступлений, содержит смайл нев и колонка поступление не пустая
+                if len(row[2]) <= 25:  # проверка длины названия категории
+                    list_two.append((f'🏷️{str(row[2])}' + '-' + str(row[3]), f'🏷️{row[0]}')) # формирование наименования из имени и размера, второе значение - атрибут
+                    back_value = f'🏷️{row[8]}'  # метка для кнопки вернуться назад (будет возвращаться в разделы поступлений)
+                    kategoriya = 'товар'
+                else:
+                    list_two.append((f'🏷️{row[2][:15]}...{str((row[2]) + str(row[3]))[-12:]}', f'🏷️{row[0]}'))
+                    back_value = f'🏷️{row[8]}'
                     kategoriya = 'товар'
             elif callback.data in str(row[1]):
                 if len(row[2]) <= 25:
@@ -206,12 +249,15 @@ def check_callback(callback):
                 size = row[3]
                 price = row[4]
                 vnalichii = row[7]
+                tovar_type = row[15]
                 your_price = row[5]
+                dostavka = row[11]
                 size_web = row[13]
-                bot.send_message(callback.message.chat.id, 'Секунду..')
+                bot.send_message(callback.message.chat.id, 'Загружаем..')
                 poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
-                                    your_price=your_price, size_web=size_web).poisk_ostatok(back_value=row[1])
+                                    your_price=your_price, size_web=size_web, tovar_type=tovar_type,
+                                    dostavka=dostavka).poisk_ostatok(back_value=row[1])
             elif f'🆕{row[0]}' == str(callback.data):
                 tovar_name = row[2]
                 article = row[0]
@@ -219,12 +265,31 @@ def check_callback(callback):
                 size = row[3]
                 price = row[4]
                 vnalichii = row[7]
+                tovar_type = row[15]
                 your_price = row[5]
+                dostavka = row[11]
                 size_web = row[13]
-                bot.send_message(callback.message.chat.id, 'Секунду..')
+                bot.send_message(callback.message.chat.id, 'Загружаем..')
                 poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
-                                    your_price=your_price, size_web=size_web).poisk_ostatok(back_value=f'🆕{row[1]}')
+                                    your_price=your_price, size_web=size_web, tovar_type=tovar_type,
+                                    dostavka=dostavka).poisk_ostatok(back_value=f'🆕{row[1]}')
+            elif f'🏷️{row[0]}' == str(callback.data):
+                tovar_name = row[2]
+                article = row[0]
+                image = row[10]
+                size = row[3]
+                price = row[4]
+                vnalichii = row[7]
+                tovar_type = row[15]
+                your_price = row[5]
+                dostavka = row[11]
+                size_web = row[13]
+                bot.send_message(callback.message.chat.id, 'Загружаем..')
+                poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
+                                    image=image, size=size, price=price,
+                                    your_price=your_price, size_web=size_web, tovar_type=tovar_type,
+                                    dostavka=dostavka).poisk_ostatok(back_value=f'🏷️{row[1]}')
         if len(list_one) != 0:
             file_open = open("menu_logo.jpeg", 'rb')
             list_one.append(back_value)

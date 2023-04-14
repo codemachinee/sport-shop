@@ -2,8 +2,11 @@ import telebot  # библиотека телеграм-бота
 from telebot import types  # с помощью типов можно создавать клавиатуры
 #from apscheduler.schedulers.background import BackgroundScheduler  # библиотека для выполнения фоновых процессов в определенное время
 # import json
+import gspread
 from openpyxl import load_workbook
-from test_functions import buttons, zayavka_done, poisk_tovar_in_base, rasylka_message, admin_id
+
+
+from test_functions import buttons, poisk_tovar_in_base, rasylka_message, admin_id, tovar_in_basket, zayavka_done
 from passwords import *
 article = None
 
@@ -91,35 +94,30 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
-    elif m.text == "Вернуться в начало":
-        for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
-            if row == (None,):
-                break
-            list_one.append(*row)
-        list_one = list(set(list_one))
-        file_open = open("menu_logo.jpeg", 'rb')
-        buttons(bot, m, kategoriya='раздел', list_one=list_one,
-                image=file_open).razdely_buttons()
-    elif m.text == '🆕Вернуться в начало':
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
-            if row[14] is not None:
-                list_one.append(f'🆕{row[8]}')
-            elif row[8] == (None,):
-                break
-        list_one = list(set(list_one))
-        file_open = open("menu_logo.jpeg", 'rb')
-        buttons(bot, m, kategoriya='раздел', list_one=list_one,
-                image=file_open).razdely_buttons()
-    elif m.text == '🏷️Вернуться в начало':
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
-            if row[9] is not None:
-                list_one.append(f'🏷️{row[8]}')
-            elif row[8] == (None,):
-                break
-        list_one = list(set(list_one))
-        file_open = open("menu_logo.jpeg", 'rb')
-        buttons(bot, m, kategoriya='раздел', list_one=list_one,
-                image=file_open).razdely_buttons()
+    elif m.text == "Вернуться в корзину":
+        bot.send_message(m.chat.id, f'Загружаем..')
+        poisk_tovar_in_base(bot, m).basket_search()
+        buttons(bot, m).menu_buttons()
+    # elif m.text == '🆕Вернуться в начало':
+    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+    #         if row[14] is not None:
+    #             list_one.append(f'🆕{row[8]}')
+    #         elif row[8] == (None,):
+    #             break
+    #     list_one = list(set(list_one))
+    #     file_open = open("menu_logo.jpeg", 'rb')
+    #     buttons(bot, m, kategoriya='раздел', list_one=list_one,
+    #             image=file_open).razdely_buttons()
+    # elif m.text == '🏷️Вернуться в начало':
+    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
+    #         if row[9] is not None:
+    #             list_one.append(f'🏷️{row[8]}')
+    #         elif row[8] == (None,):
+    #             break
+    #     list_one = list(set(list_one))
+    #     file_open = open("menu_logo.jpeg", 'rb')
+    #     buttons(bot, m, kategoriya='раздел', list_one=list_one,
+    #             image=file_open).razdely_buttons()
     elif m.text == 'Мои заказы 📋':
         bot.send_message(m.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, m).zakazy_search()
@@ -141,27 +139,46 @@ def check_callback(callback):
     if callback.data == 'Да, хочу!':
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
-        bot.register_next_step_handler(val, amount)  # функция оформления заявки. Отправляет админу специальное сообщение о заявке
-    elif callback.data == 'Не оплачено':
-        bot.send_message(callback.message.chat.id,
-                         f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-                         'Спасибо, что выбрали нас.🤝\n'
-                         f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
-        bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-                                   f'Поступила ЗАЯВКА от:\n'
-                                   f'id чата: {callback.message.chat.id}\n'
-                                   f'Имя: {callback.from_user.first_name}\n'
-                                   f'Фамилия: {callback.from_user.last_name}\n'
-                                   f'Ссылка: @{callback.from_user.username}\n'
-                                   f'Товар: {tovar_name.tovar}\n'
-                                   f'Количество: {quantity.quantity}\n'
-                                   f'Оплата: Не оплачено')
+        bot.register_next_step_handler(val, amount)
+    if callback.data == 'Оформить заказ':
+        redact_basket(bot, callback.message).zapros_number()
+    if callback.data[:7] == 'red_row':
+        val = bot.edit_message_text(f'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры',
+                                    callback.message.chat.id, callback.message.id)
+        # val = bot.send_message(callback.message.chat.id,
+        #                        'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры')
+        bot.register_next_step_handler(val, redact_basket(bot, callback, callback.data[7:]).redact_quintity)
+    # elif callback.data == 'Не оплачено':
+    #     bot.send_message(callback.message.chat.id,
+    #                      f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
+    #                      'Спасибо, что выбрали нас.🤝\n'
+    #                      f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
+    #     bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
+    #                                f'Поступила ЗАЯВКА от:\n'
+    #                                f'id чата: {callback.message.chat.id}\n'
+    #                                f'Имя: {callback.from_user.first_name}\n'
+    #                                f'Фамилия: {callback.from_user.last_name}\n'
+    #                                f'Ссылка: @{callback.from_user.username}\n'
+    #                                f'Товар: {tovar_name.tovar}\n'
+    #                                f'Количество: {quantity.quantity}\n'
+    #                                f'Оплата: Не оплачено')
         #poisk_tovar_in_base(bot, callback, article, tovar_name.tovar, quantity.quantity).zayavka_v_baze()
     # elif callback.data == 'Оплачено':
     #     platezhy(bot, callback, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity).chec_control()
-    elif callback.data[:10] == 'delete_row':
+    elif callback.data == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
-        poisk_tovar_in_base(bot, callback).basket_delete(callback.data[10:])
+        poisk_tovar_in_base(bot, callback.message).basket_delete_all()
+    elif callback.data == 'Корзина':
+        kb7 = types.InlineKeyboardMarkup(row_width=1)
+        but1 = types.InlineKeyboardButton(text='Оформить заказ', callback_data='Оформить заказ')
+        but3 = types.InlineKeyboardButton(text='Редактировать заказ', callback_data="redact")
+        kb7.add(but1, but3)
+        bot.edit_message_text(f'Хотите оформить заказ/купить онлайн выбранный товар?\n '
+                              f'/help - Подробности покупки', callback.message.chat.id,
+                              callback.message.id)
+        bot.edit_message_reply_markup(callback.message.chat.id, callback.message.id, reply_markup=kb7)
+    elif callback.data == 'redact':
+        buttons(bot, callback.message).basket_buttons_redact()
     elif callback.data == "Вернуться в начало":   # кнопка "вернуться в начало" для каталога
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
@@ -310,25 +327,14 @@ def amount(message):
         for i in range(1, ws.max_row + 1):
             if str(ws.cell(i, 1).value) == str(message.chat.id):
                 if int(message.text) <= int(ws.cell(i, 7).value) and int(message.text) != 0:
-                    if ws.cell(i, 8).value is not None:
-                        ws.cell(i, 6).value = message.text
-                        wb.save('CCM.xlsx')
-                        zayavka_done(bot=bot, message=message, number=ws.cell(i, 8).value)
-                        break
-                    else:
-                        ws.cell(i, 6).value = message.text
-                        wb.save('CCM.xlsx')
-                        kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-                        but1 = types.KeyboardButton(text='Вернуться в начало')
-                        kb4.add(but1)
-                        mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона',
-                                                   reply_markup=kb4)
-                        bot.register_next_step_handler(mes_num, save_number)
-                        break
+                    ws.cell(i, 6).value = message.text
+                    wb.save('CCM.xlsx')
+                    tovar_in_basket(bot=bot, message=message)
+                    break
                 else:
                     bot.send_message(message.chat.id,
-                                     f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
-                                     f'корректное значение.\n'
+                                     f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. '
+                                     f'Отправьте корректное значение.\n'
                                      f'Чтобы изменить товар выберите "Категории товаров 🗂️"')
                     buttons(bot, message).zayavka_buttons()
                     break
@@ -336,20 +342,39 @@ def amount(message):
         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
         buttons(bot, message).zayavka_buttons()
 
-
-def save_number(message):
-    number = message.text
-    if number == "Вернуться в начало":
-        chek_message_category(message)
-    elif len(str(number)) >= 10 and ('+' in (str(number)) or '7' in (str(number)) or '8' in (str(number))):
-        zayavka_done(bot=bot, message=message, number=number)
-    else:
-        bot.send_message(message.chat.id, 'указан некорректный номер.')
-        kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        but1 = types.KeyboardButton(text='Вернуться в начало')
-        kb4.add(but1)
-        mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона', reply_markup=kb4)
-        bot.register_next_step_handler(mes_num, save_number)
+# def amount(message):
+#     wb = load_workbook('CCM.xlsx')
+#     ws = wb['кэш']
+#     try:
+#         int(message.text)
+#         for i in range(1, ws.max_row + 1):
+#             if str(ws.cell(i, 1).value) == str(message.chat.id):
+#                 if int(message.text) <= int(ws.cell(i, 7).value) and int(message.text) != 0:
+#                     if ws.cell(i, 8).value is not None:
+#                         ws.cell(i, 6).value = message.text
+#                         wb.save('CCM.xlsx')
+#                         zayavka_done(bot=bot, message=message, number=ws.cell(i, 8).value)
+#                         break
+#                     else:
+#                         ws.cell(i, 6).value = message.text
+#                         wb.save('CCM.xlsx')
+#                         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#                         but1 = types.KeyboardButton(text='Вернуться в начало')
+#                         kb4.add(but1)
+#                         mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона',
+#                                                    reply_markup=kb4)
+#                         bot.register_next_step_handler(mes_num, save_number)
+#                         break
+#                 else:
+#                     bot.send_message(message.chat.id,
+#                                      f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
+#                                      f'корректное значение.\n'
+#                                      f'Чтобы изменить товар выберите "Категории товаров 🗂️"')
+#                     buttons(bot, message).zayavka_buttons()
+#                     break
+#     except ValueError:
+#         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
+#         buttons(bot, message).zayavka_buttons()
 
 
 def sent_message_perehvat_1(message):
@@ -368,5 +393,85 @@ def sent_message_perehvat_2(message):
     bot.copy_message(rasylka.post, admin_id, message.id, reply_markup=kb2)
     bot.send_message(admin_id, 'Сообщение отправлено!')
 
+
+class redact_basket:
+    def __init__(self, bot, message, i=None):
+        self.bot = bot
+        self.message = message
+        self.i = i
+        gc = gspread.service_account(
+            filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
+        # открытие таблицы по юрл адресу:
+        try:
+            sh = gc.open('CCM')
+            self.worksheet2 = sh.worksheet('заявки')
+        except Exception:
+            self.bot.send_message(self.message.chat.id, 'Ошибка подключения. Повторите запрос через 1 минуту.')
+
+    def redact_quintity(self, message):
+        wb = load_workbook('CCM.xlsx')
+        ws2 = wb['МЛ Остатки штаб']
+        try:
+            int(message.text)
+            if int(message.text) == 0:
+                bot.send_message(message.chat.id, f'Подчищаем базу..')
+                poisk_tovar_in_base(bot, message).basket_delete(self.i)
+                bot.send_message(message.chat.id, f'Загружаем..')
+                poisk_tovar_in_base(bot, message).basket_search()
+            else:
+                row = int(self.i)
+                article = self.worksheet2.cell(row, 9).value
+                for a in range(1, ws2.max_row + 1):
+                    if str(ws2.cell(a, 1).value) == str(article):
+                        if (int(ws2.cell(a, 8).value) + int(self.worksheet2.cell(row, 7).value)) >= int(message.text):
+                            ws2.cell(a, 8).value = int(ws2.cell(a, 8).value) + int(self.worksheet2.cell(row, 7).value) - \
+                                                   int(message.text)
+                            bot.send_message(message.chat.id, 'Данные в корзине изменены. Благодарим за ваш выбор!')
+                            self.worksheet2.update_cell(row, 7, int(message.text))
+                            self.worksheet2.update_cell(row, 11, int(self.worksheet2.cell(row, 7).value) *
+                                                        float(self.worksheet2.cell(row, 10).value[:-2].replace(",", ".").replace(" ", "").replace("\xa0", "")))
+                            poisk_tovar_in_base(bot, message).basket_search()
+                            wb.save('CCM.xlsx')
+                            break
+                        else:
+                            self.bot.edit_message_text(f'Увы, но указанное количество превышает остатки товара. '
+                                                       f'Отправьте корректное значение.', self.message.message.chat.id,
+                                                       self.message.message.id)
+                            buttons(self.bot, self.message.message).basket_buttons_redact()
+                            break
+        except ValueError:
+            bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
+            buttons(bot, message).zayavka_buttons()
+
+    def zapros_number(self):
+        wb = load_workbook('CCM.xlsx')
+        ws = wb['кэш']
+        for i in range(1, ws.max_row + 1):
+            if str(ws.cell(i, 1).value) == str(self.message.chat.id):
+                if ws.cell(i, 8).value is not None:
+                    zayavka_done(bot=self.bot, message=self.message, number=ws.cell(i, 8).value)
+                    break
+        else:
+            kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+            but1 = types.KeyboardButton(text='Вернуться в корзину')
+            kb4.add(but1)
+            mes_num = bot.send_message(self.message.chat.id, 'Пожалуйста введите номер телефона',
+                                       reply_markup=kb4)
+            bot.register_next_step_handler(mes_num, save_number)
+
+
+def save_number(message):
+    number = message.text
+    if number == "Вернуться в корзину":
+        chek_message_category(message)
+    elif len(str(number)) >= 10 and ('+' in (str(number)) or '7' in (str(number)) or '8' in (str(number))):
+        zayavka_done(bot=bot, message=message, number=number)
+    else:
+        bot.send_message(message.chat.id, 'указан некорректный номер.')
+        kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        but1 = types.KeyboardButton(text='Вернуться в начало')
+        kb4.add(but1)
+        mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона', reply_markup=kb4)
+        bot.register_next_step_handler(mes_num, save_number)
 
 bot.infinity_polling()

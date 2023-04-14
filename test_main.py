@@ -171,8 +171,9 @@ def check_callback(callback):
     elif callback.data == 'Корзина':
         kb7 = types.InlineKeyboardMarkup(row_width=1)
         but1 = types.InlineKeyboardButton(text='Оформить заказ', callback_data='Оформить заказ')
-        but3 = types.InlineKeyboardButton(text='Редактировать заказ', callback_data="redact")
-        kb7.add(but1, but3)
+        but2 = types.InlineKeyboardButton(text='Редактировать заказ', callback_data="redact")
+        but3 = types.InlineKeyboardButton(text='Очистить корзину', callback_data='delete_row')
+        kb7.add(but1, but2, but3)
         bot.edit_message_text(f'Хотите оформить заказ/купить онлайн выбранный товар?\n '
                               f'/help - Подробности покупки', callback.message.chat.id,
                               callback.message.id)

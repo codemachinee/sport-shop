@@ -82,7 +82,7 @@ class buttons:  # класс для создания клавиатур разл
     def basket_buttons(self):
         kb7 = types.InlineKeyboardMarkup(row_width=1)
         but1 = types.InlineKeyboardButton(text='Оформить заказ', callback_data='Оформить заказ')
-        but2 = types.InlineKeyboardButton(text='Редактировать заказ', callback_data='redact')
+        but2 = types.InlineKeyboardButton(text='Редактировать корзину', callback_data='redact')
         but3 = types.InlineKeyboardButton(text='Очистить корзину', callback_data='delete_row')
         kb7.add(but1, but2, but3)
         self.bot.send_message(self.message.chat.id, f'Хотите оформить заказ/купить онлайн выбранный товар?\n '
@@ -415,7 +415,8 @@ class poisk_tovar_in_base:
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         for i in cell_id:
             if self.worksheet2.cell(i.row, 15).value == 'FALSE':
-                name.append(f'\n{self.worksheet2.cell(i.row, 6).value} - {self.worksheet2.cell(i.row, 7).value} шт. \n'
+                name.append(f'\nПозиция: {cell_id.index(i) + 1}\n'
+                            f'{self.worksheet2.cell(i.row, 6).value} - {self.worksheet2.cell(i.row, 7).value} шт. \n'
                             f'Категория - {self.worksheet2.cell(i.row, 14).value}\n'
                             f'Цена - {self.worksheet2.cell(i.row, 11).value}₽\n'
                             f'Доставка - {self.worksheet2.cell(i.row, 12).value}\n')

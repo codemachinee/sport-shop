@@ -5,13 +5,13 @@ from telebot import types  # с помощью типов можно созда�
 import gspread
 from openpyxl import load_workbook
 
-
 from test_functions import buttons, poisk_tovar_in_base, rasylka_message, admin_id, tovar_in_basket, zayavka_done
 from passwords import *
 article = None
 
 token = code_mashine
 # token = lemonade
+# token = ccmclub
 bot = telebot.TeleBot(token)
 
 tovar_name = None
@@ -35,19 +35,17 @@ def start(message):
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    kb2 = types.ReplyKeyboardRemove()
-    bot.send_message(message.chat.id, '...', reply_markup=kb2)
+    kb1 = types.InlineKeyboardMarkup()
+    with open('command_help.txt', 'r') as help_text:
+        help_text1 = help_text.read()
     if message.chat.id == admin_id:      # условия демонстрации различных команд для админа и клиентов
-        bot.send_message(message.chat.id, f'Основные команды поддерживаемые ботом:\n'
-                                          f'  - для просмотра ассортимента по категориям\n'
-                                          f'/start - инициализация бота\n'
-                                          f'/help - справка по боту\n'
-                                          f'/sent_message - отправить с помощью бота сообщение клиенту по id чата')
+        but1 = types.InlineKeyboardButton('редактировать текст команды /help', callback_data='rhelp')
+        kb1.add(but1)
+        bot.send_message(message.chat.id, help_text1,
+                         reply_markup=kb1)
     else:
-        bot.send_message(message.chat.id, f'Основные команды поддерживаемые ботом:\n'
-                                          f'Выберите "Категории товаров 🗂️" - для просмотра ассортимента по категориям\n'
-                                          f'/start - инициализация бота\n'
-                                          f'/help - справка по боту\n')
+        bot.send_message(message.chat.id, help_text1)
+        buttons(bot, message).menu_buttons()
 
 
 @bot.message_handler(commands=['sent_message'])
@@ -125,7 +123,16 @@ def chek_message_category(m):
         bot.send_message(m.chat.id, f'Загружаем..')
         poisk_tovar_in_base(bot, m).basket_search()
     elif m.text == 'О нас ⁉️':
-        bot.send_message(m.chat.id, 'фрагмент в разработке')
+        kb1 = types.InlineKeyboardMarkup()
+        with open('about.txt', 'r') as help_text:
+            help_text1 = help_text.read()
+        if m.chat.id == admin_id:  # условия демонстрации различных команд для админа и клиентов
+            but1 = types.InlineKeyboardButton('редактировать текст раздела "О нас"', callback_data='rabout')
+            kb1.add(but1)
+            bot.send_message(m.chat.id, help_text1,
+                             reply_markup=kb1)
+        else:
+            bot.send_message(m.chat.id, help_text1)
     elif m.text == 'Контакты ☎️':
         bot.send_message(m.chat.id, 'фрагмент в разработке')
 
@@ -140,10 +147,11 @@ def check_callback(callback):
         val = bot.send_message(callback.message.chat.id,
                                'Пожалуйста отправьте количество желаемого товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, amount)
-    if callback.data == 'Оформить заказ':
+    elif callback.data == 'Оформить заказ':
         redact_basket(bot, callback.message).zapros_number()
-    if callback.data[:7] == 'red_row':
-        val = bot.edit_message_text(f'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры',
+    elif callback.data[:7] == 'red_row':
+        val = bot.edit_message_text(f'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры.\n'
+                                    f'Для удаления позиции введите ноль (0).',
                                     callback.message.chat.id, callback.message.id)
         # val = bot.send_message(callback.message.chat.id,
         #                        'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры')
@@ -168,10 +176,22 @@ def check_callback(callback):
     elif callback.data == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
         poisk_tovar_in_base(bot, callback.message).basket_delete_all()
+    elif callback.data == 'rhelp':
+        kb7 = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+        but1 = types.KeyboardButton(text='Каталог 🗂️')
+        kb7.add(but1)
+        val = bot.send_message(callback.message.chat.id, 'введите новый текст команды /help', reply_markup=kb7)
+        bot.register_next_step_handler(val, redact_basket(bot, callback.message, file='command_help.txt').redact_text)
+    elif callback.data == 'rabout':
+        kb7 = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+        but1 = types.KeyboardButton(text='Каталог 🗂️')
+        kb7.add(but1)
+        val = bot.send_message(callback.message.chat.id, 'введите новый текст раздела "О нас"', reply_markup=kb7)
+        bot.register_next_step_handler(val, redact_basket(bot, callback.message, file='about.txt').redact_text)
     elif callback.data == 'Корзина':
         kb7 = types.InlineKeyboardMarkup(row_width=1)
         but1 = types.InlineKeyboardButton(text='Оформить заказ', callback_data='Оформить заказ')
-        but2 = types.InlineKeyboardButton(text='Редактировать заказ', callback_data="redact")
+        but2 = types.InlineKeyboardButton(text='Редактировать корзину', callback_data="redact")
         but3 = types.InlineKeyboardButton(text='Очистить корзину', callback_data='delete_row')
         kb7.add(but1, but2, but3)
         bot.edit_message_text(f'Хотите оформить заказ/купить онлайн выбранный товар?\n '
@@ -396,10 +416,11 @@ def sent_message_perehvat_2(message):
 
 
 class redact_basket:
-    def __init__(self, bot, message, i=None):
+    def __init__(self, bot, message, i=None, file=None):
         self.bot = bot
         self.message = message
         self.i = i
+        self.file = file
         gc = gspread.service_account(
             filename='pidor-of-the-day-af3dd140b860.json')  # доступ к гугл табл по ключевому файлу аккаунта разраба
         # открытие таблицы по юрл адресу:
@@ -456,9 +477,20 @@ class redact_basket:
             kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
             but1 = types.KeyboardButton(text='Вернуться в корзину')
             kb4.add(but1)
-            mes_num = bot.send_message(self.message.chat.id, 'Пожалуйста введите номер телефона',
+            mes_num = bot.send_message(self.message.chat.id, 'Для оформления заказа и передачи его менеджеру просим '
+                                                             'ввести ваш контактный номер (с помощью клавиатуры).',
                                        reply_markup=kb4)
             bot.register_next_step_handler(mes_num, save_number)
+
+    def redact_text(self, message):
+        if message.text == 'Каталог 🗂️':
+            chek_message_category(message)
+            buttons(self.bot, message).menu_buttons()
+        else:
+            with open(self.file, 'w') as help_txt:
+                help_txt.write(message.text)
+                buttons(self.bot, message).menu_buttons()
+                bot.send_message(message.chat.id, 'текст успешно изменен')
 
 
 def save_number(message):
@@ -472,7 +504,9 @@ def save_number(message):
         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         but1 = types.KeyboardButton(text='Вернуться в начало')
         kb4.add(but1)
-        mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона', reply_markup=kb4)
+        mes_num = bot.send_message(message.chat.id, 'Для оформления заказа и передачи его менеджеру просим '
+                                                    'ввести ваш контактный номер (с помощью клавиатуры).',
+                                   reply_markup=kb4)
         bot.register_next_step_handler(mes_num, save_number)
 
 bot.infinity_polling()

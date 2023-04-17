@@ -1,7 +1,5 @@
 import telebot  # библиотека телеграм-бота
 from telebot import types  # с помощью типов можно создавать клавиатуры
-#from apscheduler.schedulers.background import BackgroundScheduler  # библиотека для выполнения фоновых процессов в определенное время
-# import json
 import gspread
 from openpyxl import load_workbook
 
@@ -96,26 +94,6 @@ def chek_message_category(m):
         bot.send_message(m.chat.id, f'Загружаем..')
         poisk_tovar_in_base(bot, m).basket_search()
         buttons(bot, m).menu_buttons()
-    # elif m.text == '🆕Вернуться в начало':
-    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
-    #         if row[14] is not None:
-    #             list_one.append(f'🆕{row[8]}')
-    #         elif row[8] == (None,):
-    #             break
-    #     list_one = list(set(list_one))
-    #     file_open = open("menu_logo.jpeg", 'rb')
-    #     buttons(bot, m, kategoriya='раздел', list_one=list_one,
-    #             image=file_open).razdely_buttons()
-    # elif m.text == '🏷️Вернуться в начало':
-    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
-    #         if row[9] is not None:
-    #             list_one.append(f'🏷️{row[8]}')
-    #         elif row[8] == (None,):
-    #             break
-    #     list_one = list(set(list_one))
-    #     file_open = open("menu_logo.jpeg", 'rb')
-    #     buttons(bot, m, kategoriya='раздел', list_one=list_one,
-    #             image=file_open).razdely_buttons()
     elif m.text == 'Мои заказы 📋':
         bot.send_message(m.chat.id, 'Загружаем..')
         poisk_tovar_in_base(bot, m).zakazy_search()
@@ -133,8 +111,6 @@ def chek_message_category(m):
                              reply_markup=kb1)
         else:
             bot.send_message(m.chat.id, help_text1)
-    elif m.text == 'Контакты ☎️':
-        bot.send_message(m.chat.id, 'фрагмент в разработке')
 
 
 @bot.callback_query_handler(func=lambda callback: callback.data)
@@ -153,26 +129,7 @@ def check_callback(callback):
         val = bot.edit_message_text(f'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры.\n'
                                     f'Для удаления позиции введите ноль (0).',
                                     callback.message.chat.id, callback.message.id)
-        # val = bot.send_message(callback.message.chat.id,
-        #                        'Пожалуйста введите НОВОЕ значение количества товара ЧИСЛОМ с помощью клавиатуры')
         bot.register_next_step_handler(val, redact_basket(bot, callback, callback.data[7:]).redact_quintity)
-    # elif callback.data == 'Не оплачено':
-    #     bot.send_message(callback.message.chat.id,
-    #                      f'Заявка оформлена и передана менеджеру, с Вами свяжутся в ближайшее время. '
-    #                      'Спасибо, что выбрали нас.🤝\n'
-    #                      f'Чтобы продолжить покупки выберите "Категории товаров 🗂️"')
-    #     bot.send_message(admin_id, f'🚨!!!ВНИМАНИЕ!!!🚨\n'
-    #                                f'Поступила ЗАЯВКА от:\n'
-    #                                f'id чата: {callback.message.chat.id}\n'
-    #                                f'Имя: {callback.from_user.first_name}\n'
-    #                                f'Фамилия: {callback.from_user.last_name}\n'
-    #                                f'Ссылка: @{callback.from_user.username}\n'
-    #                                f'Товар: {tovar_name.tovar}\n'
-    #                                f'Количество: {quantity.quantity}\n'
-    #                                f'Оплата: Не оплачено')
-        #poisk_tovar_in_base(bot, callback, article, tovar_name.tovar, quantity.quantity).zayavka_v_baze()
-    # elif callback.data == 'Оплачено':
-    #     platezhy(bot, callback, article=article, tovar_name=tovar_name.tovar, quantity=quantity.quantity).chec_control()
     elif callback.data == 'delete_row':
         bot.send_message(callback.message.chat.id, f'Подчищаем базу..')
         poisk_tovar_in_base(bot, callback.message).basket_delete_all()
@@ -362,40 +319,6 @@ def amount(message):
     except ValueError:
         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
         buttons(bot, message).zayavka_buttons()
-
-# def amount(message):
-#     wb = load_workbook('CCM.xlsx')
-#     ws = wb['кэш']
-#     try:
-#         int(message.text)
-#         for i in range(1, ws.max_row + 1):
-#             if str(ws.cell(i, 1).value) == str(message.chat.id):
-#                 if int(message.text) <= int(ws.cell(i, 7).value) and int(message.text) != 0:
-#                     if ws.cell(i, 8).value is not None:
-#                         ws.cell(i, 6).value = message.text
-#                         wb.save('CCM.xlsx')
-#                         zayavka_done(bot=bot, message=message, number=ws.cell(i, 8).value)
-#                         break
-#                     else:
-#                         ws.cell(i, 6).value = message.text
-#                         wb.save('CCM.xlsx')
-#                         kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-#                         but1 = types.KeyboardButton(text='Вернуться в начало')
-#                         kb4.add(but1)
-#                         mes_num = bot.send_message(message.chat.id, 'Пожалуйста введите номер телефона',
-#                                                    reply_markup=kb4)
-#                         bot.register_next_step_handler(mes_num, save_number)
-#                         break
-#                 else:
-#                     bot.send_message(message.chat.id,
-#                                      f'Увы, но указанное количество либо превышает остатки товара, либо равно 0. Отправьте '
-#                                      f'корректное значение.\n'
-#                                      f'Чтобы изменить товар выберите "Категории товаров 🗂️"')
-#                     buttons(bot, message).zayavka_buttons()
-#                     break
-#     except ValueError:
-#         bot.send_message(message.chat.id, f'Пожалуйста, укажите количество ЧИСЛОМ')
-#         buttons(bot, message).zayavka_buttons()
 
 
 def sent_message_perehvat_1(message):

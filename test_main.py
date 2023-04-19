@@ -66,7 +66,7 @@ def chek_message_category(m):
             if row == (None,):
                 break
             list_one.append(*row)
-        list_one = list(set(list_one))
+        list_one = sorted(list(set(list_one)))
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
@@ -76,7 +76,7 @@ def chek_message_category(m):
                 list_one.append(f'🆕{row[8]}')
             elif row[8] == (None,):
                 break
-        list_one = list(set(list_one))
+        list_one = sorted(list(set(list_one)))
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
@@ -86,7 +86,7 @@ def chek_message_category(m):
                 list_one.append(f'🏷️{row[8]}')
             elif row[8] == (None,):
                 break
-        list_one = list(set(list_one))
+        list_one = sorted(list(set(list_one)))
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
@@ -196,18 +196,18 @@ def check_callback(callback):
             elif f'🆕{row[8]}' == callback.data:  # если колбек равен разделу из поступлений
                 if row[14] is not None:
                     list_one.append(f'🆕{row[1][0:30]}')
-                    list_one = list(set(list_one))
+                    list_one = sorted(list(set(list_one)))
                     kategoriya = 'категорию'
                     back_value = '🆕Вернуться в начало'
             elif row[8] == callback.data:     # если колбек равен разделу
                 list_one.append(row[1][0:30])
-                list_one = list(set(list_one))
+                list_one = sorted(list(set(list_one)))
                 kategoriya = 'категорию'
                 back_value = 'Вернуться в начало'
             elif f'🏷️{row[8]}' == callback.data:  # если колбек равен разделу из поступлений
                 if row[9] is not None:
                     list_one.append(f'🏷️{row[1][0:30]}')
-                    list_one = list(set(list_one))
+                    list_one = sorted(list(set(list_one)))
                     kategoriya = 'категорию'
                     back_value = '🏷️Вернуться в начало'
             elif (callback.data in str(f'🆕{row[1]}')) and ('🆕' in callback.data) and row[14] is not None:  # если колбек содержится в категории из поступлений, содержит смайл нев и колонка поступление не пустая

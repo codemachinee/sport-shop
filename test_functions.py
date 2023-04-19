@@ -123,7 +123,7 @@ def tovar_in_basket(bot, message):
             buttons(bot, message).menu_buttons()
             poisk_tovar_in_base(bot, message, row[2], row[1], quantity, size=row[3],
                                 price=row[4], dostavka=row[8]).zayavka_v_baze(
-                                                             int(quantity)*(float(row[4][:-2].replace(",", ".").replace(
+                                                             int(quantity)*(float(str(row[4]).replace(",", ".").replace(
                                                                  " ", "").replace("\xa0", ""))), row[9])
             break
 
@@ -197,8 +197,8 @@ class poisk_tovar_in_base:
                 self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}\n'
                                                                       f'Артикул: {self.article}')
                 self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
-                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
-                                                            f'Ваша цена: {self.your_price}\nДоставка: {self.dostavka}\n'
+                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price} ₽\n'
+                                                            f'Ваша цена: {self.your_price} ₽\nДоставка: {self.dostavka}\n'
                                                             f'Таблица размеров: {self.size_web}')
                 if self.ws.max_row >= 20:
                     self.ws.delete_rows(5, self.ws.max_row)
@@ -292,7 +292,7 @@ class poisk_tovar_in_base:
                                              str(datetime.now().date()), self.worksheet2.cell(i.row, 9).value,
                                              self.worksheet2.cell(i.row, 10).value,
                                              (int(self.worksheet2.cell(i.row, 7).value) + int(self.vnalichii)) *
-                                             float(self.worksheet2.cell(i.row, 10).value[:-2].replace(",", ".").replace(" ", "").replace("\xa0", "")),
+                                             float(str(self.worksheet2.cell(i.row, 10).value).replace(",", ".").replace(" ", "").replace("\xa0", "")),
                                              self.dostavka]])
                     for a in range(1, self.ws2.max_row + 1):
                         if str(self.ws2.cell(a, 1).value) == str(self.article):
@@ -336,7 +336,7 @@ class poisk_tovar_in_base:
                             f'Категория - {self.worksheet2.cell(i.row, 14).value}\n'
                             f'Цена - {self.worksheet2.cell(i.row, 11).value}₽\n'
                             f'Доставка - {self.worksheet2.cell(i.row, 12).value}\n')
-                sum_price += float(self.worksheet2.cell(i.row, 11).value.replace(",", ".").replace(" ", "").replace("\xa0", ""))
+                sum_price += float(str(self.worksheet2.cell(i.row, 11).value).replace(",", ".").replace(" ", "").replace("\xa0", ""))
                 sum_quantity += int(self.worksheet2.cell(i.row, 7).value)
         name_ = ' '.join(name)
         if len(name) != 0:

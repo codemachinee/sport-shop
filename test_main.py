@@ -374,7 +374,7 @@ class redact_basket:
                             bot.send_message(message.chat.id, 'Данные в корзине изменены. Благодарим за ваш выбор!')
                             self.worksheet2.update_cell(row, 7, int(message.text))
                             self.worksheet2.update_cell(row, 11, int(self.worksheet2.cell(row, 7).value) *
-                                                        float(self.worksheet2.cell(row, 10).value[:-2].replace(",", ".").replace(" ", "").replace("\xa0", "")))
+                                                        float(str(self.worksheet2.cell(row, 10).value).replace(",", ".").replace(" ", "").replace("\xa0", "")))
                             poisk_tovar_in_base(bot, message).basket_search()
                             wb.save('CCM.xlsx')
                             break

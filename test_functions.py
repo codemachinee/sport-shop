@@ -193,7 +193,7 @@ class poisk_tovar_in_base:
         global ostatok
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
-            if self.image is not None:
+            if self.image is not None and self.image != 0:
                 self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}\n'
                                                                       f'Артикул: {self.article}')
                 self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'

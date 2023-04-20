@@ -198,7 +198,7 @@ class poisk_tovar_in_base:
                                                                       f'Артикул: {self.article}')
                 self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
                                                             f'Тип товара: {self.tovar_type}\nПрайс: {self.price} ₽\n'
-                                                            f'Ваша цена: {self.your_price} ₽\nДоставка: {self.dostavka}\n'
+                                                            f'Цена опт: {self.your_price} ₽\nДоставка: {self.dostavka}\n'
                                                             f'Таблица размеров: {self.size_web}')
                 if self.ws.max_row >= 20:
                     self.ws.delete_rows(5, self.ws.max_row)
@@ -241,7 +241,7 @@ class poisk_tovar_in_base:
                                                             f'Размер: {self.size}\nАртикул: {self.article}')
                 self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
                                                             f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
-                                                            f'Ваша цена: {self.your_price}\nДоставка: {self.dostavka}\n'
+                                                            f'Цена опт: {self.your_price}\nДоставка: {self.dostavka}\n'
                                                             f'Таблица размеров: {self.size_web}')
                 if self.ws.max_row >= 20:
                     self.ws.delete_rows(5, self.ws.max_row)

@@ -382,36 +382,40 @@ class poisk_tovar_in_base:
                                                         'обновить данные')
 
     def zakazy_search(self):
-        list_of_dicts = self.worksheet2.get_all_records()
-        cell_id = {}
-        for i in list_of_dicts:
-            if i[' telegram id'] is not None:
-                try:
-                    if i[' telegram id'] == self.message.chat.id and i[
-                         'статус заказа (оформил клиент заказ или же он просто в корзине)'] == 'TRUE':
-                        cell_id[str(i['номер заказа'])] = {'name': f'{cell_id[str(i["номер заказа"])]["name"]}\n'
-                                                                   f'{i["товар"]} - {i["количество"]} шт.',
-                                                           'price': cell_id[str(i["номер заказа"])]["price"] + float(
-                                                                    i['цена итого'].replace('\xa0', '').replace(',', '.')),
-                                                           'status': f'{cell_id[str(i["номер заказа"])]["status"]}'}
-                except KeyError:
-                    cell_id[str(i['номер заказа'])] = {'name': f'{i["товар"]} - {i["количество"]} шт.', 'price':
-                                                       float(i['цена итого'].replace('\xa0', '').replace(',', '.')),
-                                                       'status': f'{i["статус заказа (отображается у клиента)"]}'}
+        try:
+            list_of_dicts = self.worksheet2.get_all_records()
+            cell_id = {}
+            for i in list_of_dicts:
+                if i[' telegram id'] is not None:
+                    try:
+                        if i[' telegram id'] == self.message.chat.id and i[
+                             'статус заказа (оформил клиент заказ или же он просто в корзине)'] == 'TRUE':
+                            cell_id[str(i['номер заказа'])] = {'name': f'{cell_id[str(i["номер заказа"])]["name"]}\n'
+                                                                       f'{i["товар"]} - {i["количество"]} шт.',
+                                                               'price': cell_id[str(i["номер заказа"])]["price"] + float(
+                                                                        i['цена итого'].replace('\xa0', '').replace(',', '.')),
+                                                               'status': f'{cell_id[str(i["номер заказа"])]["status"]}'}
+                    except KeyError:
+                        cell_id[str(i['номер заказа'])] = {'name': f'{i["товар"]} - {i["количество"]} шт.', 'price':
+                                                           float(i['цена итого'].replace('\xa0', '').replace(',', '.')),
+                                                           'status': f'{i["статус заказа (отображается у клиента)"]}'}
+                else:
+                    break
+            if len(cell_id.keys()) != 0:
+                block = []
+                for i in reversed(cell_id.keys()):
+                    block.append(f'Заказ № {i}\n'
+                                 f'{cell_id[i]["name"]}\n'
+                                 f'Cтатус: {cell_id[i]["status"]}\n'
+                                 f'К оплате: {cell_id[i]["price"]} ₽\n\n')
+                block = ' '.join(block)
+                self.bot.send_message(self.message.chat.id, f' Ваша история заказов:\n'
+                                                            f'{block}')
             else:
-                break
-        if len(cell_id.keys()) != 0:
-            block = []
-            for i in reversed(cell_id.keys()):
-                block.append(f'Заказ № {i}\n'
-                             f'{cell_id[i]["name"]}\n'
-                             f'Cтатус: {cell_id[i]["status"]}\n'
-                             f'К оплате: {cell_id[i]["price"]} ₽\n\n')
-            block = ' '.join(block)
-            self.bot.send_message(self.message.chat.id, f' Ваша история заказов:\n'
-                                                        f'{block}')
-        else:
-            self.bot.send_message(self.message.chat.id, f'Заказы отсутствуют')
+                self.bot.send_message(self.message.chat.id, f'Заказы отсутствуют')
+        except Exception:
+            self.bot.send_message(admin_id, f'Сервисное сообщение: Ошибка в оформлении гугл таблицы. У каждого нового '
+                                            f'стобца должно быть название.')
 
 
 class rasylka_message:  # класс хранения сообщения для рассылки

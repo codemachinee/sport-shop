@@ -96,7 +96,7 @@ class buttons:  # класс для создания клавиатур разл
             kb4 = types.InlineKeyboardMarkup()
             rows = []
             for i in cell_id:
-                if worksheet2.cell(i.row, 15).value == 'FALSE':
+                if worksheet2.cell(i.row, 16).value == 'FALSE':
                     keys[f'but{cell_id.index(i)}'] = types.InlineKeyboardButton(text=int(cell_id.index(i)) + 1,
                                                                                 callback_data=f'red_row{i.row}')
                     kb4.add(keys[f'but{cell_id.index(i)}'])
@@ -136,10 +136,10 @@ def zayavka_done(bot, message, number):
         cell_id = (worksheet2.findall(str(message.chat.id), in_column=1))[::-1]# поиск ячейки с данными по ключевому слову
         zakaz_id = f'{message.chat.id}{cell_id[0].row}'
         for i in cell_id:
-            if worksheet2.cell(i.row, 15).value == 'FALSE':
+            if worksheet2.cell(i.row, 16).value == 'FALSE':
                 worksheet2.update_cell(i.row, 5, number)
                 worksheet2.update_cell(i.row, 13, zakaz_id)
-                worksheet2.update_cell(i.row, 15, 'TRUE')
+                worksheet2.update_cell(i.row, 16, 'TRUE')
         bot.send_message(message.chat.id,
                          f'Вашему заказу присвоен номер {zakaz_id}. Заказ отправлен менеджеру.\n'
                          f'Дождитесь обратного звонка в ближайшее время, для уточнения деталей заказа.')
@@ -286,7 +286,7 @@ class poisk_tovar_in_base:
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1] # поиск ячейки с данными по ключевому слову
         try:
             for i in cell_id:
-                if self.worksheet2.cell(i.row, 15).value == 'FALSE' and str(self.worksheet2.cell(i.row, 9).value) == str(self.article):
+                if self.worksheet2.cell(i.row, 16).value == 'FALSE' and str(self.worksheet2.cell(i.row, 9).value) == str(self.article):
                     self.worksheet2.update(f'G{i.row}:L{i.row}',
                                            [[int(self.worksheet2.cell(i.row, 7).value) + int(self.vnalichii),
                                              str(datetime.now().date()), self.worksheet2.cell(i.row, 9).value,
@@ -302,11 +302,11 @@ class poisk_tovar_in_base:
                     break
             else:
                 worksheet_len2 = len(self.worksheet2.col_values(1)) + 1  # запись клиента в свободную строку базы старых клиентов:
-                self.worksheet2.update(f'A{worksheet_len2}:N{worksheet_len2}',
+                self.worksheet2.update(f'A{worksheet_len2}:O{worksheet_len2}',
                                        [[self.message.chat.id, self.message.from_user.username,
                                          self.message.from_user.first_name, self.message.from_user.last_name, None,
                                          self.tovar_name, self.vnalichii, str(datetime.now().date()), self.article,
-                                         self.price, itogo, self.dostavka, None, tovar_kategory]])
+                                         self.price, itogo, self.dostavka, None, tovar_kategory, self.size]])
                 for a in range(1, self.ws2.max_row + 1):
                     if str(self.ws2.cell(a, 1).value) == str(self.article):
                         self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) - int(self.vnalichii)
@@ -330,9 +330,10 @@ class poisk_tovar_in_base:
         self.bot.send_message(self.message.chat.id, "Собираем данные..")
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
         for i in cell_id:
-            if self.worksheet2.cell(i.row, 15).value == 'FALSE':
+            if self.worksheet2.cell(i.row, 16).value == 'FALSE':
                 name.append(f'\nПозиция: {cell_id.index(i) + 1}\n'
                             f'{self.worksheet2.cell(i.row, 6).value} - {self.worksheet2.cell(i.row, 7).value} шт. \n'
+                            f'Размер - {self.worksheet2.cell(i.row, 15).value}\n'
                             f'Категория - {self.worksheet2.cell(i.row, 14).value}\n'
                             f'Цена - {self.worksheet2.cell(i.row, 11).value}₽\n'
                             f'Доставка - {self.worksheet2.cell(i.row, 12).value}\n')
@@ -357,7 +358,7 @@ class poisk_tovar_in_base:
                 if str(self.ws2.cell(a, 1).value) == str(article):
                     self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) + int(self.worksheet2.cell(row, 7).value)
                     self.bot.send_message(self.message.chat.id, 'Товар успешно удален из корзины')
-                    self.worksheet2.batch_clear([f"A{row}:N{row}"])
+                    self.worksheet2.batch_clear([f"A{row}:O{row}"])
                     self.wb.save('CCM.xlsx')
                     break
         except AttributeError:
@@ -368,12 +369,12 @@ class poisk_tovar_in_base:
         try:
             cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1]
             for i in cell_id:
-                if self.worksheet2.cell(i.row, 15).value == 'FALSE':
+                if self.worksheet2.cell(i.row, 16).value == 'FALSE':
                     article = self.worksheet2.cell(i.row, 9).value
                     for a in range(1, self.ws2.max_row + 1):
                         if str(self.ws2.cell(a, 1).value) == str(article):
                             self.ws2.cell(a, 8).value = int(self.ws2.cell(a, 8).value) + int(self.worksheet2.cell(i.row, 7).value)
-                            self.worksheet2.batch_clear([f"A{i.row}:N{i.row}"])
+                            self.worksheet2.batch_clear([f"A{i.row}:O{i.row}"])
                             self.wb.save('CCM.xlsx')
                             break
             self.bot.send_message(self.message.chat.id, 'Товары успешно удалены')
@@ -391,12 +392,14 @@ class poisk_tovar_in_base:
                         if i[' telegram id'] == self.message.chat.id and i[
                              'статус заказа (оформил клиент заказ или же он просто в корзине)'] == 'TRUE':
                             cell_id[str(i['номер заказа'])] = {'name': f'{cell_id[str(i["номер заказа"])]["name"]}\n'
-                                                                       f'{i["товар"]} - {i["количество"]} шт.',
+                                                                       f'{i["товар"]} - {i["количество"]} шт.\n'
+                                                                       f'Размер - {i["размер"]}',
                                                                'price': cell_id[str(i["номер заказа"])]["price"] + float(
                                                                         i['цена итого'].replace('\xa0', '').replace(',', '.')),
                                                                'status': f'{cell_id[str(i["номер заказа"])]["status"]}'}
                     except KeyError:
-                        cell_id[str(i['номер заказа'])] = {'name': f'{i["товар"]} - {i["количество"]} шт.', 'price':
+                        cell_id[str(i['номер заказа'])] = {'name': f'{i["товар"]} - {i["количество"]} шт.\n'
+                                                                   f'Размер - {i["размер"]}', 'price':
                                                            float(i['цена итого'].replace('\xa0', '').replace(',', '.')),
                                                            'status': f'{i["статус заказа (отображается у клиента)"]}'}
                 else:

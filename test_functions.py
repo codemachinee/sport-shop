@@ -427,3 +427,42 @@ class rasylka_message:  # класс хранения сообщения для 
 
     def _get_message_(self):
         return self.post
+
+
+class statistic:
+    def __init__(self):
+        gc = gspread.service_account(filename='pidor-of-the-day-af3dd140b860.json')
+        sh = gc.open('CCM')
+        self.worksheet = sh.worksheet('статистика')
+
+    def obnulenie(self):
+        self.worksheet.update('D2', 0)
+        if datetime.now().day == 1:
+            self.worksheet.update('B2', 0)
+        if datetime.now().isoweekday() == 1:
+            self.worksheet.update('C2', 0)
+        with open('visitors.txt', 'w') as file:
+            file.write('')
+
+    def plus_one(self):
+        self.worksheet.update('A2', str(int(self.worksheet.acell('A2').value) + 1))
+        self.worksheet.update('B2', str(int(self.worksheet.acell('B2').value) + 1))
+        self.worksheet.update('C2', str(int(self.worksheet.acell('C2').value) + 1))
+        self.worksheet.update('D2', str(int(self.worksheet.acell('D2').value) + 1))
+
+    def proverka(self, message):
+        triger = 0
+        with open('visitors.txt', 'r') as file:
+            for line in file:
+                if line[:-1] == str(message.chat.id):
+                    triger += 1
+                    break
+            if triger == 0:
+                statistic().plus_one()
+                with open('visitors.txt', 'a') as file:
+                    file.write(f'{message.chat.id}\n')
+
+
+
+
+

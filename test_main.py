@@ -2,8 +2,10 @@ import telebot  # библиотека телеграм-бота
 from telebot import types  # с помощью типов можно создавать клавиатуры
 import gspread
 from openpyxl import load_workbook
+from apscheduler.schedulers.background import BackgroundScheduler
 
-from test_functions import buttons, poisk_tovar_in_base, rasylka_message, admin_id, tovar_in_basket, zayavka_done
+from test_functions import buttons, poisk_tovar_in_base, rasylka_message, admin_id, tovar_in_basket, zayavka_done, \
+    statistic
 from passwords import *
 article = None
 
@@ -70,6 +72,7 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+        statistic().proverka(m)
     elif m.text == 'Поступления 🆕':
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[14] is not None:
@@ -80,6 +83,7 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+        statistic().proverka(m)
     elif m.text == 'Распродажа 🏷️':
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[9] is not None:
@@ -90,6 +94,7 @@ def chek_message_category(m):
         file_open = open("menu_logo.jpeg", 'rb')
         buttons(bot, m, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
+        statistic().proverka(m)
     elif m.text == "Вернуться в корзину":
         bot.send_message(m.chat.id, f'Загружаем..')
         poisk_tovar_in_base(bot, m).basket_search()
@@ -431,5 +436,11 @@ def save_number(message):
                                                     'ввести ваш контактный номер (с помощью клавиатуры).',
                                    reply_markup=kb4)
         bot.register_next_step_handler(mes_num, save_number)
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(statistic().obnulenie, "cron", day_of_week='mon-sun', hour=0)
+#scheduler.add_job(statistic().obnulenie, "interval", seconds=5)
+scheduler.start()
 
 bot.infinity_polling()

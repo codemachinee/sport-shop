@@ -125,50 +125,50 @@ async def chek_message_category(m: types.Message):
             await bot.send_message(m.chat.id, help_text1, reply_markup=kb1)
         else:
             await bot.send_message(m.chat.id, help_text1)
-    elif len(list_one) == 0:
-        list_two = []
-        kategoriya = None
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=16, values_only=True):
-            if row == (None,):
-                break
-            elif row[8] == m.text:     # если колбек равен разделу
-                list_one.append(row[1][0:30])
-                list_one = sorted(list(set(list_one)))
-                kategoriya = 'категорию'
-                back_value = 'Вернуться в начало'
-            elif m.text in str(row[1]):
-                if len(row[2]) <= 25:
-                    list_two.append((str(row[2])+'-'+str(row[3]), row[0]))
-                    back_value = row[8]
-                    kategoriya = 'товар'
-                else:
-                    list_two.append((f'{row[2][:15]}...{str((row[2])+str(row[3]))[-12:]}', row[0]))
-                    back_value = row[8]
-                    kategoriya = 'товар'
-            elif m.text in str(row[2]):
-                tovar_name = row[2]
-                article = row[0]
-                image = row[10]
-                size = row[3]
-                price = row[4]
-                vnalichii = row[7]
-                tovar_type = row[15]
-                your_price = row[5]
-                dostavka = row[11]
-                size_web = row[13]
-                await bot.send_message(m.chat.id, 'Загружаем..')
-                await poisk_tovar_in_base(bot, m, article, vnalichii=vnalichii, tovar_name=tovar_name,
-                                    image=image, size=size, price=price,
-                                    your_price=your_price, size_web=size_web, tovar_type=tovar_type,
-                                    dostavka=dostavka).poisk_ostatok(back_value=row[1])
-        if len(list_one) != 0:
-            file_open = open("menu_logo.jpeg", 'rb')
-            list_one.append(back_value)
-            await buttons(bot, m, kategoriya=kategoriya, list_one=list_one, image=file_open).razdely_buttons()
-        elif len(list_two) != 0:
-            file_open = open("menu_logo.jpeg", 'rb')
-            list_two.append(('Вернуться назад', back_value))
-            await buttons(bot, m, kategoriya=kategoriya, list_one=list_two, image=file_open).marks_buttons()
+    # elif len(list_one) == 0:
+    #     list_two = []
+    #     kategoriya = None
+    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=16, values_only=True):
+    #         if row == (None,):
+    #             break
+    #         elif row[8] == m.text:     # если колбек равен разделу
+    #             list_one.append(row[1][0:30])
+    #             list_one = sorted(list(set(list_one)))
+    #             kategoriya = 'категорию'
+    #             back_value = 'Вернуться в начало'
+    #         elif m.text in str(row[1]):
+    #             if len(row[2]) <= 25:
+    #                 list_two.append((str(row[2])+'-'+str(row[3]), row[0]))
+    #                 back_value = row[8]
+    #                 kategoriya = 'товар'
+    #             else:
+    #                 list_two.append((f'{row[2][:15]}...{str((row[2])+str(row[3]))[-12:]}', row[0]))
+    #                 back_value = row[8]
+    #                 kategoriya = 'товар'
+    #         elif m.text in str(row[2]):
+    #             tovar_name = row[2]
+    #             article = row[0]
+    #             image = row[10]
+    #             size = row[3]
+    #             price = row[4]
+    #             vnalichii = row[7]
+    #             tovar_type = row[15]
+    #             your_price = row[5]
+    #             dostavka = row[11]
+    #             size_web = row[13]
+    #             await bot.send_message(m.chat.id, 'Загружаем..')
+    #             await poisk_tovar_in_base(bot, m, article, vnalichii=vnalichii, tovar_name=tovar_name,
+    #                                 image=image, size=size, price=price,
+    #                                 your_price=your_price, size_web=size_web, tovar_type=tovar_type,
+    #                                 dostavka=dostavka).poisk_ostatok(back_value=row[1])
+    #     if len(list_one) != 0:
+    #         file_open = open("menu_logo.jpeg", 'rb')
+    #         list_one.append(back_value)
+    #         await buttons(bot, m, kategoriya=kategoriya, list_one=list_one, image=file_open).razdely_buttons()
+    #     elif len(list_two) != 0:
+    #         file_open = open("menu_logo.jpeg", 'rb')
+    #         list_two.append(('Вернуться назад', back_value))
+    #         await buttons(bot, m, kategoriya=kategoriya, list_one=list_two, image=file_open).marks_buttons()
 
 
 @dp.callback_query_handler()

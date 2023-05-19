@@ -77,6 +77,7 @@ async def chek_message_category(m: types.Message):
     wb = load_workbook('CCM.xlsx')
     ws = wb['МЛ Остатки штаб']
     if m.text == 'Каталог 🗂️':
+        await bot.send_message(m.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
             if row == (None,):
                 break
@@ -86,6 +87,7 @@ async def chek_message_category(m: types.Message):
         await buttons(bot, m, kategoriya='раздел', list_one=list_one, image=file_open).razdely_buttons()
         await statistic().proverka(m)
     elif m.text == 'Поступления 🆕':
+        await bot.send_message(m.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[14] is not None:
                 list_one.append(f'🆕{row[8]}')
@@ -96,6 +98,7 @@ async def chek_message_category(m: types.Message):
         await buttons(bot, m, kategoriya='раздел', list_one=list_one, image=file_open).razdely_buttons()
         await statistic().proverka(m)
     elif m.text == 'Распродажа 🏷️':
+        await bot.send_message(m.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[9] is not None:
                 list_one.append(f'🏷️{row[8]}')
@@ -106,14 +109,14 @@ async def chek_message_category(m: types.Message):
         await buttons(bot, m, kategoriya='раздел', list_one=list_one, image=file_open).razdely_buttons()
         await statistic().proverka(m)
     elif m.text == "Вернуться в корзину":
-        await bot.send_message(m.chat.id, f'Загружаем..')
+        await bot.send_message(m.chat.id, f'Загружаем..⏳')
         await poisk_tovar_in_base(bot, m).basket_search()
         await buttons(bot, m).menu_buttons()
     elif m.text == 'Мои заказы 📋':
-        await bot.send_message(m.chat.id, 'Загружаем..')
+        await bot.send_message(m.chat.id, 'Загружаем..⏳')
         await poisk_tovar_in_base(bot, m).zakazy_search()
     elif m.text == 'Корзина 🗑️':
-        await bot.send_message(m.chat.id, f'Загружаем..')
+        await bot.send_message(m.chat.id, f'Загружаем..⏳')
         await poisk_tovar_in_base(bot, m).basket_search()
     elif m.text == 'О нас ⁉️':
         kb1 = types.InlineKeyboardMarkup()
@@ -128,6 +131,7 @@ async def chek_message_category(m: types.Message):
     # elif len(list_one) == 0:
     #     list_two = []
     #     kategoriya = None
+    #     await bot.send_message(m.chat.id, 'Загружаем..⏳')
     #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=16, values_only=True):
     #         if row == (None,):
     #             break
@@ -156,7 +160,7 @@ async def chek_message_category(m: types.Message):
     #             your_price = row[5]
     #             dostavka = row[11]
     #             size_web = row[13]
-    #             await bot.send_message(m.chat.id, 'Загружаем..')
+    #             await bot.send_message(m.chat.id, 'Загружаем..⏳')
     #             await poisk_tovar_in_base(bot, m, article, vnalichii=vnalichii, tovar_name=tovar_name,
     #                                 image=image, size=size, price=price,
     #                                 your_price=your_price, size_web=size_web, tovar_type=tovar_type,
@@ -208,6 +212,7 @@ async def check_callback(callback: types.CallbackQuery):
     elif callback.data == 'redact':
         await buttons(bot, callback.message).basket_buttons_redact()
     elif callback.data == "Вернуться в начало":   # кнопка "вернуться в начало" для каталога
+        await bot.send_message(callback.message.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, min_col=9,   max_col=9, values_only=True):
             if row == (None,):
                 break
@@ -217,6 +222,7 @@ async def check_callback(callback: types.CallbackQuery):
         await buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
     elif callback.data == '🆕Вернуться в начало':     # кнопка "вернуться в начало" для поступлений
+        await bot.send_message(callback.message.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[14] is not None:
                 list_one.append(f'🆕{row[8]}')
@@ -227,6 +233,7 @@ async def check_callback(callback: types.CallbackQuery):
         await buttons(bot, callback.message, kategoriya='раздел', list_one=list_one,
                 image=file_open).razdely_buttons()
     elif callback.data == '🏷️Вернуться в начало':     # кнопка "вернуться в начало" для поступлений
+        await bot.send_message(callback.message.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=15, values_only=True):
             if row[9] is not None:
                 list_one.append(f'🏷️{row[8]}')
@@ -240,6 +247,7 @@ async def check_callback(callback: types.CallbackQuery):
     elif len(list_one) == 0:
         list_two = []
         kategoriya = None
+        await bot.send_message(callback.message.chat.id, 'Загружаем..⏳')
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=16, values_only=True):
             if row == (None,):
                 break
@@ -298,7 +306,6 @@ async def check_callback(callback: types.CallbackQuery):
                 your_price = row[5]
                 dostavka = row[11]
                 size_web = row[13]
-                await bot.send_message(callback.message.chat.id, 'Загружаем..')
                 await poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
                                     your_price=your_price, size_web=size_web, tovar_type=tovar_type,
@@ -314,7 +321,6 @@ async def check_callback(callback: types.CallbackQuery):
                 your_price = row[5]
                 dostavka = row[11]
                 size_web = row[13]
-                await bot.send_message(callback.message.chat.id, 'Загружаем..')
                 await poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
                                     your_price=your_price, size_web=size_web, tovar_type=tovar_type,
@@ -330,7 +336,6 @@ async def check_callback(callback: types.CallbackQuery):
                 your_price = row[5]
                 dostavka = row[11]
                 size_web = row[13]
-                await bot.send_message(callback.message.chat.id, 'Загружаем..')
                 await poisk_tovar_in_base(bot, callback.message, article, vnalichii=vnalichii, tovar_name=tovar_name,
                                     image=image, size=size, price=price,
                                     your_price=your_price, size_web=size_web, tovar_type=tovar_type,
@@ -427,7 +432,7 @@ class redact_basket:
                 if int(message.text) == 0:
                     await bot.send_message(message.chat.id, f'Подчищаем базу..')
                     await poisk_tovar_in_base(bot, message).basket_delete(self.i)
-                    await bot.send_message(message.chat.id, f'Загружаем..')
+                    await bot.send_message(message.chat.id, f'Загружаем..⏳')
                     await poisk_tovar_in_base(bot, message).basket_search()
                 else:
                     row = int(self.i)

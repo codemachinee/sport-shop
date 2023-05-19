@@ -211,7 +211,7 @@ class poisk_tovar_in_base:
                     self.ws['G1'] = self.vnalichii
                     self.ws['I1'] = self.dostavka
                     self.ws['J1'] = back_value
-                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..⏳')
                     self.ws['H1'] = await poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
                 else:
@@ -224,7 +224,7 @@ class poisk_tovar_in_base:
                     self.ws['G1'] = self.vnalichii
                     self.ws['I1'] = self.dostavka
                     self.ws['J1'] = back_value
-                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..⏳')
                     self.ws['H1'] = await poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
                 if self.vnalichii == 0:
@@ -254,7 +254,7 @@ class poisk_tovar_in_base:
                     self.ws['G1'] = self.vnalichii
                     self.ws['I1'] = self.dostavka
                     self.ws['J1'] = back_value
-                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..⏳')
                     self.ws['H1'] = await poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
                 else:
@@ -267,7 +267,7 @@ class poisk_tovar_in_base:
                     self.ws['G1'] = self.vnalichii
                     self.ws['I1'] = self.dostavka
                     self.ws['J1'] = back_value
-                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    await self.bot.send_message(self.message.chat.id, 'загружаем базу данных..⏳')
                     self.ws['H1'] = await poisk_tovar_in_base(self.bot, self.message).poisk_number()
                     self.wb.save('CCM.xlsx')
                 if self.vnalichii == 0:

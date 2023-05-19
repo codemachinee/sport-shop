@@ -7,7 +7,7 @@ from openpyxl import load_workbook  # библиотека работы с exel 
 
 tovar_descriptions = None
 ostatok = None
-admin_id = igor
+admin_id = sergey
 
 
 class buttons:  # класс для создания клавиатур различных категорий товаров
@@ -193,92 +193,94 @@ class poisk_tovar_in_base:
         global ostatok
         try:
             self.bot.send_message(self.message.chat.id, 'Проверяем наличие..')
-            # if self.image is not None and self.image != 0:
-            self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}\n'
-                                                                  f'Артикул: {self.article}')
-            self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
-                                                        f'Тип товара: {self.tovar_type}\nПрайс: {self.price} ₽\n'
-                                                        f'Цена опт: {self.your_price} ₽\nДоставка: {self.dostavka}\n'
-                                                        f'Таблица размеров: {self.size_web}')
-            if self.ws.max_row >= 20:
-                self.ws.delete_rows(5, self.ws.max_row)
-                self.ws.insert_rows(1)
-                self.ws['A1'] = self.message.chat.id
-                self.ws['B1'] = self.tovar_name
-                self.ws['C1'] = self.article
-                self.ws['D1'] = self.size
-                self.ws['E1'] = self.your_price
-                self.ws['G1'] = self.vnalichii
-                self.ws['I1'] = self.dostavka
-                self.ws['J1'] = back_value
-                self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
-                self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
-                self.wb.save('CCM.xlsx')
+            if self.image is not None and self.image != 0:
+                self.bot.send_photo(self.message.chat.id, self.image, f'{self.tovar_name}\nРазмер: {self.size}\n'
+                                                                      f'Артикул: {self.article}')
+                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
+                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price} ₽\n'
+                                                            f'Цена опт: {self.your_price} ₽\nДоставка: {self.dostavka}\n'
+                                                            f'Таблица размеров: {self.size_web}')
+                if self.ws.max_row >= 20:
+                    self.ws.delete_rows(5, self.ws.max_row)
+                    self.ws.insert_rows(1)
+                    self.ws['A1'] = self.message.chat.id
+                    self.ws['B1'] = self.tovar_name
+                    self.ws['C1'] = self.article
+                    self.ws['D1'] = self.size
+                    self.ws['E1'] = self.your_price
+                    self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
+                    self.ws['J1'] = back_value
+                    self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
+                    self.wb.save('CCM.xlsx')
+                else:
+                    self.ws.insert_rows(1)
+                    self.ws['A1'] = self.message.chat.id
+                    self.ws['B1'] = self.tovar_name
+                    self.ws['C1'] = self.article
+                    self.ws['D1'] = self.size
+                    self.ws['E1'] = self.your_price
+                    self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
+                    self.ws['J1'] = back_value
+                    self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
+                    self.wb.save('CCM.xlsx')
+                if self.vnalichii == 0:
+                    kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+                    but1 = types.KeyboardButton(text='Вернуться в начало')
+                    kb4.add(but1)
+                    self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
+                                                                f'/help - справка по боту\n', reply_markup=kb4)
+                else:
+                    buttons(self.bot, self.message).zayavka_buttons(back_value=back_value)
+                    ostatok = self.vnalichii
             else:
-                self.ws.insert_rows(1)
-                self.ws['A1'] = self.message.chat.id
-                self.ws['B1'] = self.tovar_name
-                self.ws['C1'] = self.article
-                self.ws['D1'] = self.size
-                self.ws['E1'] = self.your_price
-                self.ws['G1'] = self.vnalichii
-                self.ws['I1'] = self.dostavka
-                self.ws['J1'] = back_value
-                self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
-                self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
-                self.wb.save('CCM.xlsx')
-            if self.vnalichii == 0:
-                kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-                but1 = types.KeyboardButton(text='Вернуться в начало')
-                kb4.add(but1)
-                self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
-                                                            f'/help - справка по боту\n', reply_markup=kb4)
-            else:
-                buttons(self.bot, self.message).zayavka_buttons(back_value=back_value)
-                ostatok = self.vnalichii
+                self.bot.send_message(self.message.chat.id, f'Фото товара временно отсутствует\n{self.tovar_name}\n'
+                                                            f'Размер: {self.size}\nАртикул: {self.article}')
+                self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
+                                                            f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
+                                                            f'Цена опт: {self.your_price}\nДоставка: {self.dostavka}\n'
+                                                            f'Таблица размеров: {self.size_web}')
+                if self.ws.max_row >= 20:
+                    self.ws.delete_rows(5, self.ws.max_row)
+                    self.ws.insert_rows(1)
+                    self.ws['A1'] = self.message.chat.id
+                    self.ws['B1'] = self.tovar_name
+                    self.ws['C1'] = self.article
+                    self.ws['D1'] = self.size
+                    self.ws['E1'] = self.your_price
+                    self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
+                    self.ws['J1'] = back_value
+                    self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
+                    self.wb.save('CCM.xlsx')
+                else:
+                    self.ws.insert_rows(1)
+                    self.ws['A1'] = self.message.chat.id
+                    self.ws['B1'] = self.tovar_name
+                    self.ws['C1'] = self.article
+                    self.ws['D1'] = self.size
+                    self.ws['E1'] = self.your_price
+                    self.ws['G1'] = self.vnalichii
+                    self.ws['I1'] = self.dostavka
+                    self.ws['J1'] = back_value
+                    self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
+                    self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
+                    self.wb.save('CCM.xlsx')
+                if self.vnalichii == 0:
+                    kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+                    but1 = types.KeyboardButton(text='Вернуться в начало')
+                    kb4.add(but1)
+                    self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
+                                                                f'/help - справка по боту\n', reply_markup=kb4)
+                else:
+                    buttons(self.bot, self.message).zayavka_buttons(back_value=back_value)
+                    ostatok = self.vnalichii
         except Exception:
-            self.bot.send_message(self.message.chat.id, f'Фото товара временно отсутствует\n{self.tovar_name}\n'
-                                                        f'Размер: {self.size}\nАртикул: {self.article}')
-            self.bot.send_message(self.message.chat.id, f'В наличии: {self.vnalichii}\n'
-                                                        f'Тип товара: {self.tovar_type}\nПрайс: {self.price}\n'
-                                                        f'Цена опт: {self.your_price}\nДоставка: {self.dostavka}\n'
-                                                        f'Таблица размеров: {self.size_web}')
-            if self.ws.max_row >= 20:
-                self.ws.delete_rows(5, self.ws.max_row)
-                self.ws.insert_rows(1)
-                self.ws['A1'] = self.message.chat.id
-                self.ws['B1'] = self.tovar_name
-                self.ws['C1'] = self.article
-                self.ws['D1'] = self.size
-                self.ws['E1'] = self.your_price
-                self.ws['G1'] = self.vnalichii
-                self.ws['I1'] = self.dostavka
-                self.ws['J1'] = back_value
-                self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
-                self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
-                self.wb.save('CCM.xlsx')
-            else:
-                self.ws.insert_rows(1)
-                self.ws['A1'] = self.message.chat.id
-                self.ws['B1'] = self.tovar_name
-                self.ws['C1'] = self.article
-                self.ws['D1'] = self.size
-                self.ws['E1'] = self.your_price
-                self.ws['G1'] = self.vnalichii
-                self.ws['I1'] = self.dostavka
-                self.ws['J1'] = back_value
-                self.bot.send_message(self.message.chat.id, 'загружаем базу данных..')
-                self.ws['H1'] = poisk_tovar_in_base(self.bot, self.message).poisk_number()
-                self.wb.save('CCM.xlsx')
-            if self.vnalichii == 0:
-                kb4 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-                but1 = types.KeyboardButton(text='Вернуться в начало')
-                kb4.add(but1)
-                self.bot.send_message(self.message.chat.id, f'Увы товар закончился\n'
-                                                            f'/help - справка по боту\n', reply_markup=kb4)
-            else:
-                buttons(self.bot, self.message).zayavka_buttons(back_value=back_value)
-                ostatok = self.vnalichii
+            self.bot.send_message(self.message.chat.id, f'Ошибка, товар отсутствует')
 
     def zayavka_v_baze(self, itogo, tovar_kategory):  # функция перевода из базы потенциальных клиентов в базу старых клиентов
         cell_id = (self.worksheet2.findall(str(self.message.chat.id), in_column=1))[::-1] # поиск ячейки с данными по ключевому слову
@@ -437,7 +439,7 @@ class statistic:
         self.worksheet.update('D2', 0)
         if datetime.now().day == 1:
             self.worksheet.update('B2', 0)
-        if datetime.now().isoweekday() == 1:
+        if datetime.now().isoweekday() == 7:
             self.worksheet.update('C2', 0)
         with open('visitors.txt', 'w') as file:
             file.write('')

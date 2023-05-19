@@ -211,7 +211,7 @@ def check_callback(callback):
     elif callback.data == 'redact':
         buttons(bot, callback.message).basket_buttons_redact()
     elif callback.data == "Вернуться в начало":   # кнопка "вернуться в начало" для каталога
-        for row in ws.iter_rows(min_row=2, min_col=9, max_col=9, values_only=True):
+        for row in ws.iter_rows(min_row=2, min_col=9,   max_col=9, values_only=True):
             if row == (None,):
                 break
             list_one.append(*row)

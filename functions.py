@@ -427,7 +427,7 @@ class statistic:
         sh = gc.open('CCM')
         self.worksheet = sh.worksheet('статистика')
 
-    async def obnulenie(self):
+    def obnulenie(self):
         self.worksheet.update('D2', 0)
         if datetime.now().day == 1:
             self.worksheet.update('B2', 0)
